@@ -1,0 +1,8 @@
+addi $s0,$s0,55
+add $t3,$t1,$t2
+addi $s1,$s1,5
+Label:
+beq $s0,$s2,Exit
+addi $s2,$s2,1
+j Label
+Exit:
