@@ -36,7 +36,10 @@ SOURCES += \
     gui.cpp \
     editor.cpp \
     tree_widget.cpp \
-    data_memory.cpp
+    data_memory.cpp \
+    regfile_widget.cpp \
+    execute_widget.cpp \
+    data_mem_widget.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -49,7 +52,10 @@ HEADERS += \
     gui.h \
     editor.h \
     tree_widget.h \
-    data_memory.h
+    data_memory.h \
+    regfile_widget.h \
+    execute_widget.h \
+    data_mem_widget.h
 
 FORMS += \
         mainwindow.ui

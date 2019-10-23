@@ -3,6 +3,7 @@
 
 #define REGISTER "registers"
 #define EXECUTE "Execute"
+#define DATA_MEMORY "data_memory"
 #define ADDRESS 0
 #define CODE 1
 #define INSTRUCTION 2
@@ -25,26 +26,19 @@ using namespace std;
 class Tree_Widget : public QTreeWidget
 {
     Q_OBJECT
-private:
-    string Type ;
+protected:
     QColor color;
     bool flag_color;
     vector<QTreeWidgetItem*> Items ;
 
 public:
-    explicit Tree_Widget(string type,QWidget *parent = nullptr);
+    explicit Tree_Widget(QWidget *parent = nullptr);
     void init_registers();
     void addItem();
     void addItem(QStringList);
     void setColor(QTreeWidgetItem*item);
     void clean_from_specials();
-public slots:
-    void updateRegisters();
-    void updateInstructions();
-signals:
-    vector<string> require_Instructions();
-    vector<string> require_AssembledInstructions();
-    map<string,Register*> get_registers();
+
 
 };
 

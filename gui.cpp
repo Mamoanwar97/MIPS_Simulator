@@ -10,8 +10,8 @@ GUI::GUI(QWidget *parent) :
     this->grid    = new QGridLayout();
 
     this->tabWidget       = new QTabWidget();
-    this->Registers_Table = new Tree_Widget(REGISTERS_TYPE);
-    this->Execution       = new Tree_Widget("Execute");
+    this->Registers_Table = new regFile_Widget();
+    this->Execution       = new Execute_Widget();
 
     this->Code_Editor     = new Editor();
     this->IO_Screen       = new Editor();

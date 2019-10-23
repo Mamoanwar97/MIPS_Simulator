@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QTableWidget>
 
-#define SIZE 8192
+#define MEM_SIZE 8192
 
 class Data_Memory : public QTableWidget
 {
@@ -19,6 +19,8 @@ signals:
 public slots:
     void write_memory(uint address , int value);
     int read_memory (uint address);
+
+    int *get_Memory_Access();
 };
 
 #endif // DATA_MEMORY_H

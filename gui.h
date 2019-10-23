@@ -1,6 +1,9 @@
 #ifndef GUI_H
 #define GUI_H
 
+#include "execute_widget.h"
+#include "regfile_widget.h"
+#include "data_mem_widget.h"
 #include "tree_widget.h"
 #include "editor.h"
 #include "simulator.h"
@@ -53,7 +56,7 @@ private:
 
     QTabWidget* tabWidget;
     Editor* Code_Editor;
-    Tree_Widget* Execution;
+    Execute_Widget* Execution;
 
     QHBoxLayout* horizontalLayout;
     QLineEdit *  lineEdit;
@@ -64,7 +67,7 @@ private:
 
     Editor* IO_Screen;
     QTabWidget* IO_Screen_Container;
-    Tree_Widget* Registers_Table;
+    regFile_Widget* Registers_Table;
 public:
     explicit GUI(QWidget *parent = nullptr);
     ~GUI();
