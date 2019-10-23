@@ -4,11 +4,11 @@ Data::Data(string Name, int Size)
 {
     this->name = Name;
     this->size = Size ;
-    this->address = new long(this->size);
+    this->address = new int(this->size);
     cout << "address " << this->name << " " << this->address<<endl;
 }
 
-long* Data::get_address()
+int* Data::get_address()
 {
     return this->address;
 }

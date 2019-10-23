@@ -39,7 +39,7 @@ Register_File::Register_File(QObject *parent) : QObject(parent)
     this->Registers["$sp"]->setValue(  STACK_SIZE  );
 }
 
-void Register_File::add_register(string Name, uint Num, long Value )
+void Register_File::add_register(string Name, uint Num, int Value )
 {
     this->Registers[Name] = new Register(Name,Num,Value);
 }
@@ -78,7 +78,7 @@ void Register_File::push(string name)
         return;
     }
 
-    long value = this->Registers[name]->getValue();
+    int value = this->Registers[name]->getValue();
     this->Stack_Pointer.push(value);
 
     this->Registers["$sp"]->setValue( this->Registers["$sp"]->getValue() - WORD_SIZE );
@@ -92,7 +92,7 @@ void Register_File::pop(string name)
         return ;
     }
 
-    long value = this->Stack_Pointer.top();
+    int value = this->Stack_Pointer.top();
     this->Stack_Pointer.pop();
 
     this->Registers[name]->setValue(value);
@@ -109,7 +109,7 @@ void Register_File::stack_read(string name)
     this->Registers[name]->setValue( this->Stack_Pointer.top());
 }
 
-long Register_File::read_register(string name)
+int Register_File::read_register(string name)
 {
     return this->Registers[name]->getValue();
 }
@@ -119,7 +119,7 @@ uint Register_File::get_register_num(string name)
     return this->Registers[name]->getNum();
 }
 
-void Register_File::write_register(string name,long Value)
+void Register_File::write_register(string name,int Value)
 {
     this->Registers[name]->setValue(Value);
 }

@@ -7,12 +7,12 @@ using namespace std;
 class Data
 {
 private:
-    long* address;
+    int* address;
     int size;
     string name;
 public:
     Data(string Name,int Size);
-    long* get_address();
+    int* get_address();
     int get_size();
     string get_name();
 

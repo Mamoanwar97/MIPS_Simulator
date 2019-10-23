@@ -3,16 +3,17 @@
 #include <fstream>
 #include <bits/stdc++.h>
 #include <QObject>
-using namespace std;
 #include "assembler.h"
 #include "register_file.h"
 #include "alu.h"
+#include "data_memory.h"
 
 #define PC         this->Program_Counter->getValue() /4
 #define Set_PC(x)  this->Program_Counter->setValue((x)*4)
 #define SYSCALL "syscall"
 
 
+using namespace std;
 class GUI;
 
 class Simulator : public QObject
@@ -25,6 +26,7 @@ private:
     Assembler* assembler;
     Register_File* register_file;
     Register* Program_Counter;
+    Data_Memory* data_memory;
 
     ifstream file;
     string code_path;
@@ -34,7 +36,7 @@ private:
     vector<vector<string>> instructions;
     map<string,uint> Lables;
     map<string,string> data_asciiz;
-    map<string,long> data_word;
+    map<string,int> data_word;
 
 
 public:
@@ -51,6 +53,7 @@ public:
     void Assemble_Instructions();
     void ALU_Logic();
     void clear();
+    void update_GUI();
 private:
     bool check_for_specials(string);
     bool check_for_Lable(string,uint);
@@ -69,6 +72,7 @@ signals:
     void print_registers();
     void update_assembled_instruction();
     void update_registers();
+    void update_data_memory();
 
 
 public slots:
@@ -77,7 +81,7 @@ public slots:
     uint get_Label(string);
     vector<string> get_instructions();
     bool check_data_words(string s);
-    long get_dataWord(string s);
+    int get_dataWord(string s);
 };
 
 #endif // SIMULATOR_H

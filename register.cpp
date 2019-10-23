@@ -1,6 +1,6 @@
 #include "register.h"
 
-Register::Register(string Name,uint Num, long Value)
+Register::Register(string Name,uint Num, int Value)
 {
     this->name = Name;
     this->value = Value;
@@ -12,12 +12,12 @@ void Register::clear()
     this->value = 0;
 }
 
-void Register::setValue(long Value)
+void Register::setValue(int Value)
 {
     this->value = Value;
 }
 
-long Register::getValue()
+int Register::getValue()
 {
     return this->value;
 }

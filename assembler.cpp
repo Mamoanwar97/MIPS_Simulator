@@ -33,7 +33,7 @@ Assembler::Assembler()
     // ===================================
 }
 
-long Assembler::get_16bit_value(string s)
+int Assembler::get_16bit_value(string s)
 {
     if ( emit check_for_word(s))
     {
@@ -59,7 +59,7 @@ uint Assembler::get_fun(string Operand)
 
 void Assembler::Assemble(vector<string> Instruction)
 {
-    deque<long> assembled_Instruction ;
+    deque<int> assembled_Instruction ;
     this->operand = Instruction[main_operand];
 
     if (this->operand == "syscall")
@@ -94,7 +94,7 @@ void Assembler::Assemble(vector<string> Instruction)
 //            assembled_Instruction.push_back(0);
 //            assembled_Instruction.push_back( emit get_register_num(Instruction[1]) ) ;
 //            int* address = emit get_data_address(Instruction[2]) ;
-//            long add = long(address);
+//            int add = int(address);
 //            assembled_Instruction.push_back(add) ;
 //        }
         else if (this->operand == "li")
@@ -154,7 +154,7 @@ void Assembler::Assemble(vector<string> Instruction)
     this->convert_Assemble_to_String(assembled_Instruction,Fun);
     this->assembled_Instructions.push_back(assembled_Instruction);
 }
-string assemble(long num , uint n)
+string assemble(int num , uint n)
 {
     string s;
     bitset<32> Num(num);
@@ -166,7 +166,7 @@ string assemble(long num , uint n)
     }
     return s;
 }
-void Assembler::convert_Assemble_to_String(deque<long> instruction,uint Fun)
+void Assembler::convert_Assemble_to_String(deque<int> instruction,uint Fun)
 {
     string s;
 
@@ -210,7 +210,7 @@ void Assembler::print_all()
         print(assembled_Instructions[i]);
     cout << endl;
 }
-void Assembler::print(deque<long> x)
+void Assembler::print(deque<int> x)
 {
     for (uint i = 0; i < x.size(); ++i) {
         cout << x[i] << " ";

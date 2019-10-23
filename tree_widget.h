@@ -33,11 +33,9 @@ protected:
 
 public:
     explicit Tree_Widget(QWidget *parent = nullptr);
-    void init_registers();
     void addItem();
     void addItem(QStringList);
     void setColor(QTreeWidgetItem*item);
-    void clean_from_specials();
 
 
 };

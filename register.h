@@ -8,14 +8,14 @@ class Register : public QObject
     Q_OBJECT
 private:
     string name;
-    long value ;
+    int value ;
     uint num ;
 public:
-    Register(string Name,uint Num,long Value=0);
+    Register(string Name,uint Num,int Value=0);
     void clear();
 public slots:
-    void setValue(long);
-    long getValue();
+    void setValue(int);
+    int getValue();
     uint getNum();
     string getName();
 

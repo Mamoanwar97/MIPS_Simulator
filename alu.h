@@ -5,7 +5,7 @@
 using namespace std;
 #include "assembler.h"
 
-#define SEGMENT_SIZE sizeof(long)
+#define SEGMENT_SIZE sizeof(int)
 #define PRINT_CODE 4
 #define EXIT_CODE 10
 
@@ -14,9 +14,9 @@ class ALU : public QObject
     Q_OBJECT
 private:
     string operand;
-    long input1;
-    long input2;
-    long result;
+    int input1;
+    int input2;
+    int result;
     uint Zero_Flag;
     map<uint,vector<string>> Instructions;
 public:
@@ -26,12 +26,12 @@ public:
     void J_Format_ALU(vector<string>);
     bool Special_MIPS(vector<string>);
     void clear();
-    long get_16_bit_value(string s);
+    int get_16_bit_value(string s);
 
 signals:
     uint get_fun_format(string name);
-    long read_register(string name);
-    void set_register(string name,long value);
+    int read_register(string name);
+    void set_register(string name,int value);
     void change_PC_Label(string);
     void change_PC_address(int);
     int  PC_current_instr();
@@ -41,10 +41,11 @@ signals:
     void syscall(string);
 
     bool check_for_word(string s);
-    long get_data_word(string s);
+    int get_data_word(string s);
 
-    long get_value_data_memory(uint);
-    void set_value_data_memory(uint,long);
+    int get_value_data_memory(uint);
+    void set_value_data_memory(uint,int);
+    void update_memory_gui(uint);
 public slots:
     void ALU_Operation(vector<string>);
 };

@@ -5,7 +5,7 @@
 #include "register.h"
 using namespace std;
 
-#define WORD_SIZE sizeof(long)
+#define WORD_SIZE sizeof(int)
 #define STACK_SIZE WORD_SIZE*1000
 
 class Register_File : public QObject
@@ -14,16 +14,16 @@ class Register_File : public QObject
 
 private:
     map<string,Register*> Registers;
-    stack<long> Stack_Pointer;
+    stack<int> Stack_Pointer;
 public:
     Register_File(QObject *parent = nullptr);
-    void add_register(string Name,uint Num , long Value = 0 );
+    void add_register(string Name,uint Num , int Value = 0 );
     void clear();
 public slots:
     map<string,Register*> registers_reading();
-    long read_register(string name);
+    int read_register(string name);
     uint get_register_num(string name);
-    void write_register(string name,long Value=0);
+    void write_register(string name,int Value=0);
     void print_all();
 
     void push(string name);

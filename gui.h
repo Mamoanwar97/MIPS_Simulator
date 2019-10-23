@@ -35,6 +35,7 @@
 #define EDIT "Edit"
 #define EXECUTE "Execute"
 #define REGISTERS_TYPE "registers"
+#define DATA_MEM "Memory"
 
 #define Width_Editor 600
 #define Hight_Editor 500
@@ -57,6 +58,7 @@ private:
     QTabWidget* tabWidget;
     Editor* Code_Editor;
     Execute_Widget* Execution;
+    Data_Mem_Widget* Data_Memory;
 
     QHBoxLayout* horizontalLayout;
     QLineEdit *  lineEdit;
@@ -80,7 +82,7 @@ public:
     void keyPressEvent(QKeyEvent * event);
 
 signals:
-    void update(vector<long>);
+    void update(vector<int>);
 
 public slots:
     void Start_Simulation();

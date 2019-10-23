@@ -16,22 +16,22 @@ class Assembler : public QObject
     friend class Simulator;
 private:
 
-    vector<deque<long>> assembled_Instructions;
+    vector<deque<int>> assembled_Instructions;
     vector<string> assembled_Instr_Strings;
     map<string,pair<uint,uint>> operands;
     string operand;
 
 public:
     Assembler();
-    long get_16bit_value(string s );
+    int get_16bit_value(string s );
 public slots:
 
     vector<string> get_assembled_strings();
     uint get_opcode(string Operand);
     uint get_fun(string Operand);
-    void print(deque<long> x);
+    void print(deque<int> x);
     void Assemble(vector<string> Instruction);
-    void convert_Assemble_to_String(deque<long>,uint);
+    void convert_Assemble_to_String(deque<int>,uint);
     void print_all();
 
 signals:
@@ -41,7 +41,7 @@ signals:
     int* get_data_address(string);
 
     bool check_for_word(string s);
-    long get_data_word(string s);
+    int get_data_word(string s);
 
 };
 

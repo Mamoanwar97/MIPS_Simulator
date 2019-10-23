@@ -12,6 +12,7 @@ GUI::GUI(QWidget *parent) :
     this->tabWidget       = new QTabWidget();
     this->Registers_Table = new regFile_Widget();
     this->Execution       = new Execute_Widget();
+    this->Data_Memory     = new Data_Mem_Widget();
 
     this->Code_Editor     = new Editor();
     this->IO_Screen       = new Editor();
@@ -39,6 +40,7 @@ void GUI::Design()
     this->setStyleSheet("background-color:white");
     this->tabWidget->addTab(this->Code_Editor,EDIT);
     this->tabWidget->addTab(this->Execution,EXECUTE);
+    this->tabWidget->addTab(this->Data_Memory,DATA_MEM);
     this->tabWidget->setMovable(true);
 
     this->IO_Screen_Container->addTab(this->IO_Screen,"Output");
@@ -84,6 +86,7 @@ void GUI::Signals_Slots()
     connect( this->Execution,SIGNAL(require_Instructions() ), this->simulator , SLOT ( get_instructions() ) );
     connect( this->Execution,SIGNAL(require_AssembledInstructions() ), this->simulator->assembler , SLOT ( get_assembled_strings() ) );
 
+    connect( this->Data_Memory,SIGNAL(get_access_memory() ), this->simulator->data_memory, SLOT ( get_Memory_Access() ) );
     connect( this->Registers_Table,SIGNAL(get_registers() ), this->simulator->register_file , SLOT ( registers_reading() ) );
     connect( this->simulator->Alu ,SIGNAL( syscall(string) ) , this,SLOT( Output_Screen(string) ) );
 
@@ -92,8 +95,9 @@ void GUI::Signals_Slots()
 
     connect( this->simulator, SIGNAL(getInstruction_Editor()), this->Code_Editor,SLOT(Read_Code_Text_Editor() ));
     connect( this->simulator, SIGNAL(update_assembled_instruction() ) , this->Execution , SLOT( updateInstructions() ) );
-    connect( this->simulator, SIGNAL(update_registers() )             , this->Registers_Table , SLOT( updateRegisters() ) );
-
+    connect( this->simulator, SIGNAL(update_registers() )    , this->Registers_Table , SLOT( updateRegisters() ) );
+    connect( this->simulator, SIGNAL(update_data_memory() ), this->Data_Memory , SLOT( update_memory() ) );
+    connect( this->simulator->Alu , SIGNAL (update_memory_gui(uint)) , this->Data_Memory , SLOT(update_memory(uint)) );
 }
 
 void GUI::keyPressEvent(QKeyEvent *event)

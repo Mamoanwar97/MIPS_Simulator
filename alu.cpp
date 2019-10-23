@@ -79,7 +79,9 @@ void ALU::I_Format_ALU(vector<string> instruction)
         input1 = emit read_register(instruction[3]) ; // base address
         input2 = get_16_bit_value(instruction[2]) ; // the shift
         this->result = input1+input2; // index
-        long value = emit get_value_data_memory(this->result/4); // devide by 4 because it is num of bytes not words
+
+        uint address =this->result/4; // devide by 4 because it is num of bytes not words
+        int value = emit get_value_data_memory(address);
         emit set_register(instruction[1],value);
         return;
     }
@@ -89,8 +91,12 @@ void ALU::I_Format_ALU(vector<string> instruction)
         input2 = get_16_bit_value(instruction[2]) ; // the shift
         this->result = input1+input2; // index
 
-        long value  = emit read_register(instruction[1] );  // get data from register to store it
-        emit set_value_data_memory(this->result/4,value); // devide by 4 because it is num of bytes not words
+        int value  = emit read_register(instruction[1] );  // get data from register to store it
+        uint address =this->result/4; // devide by 4 because it is num of bytes not words
+
+        emit set_value_data_memory(address,value);
+        emit update_memory_gui(address);
+
         return;
     }
     else if (this ->operand == "li")
@@ -213,7 +219,7 @@ void ALU::clear()
     this->result =0;
 }
 
-long ALU::get_16_bit_value(string s)
+int ALU::get_16_bit_value(string s)
 {
     if ( emit check_for_word(s))
     {

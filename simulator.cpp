@@ -6,6 +6,7 @@ Simulator::Simulator()
     this->Alu = new ALU(this->Program_Counter);
     this->assembler = new Assembler();
     this->register_file = new Register_File();
+    this->data_memory = new Data_Memory();
     Observer_Pattern();
 }
 
@@ -15,6 +16,7 @@ Simulator::~Simulator()
     delete this->assembler;
     delete this->Alu;
     delete this->Program_Counter;
+    delete this->data_memory;
     this->file.close();
 }
 void Simulator::clear()
@@ -32,7 +34,15 @@ void Simulator::clear()
     this->Program_Counter->clear();
     this->Alu->clear();
     this->register_file->clear();
+    this->data_memory->clear();
     this->address = 0;
+}
+
+void Simulator::update_GUI()
+{
+    emit update_assembled_instruction();
+    emit update_registers();
+//    emit update_data_memory();
 }
 void Simulator::Simulate()
 {
@@ -40,15 +50,13 @@ void Simulator::Simulate()
     clear();
     Read_Instruction_Editor();
     Assemble_Instructions();
-//    ALU_Logic();
+    ALU_Logic();
 
-    emit print_registers();
+//    emit print_registers();
     print(this->Lables);
     print(this->assembler->get_assembled_strings());
 
-    emit update_assembled_instruction();
-    emit update_registers();
-
+    this->update_GUI();
 }
 
 void Simulator::Simulate(string path)
@@ -58,15 +66,14 @@ void Simulator::Simulate(string path)
 
     Read_Instruction();
     Assemble_Instructions();
-//    ALU_Logic();
+    ALU_Logic();
 
 
     emit print_registers();
     print(this->Lables);
     print(this->assembler->get_assembled_strings());
 
-    emit update_assembled_instruction();
-    emit update_registers();
+    this->update_GUI();
 }
 
 void Simulator::Read_Instruction()
@@ -320,7 +327,7 @@ void Simulator::Observer_Pattern()
 
     connect(this->Alu ,     SIGNAL(get_fun_format(string)),                 this->assembler,SLOT(get_fun(string)));
     connect(this->Alu ,     SIGNAL(read_register(string)) ,                 this->register_file, SLOT(read_register(string)) );
-    connect(this->Alu ,     SIGNAL(set_register(string,long)) ,             this->register_file, SLOT(write_register(string,long)) );
+    connect(this->Alu ,     SIGNAL(set_register(string,int)) ,             this->register_file, SLOT(write_register(string,int)) );
     connect(this->Alu ,     SIGNAL(change_PC_Label(string)) ,               this,SLOT(set_Program_Counter(string)));
     connect(this->Alu ,     SIGNAL(change_PC_address(int)) ,                this,SLOT(set_Program_Counter(int)));
     connect(this->Alu ,     SIGNAL(PC_current_instr()),                     this->Program_Counter,SLOT(getValue()));
@@ -328,6 +335,8 @@ void Simulator::Observer_Pattern()
     connect(this->Alu ,     SIGNAL(Pop (string)),                           this->register_file,SLOT(pop(string)));
     connect(this->Alu ,     SIGNAL(get_data_word(string)),                  this,SLOT(get_dataWord(string)));
     connect(this->Alu ,     SIGNAL(check_for_word(string)),                 this,SLOT(check_data_words(string)));
+    connect(this->Alu ,     SIGNAL(get_value_data_memory(uint)),            this->data_memory,SLOT(read_memory(uint)));
+    connect(this->Alu ,     SIGNAL(set_value_data_memory(uint,int)),        this->data_memory,SLOT(write_memory(uint ,int)));
 }
 vector<string> Simulator :: split_string(string s,string splitter)
 {
@@ -361,18 +370,13 @@ void Simulator::set_Program_Counter(string label)
 {
     uint address = this->Lables[label];
     this->Program_Counter->setValue((address*4)+4);}
-
 void Simulator::set_Program_Counter(int address)
 {
     this->Program_Counter->setValue(address);
 }
-
 uint Simulator::get_Label(string label)
 {
-    return this->Lables[label];
-}
-
-
+    return this->Lables[label];}
 vector<string> Simulator::get_instructions()
 {
     vector<string> code_cleaned;
@@ -381,27 +385,21 @@ vector<string> Simulator::get_instructions()
         if (pos == -1)
             code_cleaned.push_back(this->code[i]);
     }
-    return code_cleaned;
-}
-
+    return code_cleaned;}
 bool Simulator::check_data_words(string s)
 {
     auto found = this->data_word.find(s);
     if (found != this->data_word.end())
         return true;
-    return false;
-}
-
-long Simulator::get_dataWord(string s)
+    return false;}
+int Simulator::get_dataWord(string s)
 {
-    return this->data_word[s];
-}
+    return this->data_word[s];}
 void Simulator::print(map<string,uint> x)
 {
     for (auto i = x.begin();i != x.end(); i ++)
         cout << "(" << i->first << "," << i->second << ") ";    
-    cout << endl;
-}
+    cout << endl;}
 void Simulator::print(deque<string> x)
 {
     for (int i = 0; i < x.size()-1; ++i) {
