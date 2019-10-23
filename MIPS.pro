@@ -35,7 +35,8 @@ SOURCES += \
         data.cpp \
     gui.cpp \
     editor.cpp \
-    tree_widget.cpp
+    tree_widget.cpp \
+    data_memory.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -47,7 +48,8 @@ HEADERS += \
         data.h \
     gui.h \
     editor.h \
-    tree_widget.h
+    tree_widget.h \
+    data_memory.h
 
 FORMS += \
         mainwindow.ui

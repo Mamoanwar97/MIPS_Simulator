@@ -28,7 +28,7 @@ GUI::~GUI()
     delete this->grid;
     delete this->simulator;
     delete this->tabWidget;
-        delete this->Code_Editor;
+    delete this->Code_Editor;
     delete this->IO_Screen;
     delete this->Registers_Table;
     delete this->Execution;

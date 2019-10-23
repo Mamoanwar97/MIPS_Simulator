@@ -23,7 +23,7 @@ Assembler::Assembler()
     this->operands[ "sw" ] = {43,I_Format_Fun};
     this->operands["beq" ] = {4, I_Format_Fun};
     this->operands["bne"]  = {5, I_Format_Fun};
-    this->operands["la"]   = {100,I_Format_Fun};
+//    this->operands["la"]   = {100,I_Format_Fun};
     this->operands["li"]   = {101,I_Format_Fun};
     // ============ J-Format =============
     this->operands[ "j" ]     = {2, J_Format_Fun};
@@ -31,6 +31,15 @@ Assembler::Assembler()
     this->operands["push"]    = {200,J_Format_Fun};
     this->operands["pop"]     =  {201,J_Format_Fun};
     // ===================================
+}
+
+long Assembler::get_16bit_value(string s)
+{
+    if ( emit check_for_word(s))
+    {
+        return emit get_data_word(s);
+    }
+    return stol(s);
 }
 
 vector<string> Assembler::get_assembled_strings()
@@ -65,7 +74,7 @@ void Assembler::Assemble(vector<string> Instruction)
         {
             assembled_Instruction.push_back( emit get_register_num(Instruction[3]) ) ;
             assembled_Instruction.push_back( emit get_register_num(Instruction[1]) ) ;
-            assembled_Instruction.push_back( stoul(Instruction[2]) ) ;  // 16-bit address value
+            assembled_Instruction.push_back( get_16bit_value(Instruction[2]) ) ;  // 16-bit address value
         }
         else if (this->operand == "beq" || this->operand == "bne")
         {
@@ -78,27 +87,27 @@ void Assembler::Assemble(vector<string> Instruction)
         {
             assembled_Instruction.push_back(0);
             assembled_Instruction.push_back( emit get_register_num(Instruction[1]) ) ;
-            assembled_Instruction.push_back( stoul(Instruction[2]) ) ;  // shift value
+            assembled_Instruction.push_back( get_16bit_value(Instruction[2]) ) ;  // shift value
         }
-        else if (this->operand == "la")
-        {
-            assembled_Instruction.push_back(0);
-            assembled_Instruction.push_back( emit get_register_num(Instruction[1]) ) ;
-            int* address = emit get_data_address(Instruction[2]) ;
-            long add = long(address);
-            assembled_Instruction.push_back(add) ;
-        }
+//        else if (this->operand == "la")
+//        {
+//            assembled_Instruction.push_back(0);
+//            assembled_Instruction.push_back( emit get_register_num(Instruction[1]) ) ;
+//            int* address = emit get_data_address(Instruction[2]) ;
+//            long add = long(address);
+//            assembled_Instruction.push_back(add) ;
+//        }
         else if (this->operand == "li")
         {
             assembled_Instruction.push_back(0);
             assembled_Instruction.push_back( emit get_register_num(Instruction[1]) ) ;
-            assembled_Instruction.push_back( stol(Instruction[2])) ;
+            assembled_Instruction.push_back( get_16bit_value(Instruction[2])) ;
         }
         else
         {
             assembled_Instruction.push_back( emit get_register_num(Instruction[2]) ) ;
             assembled_Instruction.push_back( emit get_register_num(Instruction[1]) ) ;
-            assembled_Instruction.push_back( stoul(Instruction[3]) ) ;  // 16-bit value
+            assembled_Instruction.push_back( get_16bit_value(Instruction[3]) ) ;  // 16-bit value
         }
     }
     else if(Fun == J_Format_Fun)

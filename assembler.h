@@ -23,6 +23,7 @@ private:
 
 public:
     Assembler();
+    long get_16bit_value(string s );
 public slots:
 
     vector<string> get_assembled_strings();
@@ -38,6 +39,10 @@ signals:
     uint get_PC();
     uint get_label_address(string);
     int* get_data_address(string);
+
+    bool check_for_word(string s);
+    long get_data_word(string s);
+
 };
 
 #endif // ASSEMBLER_H

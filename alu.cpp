@@ -76,35 +76,26 @@ void ALU::I_Format_ALU(vector<string> instruction)
     //  ==================Specials ==================
     if (this->operand == "lw")
     {
-        input1 = emit read_register(instruction[3]) ;
-        input2 = stoi(instruction[2]) *SEGMENT_SIZE;
-        long* ptr = (long*)(input1+input2); // address in register + index
-        this->result = *(ptr);
-        emit set_register(instruction[1],this->result);
+        input1 = emit read_register(instruction[3]) ; // base address
+        input2 = get_16_bit_value(instruction[2]) ; // the shift
+        this->result = input1+input2; // index
+        long value = emit get_value_data_memory(this->result/4); // devide by 4 because it is num of bytes not words
+        emit set_register(instruction[1],value);
         return;
     }
     else if (this->operand == "sw")
     {
-        input1 = emit read_register(instruction[3]) ;
-        input2 = stoi(instruction[2]) *SEGMENT_SIZE;
-        long* ptr = (long*)(input1+input2); // address in register + index
-        *ptr = emit read_register(instruction[1]) ;
-        this->result = *ptr;
-        return;
-    }
-    else if (this ->operand == "la")
-    {
-        long* address = emit Get_data_address(instruction[2]) ;
-        long add = long(address);
-        input1 = add;
-        this->result = input1;
-        //        cout << "La ALU =" << add << endl;
-        emit set_register(instruction[1],add);
+        input1 = emit read_register(instruction[3]) ; // base address
+        input2 = get_16_bit_value(instruction[2]) ; // the shift
+        this->result = input1+input2; // index
+
+        long value  = emit read_register(instruction[1] );  // get data from register to store it
+        emit set_value_data_memory(this->result/4,value); // devide by 4 because it is num of bytes not words
         return;
     }
     else if (this ->operand == "li")
     {
-        input1 = stol(instruction[2]);
+        input1 = get_16_bit_value(instruction[2]);
         input2 = 0;
         this->result = input1;
         emit set_register(instruction[1],this->result);
@@ -134,7 +125,7 @@ void ALU::I_Format_ALU(vector<string> instruction)
     }
     else if (this->operand== "lui")
     {
-        input1 = stoul (instruction[2]);
+        input1 = get_16_bit_value (instruction[2]);
         this->result = input1 << 16;
         emit set_register(instruction[1],this->result);
         return;
@@ -142,7 +133,7 @@ void ALU::I_Format_ALU(vector<string> instruction)
     else if(this->operand == "slti")
     {
         input1 = emit read_register(instruction[2]);
-        input2 = stoul( instruction[3] );
+        input2 = get_16_bit_value( instruction[3] );
         if(input1 < input2)
         {
             this->result=1;
@@ -156,7 +147,7 @@ void ALU::I_Format_ALU(vector<string> instruction)
         }
         return;}
     input1 = emit read_register(instruction[2]);
-    input2 = stoul(instruction[3]);
+    input2 = get_16_bit_value(instruction[3]);
     if(this->operand == "addi")
         this->result = input1 +input2;
     else if(this->operand == "andi")
@@ -220,6 +211,15 @@ void ALU::clear()
     this->input2=0;
     this->operand="";
     this->result =0;
+}
+
+long ALU::get_16_bit_value(string s)
+{
+    if ( emit check_for_word(s))
+    {
+        return emit get_data_word(s);
+    }
+    return stol(s);
 }
 
 

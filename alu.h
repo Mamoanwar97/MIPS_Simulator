@@ -26,6 +26,7 @@ public:
     void J_Format_ALU(vector<string>);
     bool Special_MIPS(vector<string>);
     void clear();
+    long get_16_bit_value(string s);
 
 signals:
     uint get_fun_format(string name);
@@ -34,12 +35,16 @@ signals:
     void change_PC_Label(string);
     void change_PC_address(int);
     int  PC_current_instr();
-    long* Get_data_address(string);
 
     void Push(string);
     void Pop(string);
     void syscall(string);
 
+    bool check_for_word(string s);
+    long get_data_word(string s);
+
+    long get_value_data_memory(uint);
+    void set_value_data_memory(uint,long);
 public slots:
     void ALU_Operation(vector<string>);
 };

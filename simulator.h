@@ -7,7 +7,6 @@ using namespace std;
 #include "assembler.h"
 #include "register_file.h"
 #include "alu.h"
-#include "data.h"
 
 #define PC         this->Program_Counter->getValue() /4
 #define Set_PC(x)  this->Program_Counter->setValue((x)*4)
@@ -15,6 +14,7 @@ using namespace std;
 
 
 class GUI;
+
 class Simulator : public QObject
 {
     Q_OBJECT
@@ -33,7 +33,9 @@ private:
     vector<string> code;
     vector<vector<string>> instructions;
     map<string,uint> Lables;
-    map<string,Data*> Memory_Data;
+    map<string,string> data_asciiz;
+    map<string,long> data_word;
+
 
 public:
     Simulator();
@@ -73,8 +75,9 @@ public slots:
     void set_Program_Counter(string label);
     void set_Program_Counter(int adress);
     uint get_Label(string);
-    long *get_Data_address(string);
     vector<string> get_instructions();
+    bool check_data_words(string s);
+    long get_dataWord(string s);
 };
 
 #endif // SIMULATOR_H

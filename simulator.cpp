@@ -7,7 +7,6 @@ Simulator::Simulator()
     this->assembler = new Assembler();
     this->register_file = new Register_File();
     Observer_Pattern();
-
 }
 
 Simulator::~Simulator()
@@ -26,7 +25,8 @@ void Simulator::clear()
         instructions[i].clear();
     this->instructions.clear();
     this->Lables.clear();
-    this->Memory_Data.clear();
+    this->data_asciiz.clear();
+    this->data_word.clear();
     this->assembler->assembled_Instructions.clear();
     this->assembler->assembled_Instr_Strings.clear();
     this->Program_Counter->clear();
@@ -40,7 +40,7 @@ void Simulator::Simulate()
     clear();
     Read_Instruction_Editor();
     Assemble_Instructions();
-    ALU_Logic();
+//    ALU_Logic();
 
     emit print_registers();
     print(this->Lables);
@@ -58,7 +58,7 @@ void Simulator::Simulate(string path)
 
     Read_Instruction();
     Assemble_Instructions();
-    ALU_Logic();
+//    ALU_Logic();
 
 
     emit print_registers();
@@ -156,7 +156,6 @@ void Simulator::Split_Instruction(string s,uint index)
 
     this->instructions.push_back(x);}
 
-
 uint Simulator::Read_Data_Editor(vector<string> editor_code)
 {
     string s = editor_code[0];
@@ -164,7 +163,7 @@ uint Simulator::Read_Data_Editor(vector<string> editor_code)
     if (data_found == -1)
         return 0;
 
-    for(uint i=0 ; i< editor_code.size();i++)
+    for(uint i=1 ; i< editor_code.size();i++)
     {
         s= editor_code[i];
         if(s==".text")
@@ -172,17 +171,34 @@ uint Simulator::Read_Data_Editor(vector<string> editor_code)
         else if(s == "")
             continue;
 
-        int pos = s.find_first_of(":");
-        if (pos == -1)
-        {
-            cout << "Error cannot find : in the data" << endl;
-            return i+1;
-        }
-        string name = s.substr(0,pos);
-        uint size = stoi(s.substr(pos+1));
+        // split the dot data to get the name and type and value .....  my_int: .word 25
+        vector<string> dot_data_ = split_string(s," ");
+        // remove space noise
+        vector<string> dot_data;
+        for (int i =0 ;i < dot_data_.size(); i++)
+            if(dot_data_[i] != "")
+              dot_data.push_back(dot_data_[i]);
 
-        Data* new_data = new Data(name,size);
-        this->Memory_Data[name] = new_data;
+        print(dot_data);
+
+        if (dot_data.size() != 3)
+        {
+            cout << "error in .data" << endl;
+            continue;
+        }
+
+        if(dot_data[1] == ".asciiz")
+        {
+            string name = dot_data[0];
+            name.erase(name.size()-1); // delete the ":"
+            data_asciiz[name] = dot_data[2];
+        }
+        else if (dot_data[1] == ".word")
+        {
+            string name = dot_data[0];
+            name.erase(name.size()-1); // delete the ":"
+            data_word[name] = stoi(dot_data[2]);
+        }
     }
 }
 
@@ -204,17 +220,30 @@ void Simulator::Read_Data()
         else if(s == "")
             continue;
 
-        int pos = s.find_first_of(":");
-        if (pos == -1)
+        // split the dot data to get the name and type and value .....  my_int: .word 25
+        vector<string> dot_data = split_string(s," ");
+        if (dot_data.size() != 3)
         {
-            cout << "Error cannot find : in the data" << endl;
-            return ;
+            cout << "error in .data" << endl;
+            continue;
         }
-        string name = s.substr(0,pos);
-        uint size = stoi(s.substr(pos+1));
-
-        Data* new_data = new Data(name,size);
-        this->Memory_Data[name] = new_data;
+        // remove space noise
+        for (int i =0 ;i<3;i++)
+            for (int j =0 ; j <dot_data.size();j++)
+                if ( s[i] == ' ')
+                    s.erase(i,1);
+        if(dot_data[1] == ".asciiz")
+        {
+            string name = dot_data[0];
+            name.erase(name.size()-1); // delete the ":"
+            data_asciiz[name] = dot_data[2];
+        }
+        else if (dot_data[1] == ".word")
+        {
+            string name = dot_data[0];
+            name.erase(name.size()-1); // delete the ":"
+            data_word[name] = stoi(dot_data[2]);
+        }
     }
 }
 bool Simulator::check_for_Lable(string s,uint index)
@@ -264,9 +293,6 @@ void Simulator::ALU_Logic()
         emit ALU_Instruction(this->instructions[address]);
     }
 }
-
-
-
 bool Simulator::check_for_specials(string s)
 {
     if (s == "syscall")
@@ -279,7 +305,6 @@ bool Simulator::check_for_specials(string s)
     return false;
 }
 
-
 void Simulator::Observer_Pattern()
 {
     connect(this,           SIGNAL(Assemble_Instruction(vector<string>)),   this-> assembler,SLOT(Assemble(vector<string>)) );
@@ -290,7 +315,8 @@ void Simulator::Observer_Pattern()
     connect(this->assembler,SIGNAL(get_register_num(string)),               this->register_file,SLOT(get_register_num(string)));
     connect(this->assembler,SIGNAL(get_PC()),                               this->Program_Counter,SLOT(getValue()));
     connect(this->assembler,SIGNAL(get_label_address(string)),              this,SLOT(get_Label(string)));
-    connect(this->assembler,SIGNAL(get_data_address(string)),               this,SLOT(get_Data_address(string)));
+    connect(this->assembler,SIGNAL(get_data_word(string)),                  this,SLOT(get_dataWord(string)));
+    connect(this->assembler,SIGNAL(check_for_word(string)),                 this,SLOT(check_data_words(string)));
 
     connect(this->Alu ,     SIGNAL(get_fun_format(string)),                 this->assembler,SLOT(get_fun(string)));
     connect(this->Alu ,     SIGNAL(read_register(string)) ,                 this->register_file, SLOT(read_register(string)) );
@@ -298,10 +324,10 @@ void Simulator::Observer_Pattern()
     connect(this->Alu ,     SIGNAL(change_PC_Label(string)) ,               this,SLOT(set_Program_Counter(string)));
     connect(this->Alu ,     SIGNAL(change_PC_address(int)) ,                this,SLOT(set_Program_Counter(int)));
     connect(this->Alu ,     SIGNAL(PC_current_instr()),                     this->Program_Counter,SLOT(getValue()));
-    connect(this->Alu,      SIGNAL(Get_data_address(string)),               this,SLOT(get_Data_address(string)));
-    connect(this->Alu,      SIGNAL(Push(string)),                           this->register_file,SLOT(push(string)));
-    connect(this->Alu,      SIGNAL(Pop (string)),                           this->register_file,SLOT(pop(string)));
-
+    connect(this->Alu ,     SIGNAL(Push(string)),                           this->register_file,SLOT(push(string)));
+    connect(this->Alu ,     SIGNAL(Pop (string)),                           this->register_file,SLOT(pop(string)));
+    connect(this->Alu ,     SIGNAL(get_data_word(string)),                  this,SLOT(get_dataWord(string)));
+    connect(this->Alu ,     SIGNAL(check_for_word(string)),                 this,SLOT(check_data_words(string)));
 }
 vector<string> Simulator :: split_string(string s,string splitter)
 {
@@ -325,9 +351,7 @@ void Simulator::print(vector<string> x)
     for (int i = 0; i < x.size()-1; ++i) {
         cout << x[i] << "-";
     }
-    cout << x[x.size()-1] << endl;
-
-}
+    cout << x[x.size()-1] << endl;}
 void Simulator::print_all()
 {
     for (int i =0 ;i < instructions.size();i++)
@@ -348,10 +372,6 @@ uint Simulator::get_Label(string label)
     return this->Lables[label];
 }
 
-long *Simulator::get_Data_address(string name)
-{
-    return this->Memory_Data[name]->get_address();
-}
 
 vector<string> Simulator::get_instructions()
 {
@@ -362,6 +382,19 @@ vector<string> Simulator::get_instructions()
             code_cleaned.push_back(this->code[i]);
     }
     return code_cleaned;
+}
+
+bool Simulator::check_data_words(string s)
+{
+    auto found = this->data_word.find(s);
+    if (found != this->data_word.end())
+        return true;
+    return false;
+}
+
+long Simulator::get_dataWord(string s)
+{
+    return this->data_word[s];
 }
 void Simulator::print(map<string,uint> x)
 {
