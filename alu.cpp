@@ -228,7 +228,6 @@ int ALU::get_16_bit_value(string s)
     return stol(s);
 }
 
-
 void ALU::ALU_Operation(vector<string> Instruction)
 {
     this->operand = Instruction[0];
@@ -251,4 +250,21 @@ void ALU::ALU_Operation(vector<string> Instruction)
     else
         this->R_Format_ALU(Instruction);
 
+    // print the feedback information on the output widget
+    this->info_alu(Instruction);
+}
+
+void ALU::info_alu(vector<string> instruction)
+{
+    // ============ Create Instruction ==============
+    string ins ;
+    ins += instruction[0] + " "; // for operand
+    for (uint i =1 ; i< instruction.size() ; i++)
+        ins += instruction[i] + ","; // for every register or number
+    ins.erase(ins.size()-1); // delete the last ','
+    // ==============================================
+
+    // Info Msg for Output Widget
+    string info = "Read_Data1=" + to_string(this->input1) +" ,Read_Data2=" + to_string(this->input2) + " ,ALU_Result=" + to_string(this->result);
+    emit Info_Output(info);
 }

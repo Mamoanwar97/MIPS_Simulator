@@ -23,7 +23,6 @@ Assembler::Assembler()
     this->operands[ "sw" ] = {43,I_Format_Fun};
     this->operands["beq" ] = {4, I_Format_Fun};
     this->operands["bne"]  = {5, I_Format_Fun};
-//    this->operands["la"]   = {100,I_Format_Fun};
     this->operands["li"]   = {101,I_Format_Fun};
     // ============ J-Format =============
     this->operands[ "j" ]     = {2, J_Format_Fun};

@@ -49,7 +49,7 @@ void Register_File::clear()
     for (auto it = Registers.begin();it != Registers.end();it ++) {
         it->second->clear();
     }
-    this->Registers["$sp"]->setValue(8000);
+    this->Registers["$sp"]->setValue(STACK_SIZE);
 }
 
 map<string,Register*> Register_File::registers_reading()

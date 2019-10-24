@@ -27,6 +27,7 @@ public:
     bool Special_MIPS(vector<string>);
     void clear();
     int get_16_bit_value(string s);
+    void info_alu(vector<string>);
 
 signals:
     uint get_fun_format(string name);
@@ -46,6 +47,7 @@ signals:
     int get_value_data_memory(uint);
     void set_value_data_memory(uint,int);
     void update_memory_gui(uint);
+    void Info_Output(string);
 public slots:
     void ALU_Operation(vector<string>);
 };

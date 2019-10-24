@@ -73,7 +73,8 @@ signals:
     void update_assembled_instruction();
     void update_registers();
     void update_data_memory();
-
+    void clear_data_memory();
+    void ERROR_Output(string);
 
 public slots:
     void set_Program_Counter(string label);

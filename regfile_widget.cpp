@@ -38,7 +38,7 @@ void regFile_Widget::init_registers()
     this->addItem({ "$k0" , "26" , "0" });
     this->addItem({ "$k1" , "27" , "0" });
     this->addItem({ "$gp" , "28" , "0" });
-    this->addItem({ "$sp" , "29" , "0" });
+    this->addItem({ "$sp" , "29" , QString::number(STACK_SIZE) });
     this->addItem({ "$fp" , "30" , "0" });
     this->addItem({ "$ra" , "31" , "0" });
 }

@@ -15,8 +15,10 @@ public:
     explicit Data_Mem_Widget(QWidget *parent = nullptr);
 
 public slots:
+    void clear();
     void update_memory();
     void update_memory(uint);
+
 signals:
     int * get_access_memory();
 };

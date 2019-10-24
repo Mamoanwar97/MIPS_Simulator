@@ -24,8 +24,6 @@ Data_Mem_Widget::Data_Mem_Widget(QWidget *parent) : Tree_Widget(parent)
     }
 
     this->setHeaderLabels(Headers);
-
-    // SIZE of memory / size of colomn = size of rows
     for (uint i =0 ; i<ROW_SIZE ; i++)
     {
         QStringList text_items;
@@ -40,6 +38,18 @@ Data_Mem_Widget::Data_Mem_Widget(QWidget *parent) : Tree_Widget(parent)
     }
 }
 
+void Data_Mem_Widget::clear()
+{
+    this->memory = emit get_access_memory();
+    cout << "CLEAR DATA MEMORY" << endl;
+
+    for (uint i =0 ; i< ROW_SIZE ; i++)
+        for(uint j =1 ; j< COLOMN_SIZE; j++)
+            this->Items[i]->setText(j,  "x" )  ;
+
+}
+
+
 void Data_Mem_Widget::update_memory()
 {
     this->memory = emit get_access_memory();
@@ -50,7 +60,6 @@ void Data_Mem_Widget::update_memory()
         for(uint j =1 ; j< COLOMN_SIZE; j++)
         {
             uint index =  i * (COLOMN_SIZE-1) + (j-1) ;
-//            cout <<"i= " << i << " j=" << j  << "index= " << index << endl;
             string text = convert_int_to_hex_string(this->memory[index])  ;
             this->Items[i]->setText(j,  QString::fromStdString( text ) )  ;
         }
@@ -67,5 +76,4 @@ void Data_Mem_Widget::update_memory(uint address)
     uint colomn = address % (COLOMN_SIZE-1);
     cout << "row= " << row << "colomn= " << colomn << endl;
     this->Items[row]->setText(colomn,  QString::fromStdString( text ) )  ;
-    cout << "END RAY2" << endl;
 }

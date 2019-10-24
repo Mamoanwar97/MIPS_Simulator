@@ -1,6 +1,7 @@
 #ifndef REGFILE_WIDGET_H
 #define REGFILE_WIDGET_H
 #include "tree_widget.h"
+#include "register_file.h"
 
 class regFile_Widget : public Tree_Widget
 {

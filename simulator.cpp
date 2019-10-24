@@ -35,7 +35,9 @@ void Simulator::clear()
     this->Alu->clear();
     this->register_file->clear();
     this->data_memory->clear();
-    this->address = 0;
+    this->address = 0;   // pc = 0
+    emit clear_data_memory(); // clear the data memory
+
 }
 
 void Simulator::update_GUI()
@@ -119,10 +121,10 @@ void Simulator::Read_Instruction_Editor()
         s = code_from_editor[i];
         if (s=="")
             continue;
+            Split_Instruction(s,address);
+            this->instructions[address].push_back( to_string(address*4) ) ; // add adress to the instruction (for just the address)
+            address++;
 
-        Split_Instruction(s,address);
-        this->instructions[address].push_back( to_string(address*4) ) ; // add adress to the instruction (for just the address)
-        address++;
     }
     this->instructions.push_back(vector<string> {"end"});
 
@@ -253,6 +255,7 @@ void Simulator::Read_Data()
         }
     }
 }
+
 bool Simulator::check_for_Lable(string s,uint index)
 {
     int pos = s.find_first_of(":");
@@ -295,8 +298,7 @@ void Simulator::ALU_Logic()
         {
             cout << " ============= End of Excution ============== " << endl;
             return;
-        }
-
+        }  
         emit ALU_Instruction(this->instructions[address]);
     }
 }
