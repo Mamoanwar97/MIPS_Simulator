@@ -40,7 +40,6 @@ Data_Mem_Widget::Data_Mem_Widget(QWidget *parent) : Tree_Widget(parent)
 
 void Data_Mem_Widget::clear()
 {
-    this->memory = emit get_access_memory();
     cout << "CLEAR DATA MEMORY" << endl;
 
     for (uint i =0 ; i< ROW_SIZE ; i++)
@@ -64,7 +63,6 @@ void Data_Mem_Widget::update_memory()
             this->Items[i]->setText(j,  QString::fromStdString( text ) )  ;
         }
     }
-
 }
 
 void Data_Mem_Widget::update_memory(uint address)
@@ -75,5 +73,6 @@ void Data_Mem_Widget::update_memory(uint address)
     uint row = address / (COLOMN_SIZE-1);
     uint colomn = address % (COLOMN_SIZE-1);
     cout << "row= " << row << "colomn= " << colomn << endl;
-    this->Items[row]->setText(colomn,  QString::fromStdString( text ) )  ;
+    // colomn + 1 because of first colomn is for base address
+    this->Items[row]->setText( colomn+1,  QString::fromStdString( text ) )  ;
 }

@@ -2,6 +2,10 @@
 
 Simulator::Simulator()
 {
+    this->file_assembly_path   = "/home/amrelsersy/ins.txt";
+    this->file_regFile_path    = "/home/amrelsersy/regFile.txt";
+    this->file_dataMemory_path = "/home/amrelsersy/dataMemory.txt";
+
     this->Program_Counter = new Register("PC",100,0);
     this->Alu = new ALU(this->Program_Counter);
     this->assembler = new Assembler();
@@ -16,7 +20,7 @@ Simulator::~Simulator()
     delete this->assembler;
     delete this->Alu;
     delete this->Program_Counter;
-    delete this->data_memory;
+//    delete this->data_memory;
     this->file.close();
 }
 void Simulator::clear()
@@ -44,7 +48,14 @@ void Simulator::update_GUI()
 {
     emit update_assembled_instruction();
     emit update_registers();
-//    emit update_data_memory();
+}
+
+void Simulator::Modelsim()
+{
+    emit file_assembled_instructions(this->file_assembly_path);
+    emit file_regFile_data(this->file_regFile_path);
+    emit file_dataMemory_data(this->file_dataMemory_path);
+
 }
 void Simulator::Simulate()
 {
@@ -52,12 +63,13 @@ void Simulator::Simulate()
     clear();
     Read_Instruction_Editor();
     Assemble_Instructions();
-    ALU_Logic();
+//    ALU_Logic();
 
 //    emit print_registers();
     print(this->Lables);
     print(this->assembler->get_assembled_strings());
 
+    this->Modelsim();
     this->update_GUI();
 }
 
@@ -68,13 +80,14 @@ void Simulator::Simulate(string path)
 
     Read_Instruction();
     Assemble_Instructions();
-    ALU_Logic();
+//    ALU_Logic();
 
 
     emit print_registers();
     print(this->Lables);
     print(this->assembler->get_assembled_strings());
 
+    this->Modelsim();
     this->update_GUI();
 }
 
@@ -102,6 +115,7 @@ void Simulator::Read_Instruction()
         Split_Instruction(s,address);
         this->instructions[address].push_back( to_string(address*4) ) ; // add adress to the instruction
         address++;
+
     }
     this->instructions.push_back(vector<string> {"end"});
     this->print_all();
@@ -299,7 +313,11 @@ void Simulator::ALU_Logic()
             cout << " ============= End of Excution ============== " << endl;
             return;
         }  
+
         emit ALU_Instruction(this->instructions[address]);
+        cout << "instruction ";
+        print(instructions[address]);
+        cout << "address = " << address << endl;
     }
 }
 bool Simulator::check_for_specials(string s)
@@ -320,6 +338,9 @@ void Simulator::Observer_Pattern()
     connect(this,           SIGNAL(print_assembled_instruction()) ,         this-> assembler,SLOT(print_all() ) );
     connect(this,           SIGNAL(ALU_Instruction(vector<string>)),        this-> Alu,SLOT(ALU_Operation(vector<string>) ) );
     connect(this,           SIGNAL(print_registers()) ,                     this->register_file, SLOT(print_all()) );
+    connect(this,           SIGNAL(file_assembled_instructions(string)),    this->assembler, SLOT(File_assembled_instructions(string)) );
+    connect(this,           SIGNAL(file_regFile_data(string)),              this->register_file, SLOT(read_regFile_data(string)) );
+    connect(this,           SIGNAL(file_dataMemory_data(string)),           this->data_memory, SLOT(file_read_data_mem(string)) );
 
     connect(this->assembler,SIGNAL(get_register_num(string)),               this->register_file,SLOT(get_register_num(string)));
     connect(this->assembler,SIGNAL(get_PC()),                               this->Program_Counter,SLOT(getValue()));
@@ -329,7 +350,7 @@ void Simulator::Observer_Pattern()
 
     connect(this->Alu ,     SIGNAL(get_fun_format(string)),                 this->assembler,SLOT(get_fun(string)));
     connect(this->Alu ,     SIGNAL(read_register(string)) ,                 this->register_file, SLOT(read_register(string)) );
-    connect(this->Alu ,     SIGNAL(set_register(string,int)) ,             this->register_file, SLOT(write_register(string,int)) );
+    connect(this->Alu ,     SIGNAL(set_register(string,int)) ,              this->register_file, SLOT(write_register(string,int)) );
     connect(this->Alu ,     SIGNAL(change_PC_Label(string)) ,               this,SLOT(set_Program_Counter(string)));
     connect(this->Alu ,     SIGNAL(change_PC_address(int)) ,                this,SLOT(set_Program_Counter(int)));
     connect(this->Alu ,     SIGNAL(PC_current_instr()),                     this->Program_Counter,SLOT(getValue()));
@@ -376,6 +397,7 @@ void Simulator::set_Program_Counter(int address)
 {
     this->Program_Counter->setValue(address);
 }
+
 uint Simulator::get_Label(string label)
 {
     return this->Lables[label];}

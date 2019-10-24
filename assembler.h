@@ -20,6 +20,7 @@ private:
     vector<string> assembled_Instr_Strings;
     map<string,pair<uint,uint>> operands;
     string operand;
+    ofstream file;
 
 public:
     Assembler();
@@ -33,6 +34,7 @@ public slots:
     void Assemble(vector<string> Instruction);
     void convert_Assemble_to_String(deque<int>,uint);
     void print_all();
+    void File_assembled_instructions(string);
 
 signals:
     uint get_register_num(string);

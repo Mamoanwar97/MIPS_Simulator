@@ -32,6 +32,10 @@ private:
     string code_path;
     uint address;
 
+    string file_assembly_path ;
+    string file_regFile_path;
+    string file_dataMemory_path;
+
     vector<string> code;
     vector<vector<string>> instructions;
     map<string,uint> Lables;
@@ -54,6 +58,8 @@ public:
     void ALU_Logic();
     void clear();
     void update_GUI();
+    void Modelsim();
+
 private:
     bool check_for_specials(string);
     bool check_for_Lable(string,uint);
@@ -62,7 +68,6 @@ private:
     void print(map<string,uint>);
     void print(deque<string> x);
     void print_all();
-
 
 signals:
     vector<string> getInstruction_Editor();
@@ -75,6 +80,9 @@ signals:
     void update_data_memory();
     void clear_data_memory();
     void ERROR_Output(string);
+    void file_assembled_instructions(string path);
+    void file_regFile_data(string path);
+    void file_dataMemory_data(string path);
 
 public slots:
     void set_Program_Counter(string label);

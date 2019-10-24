@@ -65,12 +65,12 @@ void ALU::J_Format_ALU(vector<string> instruction)
     }
     else if (this->operand == "jal")
     {
-        int current_instruction_address = emit PC_current_instr();
+        int current_instruction_address = emit PC_current_instr()  ; // -4 as current instruction is incremented already in simulator.cpp
         cout << current_instruction_address << endl;
         emit change_PC_Label( instruction[1] );
         emit set_register("$ra",current_instruction_address);
-    }}
 
+    }}
 void ALU::I_Format_ALU(vector<string> instruction)
 {
     //  ==================Specials ==================
@@ -225,7 +225,7 @@ int ALU::get_16_bit_value(string s)
     {
         return emit get_data_word(s);
     }
-    return stol(s);
+    return stoi(s);
 }
 
 void ALU::ALU_Operation(vector<string> Instruction)
@@ -251,11 +251,12 @@ void ALU::ALU_Operation(vector<string> Instruction)
         this->R_Format_ALU(Instruction);
 
     // print the feedback information on the output widget
-    this->info_alu(Instruction);
+//    this->info_alu(Instruction);
 }
 
 void ALU::info_alu(vector<string> instruction)
 {
+    instruction.erase(instruction.end()); // delete the address
     // ============ Create Instruction ==============
     string ins ;
     ins += instruction[0] + " "; // for operand
@@ -265,6 +266,6 @@ void ALU::info_alu(vector<string> instruction)
     // ==============================================
 
     // Info Msg for Output Widget
-    string info = "Read_Data1=" + to_string(this->input1) +" ,Read_Data2=" + to_string(this->input2) + " ,ALU_Result=" + to_string(this->result);
-    emit Info_Output(info);
+    string info = "Read_Data1=" + to_string(this->input1) +",Read_Data2=" + to_string(this->input2) + "     ALU_Result=" + to_string(this->result);
+    emit Info_Output(info+ "   ins:" +ins);
 }

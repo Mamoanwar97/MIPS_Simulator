@@ -17,10 +17,12 @@ void Tree_Widget::addItem()
 void Tree_Widget::addItem(QStringList s)
 {
     QTreeWidgetItem * item = new QTreeWidgetItem(s);
-    this->setColor(item);
 
     this->addTopLevelItem(item);
-    this->Items.push_back(item);}
+    this->Items.push_back(item);
+    this->setColor(item);
+
+}
 
 void Tree_Widget::setColor(QTreeWidgetItem *item)
 {

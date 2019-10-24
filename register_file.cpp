@@ -109,6 +109,32 @@ void Register_File::stack_read(string name)
     this->Registers[name]->setValue( this->Stack_Pointer.top());
 }
 
+void Register_File::read_regFile_data(string path)
+{
+    this->file.open(path);
+    if (!file.is_open())
+    {
+        cout << "Cannot open RegFile" << endl;
+        return;
+    }
+
+    string s ;
+    while(getline(this->file,s)) // read line by line
+    {
+        vector<string> address_value = split_string(s," ");
+        if(address_value.size() != 2)
+        {
+            cout << "ERROR in Reading Data of RegFile (not the openning) " << endl;
+            file.close();
+            return;
+        }
+        uint address = uint( stoi(address_value[0]) );
+        int value    = stoi (address_value[1] );
+        this->write_register(address,value);
+    }
+    file.close();
+}
+
 int Register_File::read_register(string name)
 {
     return this->Registers[name]->getValue();
@@ -123,3 +149,30 @@ void Register_File::write_register(string name,int Value)
 {
     this->Registers[name]->setValue(Value);
 }
+
+void Register_File::write_register(uint address, int value)
+{
+    for (auto it = this->Registers.begin() ; it != this->Registers.end(); it++)
+    {
+        if(it->second->getNum() == address) // seconed is pointer to Register
+        {
+            it->second->setValue(value);
+            return;
+        }
+    }
+}
+vector<string> Register_File :: split_string(string s,string splitter)
+{
+    vector<string> splitted;
+    uint n = s.length();
+    int pos = 0;
+    int start = pos;
+    while (pos != string::npos)
+    {
+        pos = s.find_first_of(splitter,pos+1);
+        string splitted_string = s.substr(start,pos-start);
+        splitted.push_back(splitted_string);
+        start = pos+1;
+    }
+
+    return splitted;}

@@ -209,6 +209,25 @@ void Assembler::print_all()
         print(assembled_Instructions[i]);
     cout << endl;
 }
+
+void Assembler::File_assembled_instructions(string path )
+{
+    this->file.open(path);
+    if (!file.is_open())
+    {
+        cout << "assembled file can't open ya ray2" << endl;
+        return;
+    }
+
+    string s;
+    for(uint i =0 ;i < assembled_Instr_Strings.size(); i++)
+    {   s = assembled_Instr_Strings[i];
+        s.erase(0,2);
+        file << s << endl;
+    }
+    file.close();
+    cout << "************* Assembled file is Written **************" << endl;
+}
 void Assembler::print(deque<int> x)
 {
     for (uint i = 0; i < x.size(); ++i) {
