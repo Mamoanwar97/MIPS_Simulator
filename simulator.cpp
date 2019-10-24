@@ -2,11 +2,15 @@
 
 Simulator::Simulator()
 {
-    this->file_assembly_path   = "/home/amrelsersy/ins.txt";
-    this->file_regFile_path    = "/home/amrelsersy/regFile.txt";
-    this->file_dataMemory_path = "/home/amrelsersy/dataMemory.txt";
+//    this->file_assembly_path   = "/home/amrelsersy/ins.txt";
+//    this->file_regFile_path    = "/home/amrelsersy/regFile.txt";
+//    this->file_dataMemory_path = "/home/amrelsersy/dataMemory.txt";
+
+    this->file_assembly_path   = "C:\\Users\\user\\Desktop\\ins.txt";
+    this->file_regFile_path    = "C:\\Users\\user\\Desktop\\regFile.txt";
+    this->file_dataMemory_path = "C:\\Users\\user\\Desktop\\dataMemory.txt";
     this->modelsim_process = new QProcess();
-    this->modelsim_path = "/home/amrelsersy/ins.txt";
+    this->modelsim_path = "C:\\Modeltech_pe_edu_10.4a\\examples\\mips_project";
 
     this->Program_Counter = new Register("PC",100,0);
     this->Alu = new ALU(this->Program_Counter);
@@ -55,8 +59,8 @@ void Simulator::update_GUI()
 void Simulator::Modelsim()
 {
     emit file_assembled_instructions(this->file_assembly_path);
-//    this->modelsim_process->start("vsim" , QStringList() << "-c" << "-do" << "'run'" << this->modelsim_path );
-    this->modelsim_process->start("ORCA");
+    QProcess().start("cd" , QStringList() << this->modelsim_path);
+    this->modelsim_process->start("vsim" , QStringList() << "-c" << "-do" << "'run'" << "work.mips_processor" );
 
     emit file_regFile_data(this->file_regFile_path);
     emit file_dataMemory_data(this->file_dataMemory_path);
