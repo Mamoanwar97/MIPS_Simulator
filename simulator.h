@@ -3,11 +3,12 @@
 #include <fstream>
 #include <bits/stdc++.h>
 #include <QObject>
+
 #include "assembler.h"
 #include "register_file.h"
 #include "alu.h"
 #include "data_memory.h"
-
+#include <QProcess>
 #define PC         this->Program_Counter->getValue() /4
 #define Set_PC(x)  this->Program_Counter->setValue((x)*4)
 #define SYSCALL "syscall"
@@ -35,6 +36,9 @@ private:
     string file_assembly_path ;
     string file_regFile_path;
     string file_dataMemory_path;
+    QString modelsim_path;
+    QProcess* modelsim_process ;
+
 
     vector<string> code;
     vector<vector<string>> instructions;
