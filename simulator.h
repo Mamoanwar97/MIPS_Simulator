@@ -39,6 +39,7 @@ private:
     QString modelsim_path;
     QProcess* modelsim_process ;
 
+    QString python_path;
 
     vector<string> code;
     vector<vector<string>> instructions;
@@ -63,6 +64,7 @@ public:
     void clear();
     void update_GUI();
     void Modelsim();
+    void Run_Modelsim();
 
 private:
     bool check_for_specials(string);

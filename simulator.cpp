@@ -9,8 +9,20 @@ Simulator::Simulator()
     this->file_assembly_path   = "C:\\Users\\user\\Desktop\\ins.txt";
     this->file_regFile_path    = "C:\\Users\\user\\Desktop\\regFile.txt";
     this->file_dataMemory_path = "C:\\Users\\user\\Desktop\\dataMemory.txt";
+
     this->modelsim_process = new QProcess();
     this->modelsim_path = "C:\\Modeltech_pe_edu_10.4a\\examples\\mips_project";
+    this->python_path  =  "C:\\Users\\user\\Desktop\\modelsim.py" ;
+
+    // ================== ModelSim Running Settings ===========================
+//    this->modelsim_process->setWorkingDirectory("C:\\Users\\user\\Desktop");
+//    this->modelsim_process->setProgram("python");
+//    this->modelsim_process->setArguments(QStringList() << "modelsim.py");
+
+    this->modelsim_process->setWorkingDirectory(this->modelsim_path);
+    this->modelsim_process->setProgram("vsim");
+    this->modelsim_process->setArguments(QStringList() << "-c" << "-do" << "'run'" << "work.mips_processor");
+    // =========================================================================
 
     this->Program_Counter = new Register("PC",100,0);
     this->Alu = new ALU(this->Program_Counter);
@@ -26,7 +38,6 @@ Simulator::~Simulator()
     delete this->assembler;
     delete this->Alu;
     delete this->Program_Counter;
-//    delete this->data_memory;
     this->file.close();
 }
 void Simulator::clear()
@@ -47,7 +58,6 @@ void Simulator::clear()
     this->data_memory->clear();
     this->address = 0;   // pc = 0
     emit clear_data_memory(); // clear the data memory
-
 }
 
 void Simulator::update_GUI()
@@ -59,12 +69,16 @@ void Simulator::update_GUI()
 void Simulator::Modelsim()
 {
     emit file_assembled_instructions(this->file_assembly_path);
-    QProcess().start("cd" , QStringList() << this->modelsim_path);
-    this->modelsim_process->start("vsim" , QStringList() << "-c" << "-do" << "'run'" << "work.mips_processor" );
-
+    this->Run_Modelsim();
     emit file_regFile_data(this->file_regFile_path);
     emit file_dataMemory_data(this->file_dataMemory_path);
+}
 
+void Simulator::Run_Modelsim()
+{
+
+    // ================== python ====================================
+    this->modelsim_process->start();
 }
 void Simulator::Simulate()
 {
