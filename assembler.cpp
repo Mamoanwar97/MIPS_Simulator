@@ -79,8 +79,10 @@ void Assembler::Assemble(vector<string> Instruction)
         {
             assembled_Instruction.push_back( emit get_register_num(Instruction[1]) ) ;
             assembled_Instruction.push_back( emit get_register_num(Instruction[2]) ) ;
-            int x = emit get_PC() - emit get_label_address(Instruction[3]) ;
-            assembled_Instruction.push_back( abs( x ) )  ;  // PC-relative addressing
+            // label address in words mode +1 (to get the instruction after the label not the label itself) -address = pc address(in bytes)/4 +1(because pc incremented automatically)
+            int x = ( emit get_label_address(Instruction[3])+1 ) - ( stoi(Instruction[4])/4 +1) ;
+            cout << "x= " <<  emit get_label_address(Instruction[3])+1 << " - " << stoi(Instruction[4])/4+1 << "=" << x << endl;
+            assembled_Instruction.push_back( ( x ) )  ;  // PC-relative addressing
         }
         else if (this->operand == "lui")
         {
@@ -88,14 +90,7 @@ void Assembler::Assemble(vector<string> Instruction)
             assembled_Instruction.push_back( emit get_register_num(Instruction[1]) ) ;
             assembled_Instruction.push_back( get_16bit_value(Instruction[2]) ) ;  // shift value
         }
-//        else if (this->operand == "la")
-//        {
-//            assembled_Instruction.push_back(0);
-//            assembled_Instruction.push_back( emit get_register_num(Instruction[1]) ) ;
-//            int* address = emit get_data_address(Instruction[2]) ;
-//            int add = int(address);
-//            assembled_Instruction.push_back(add) ;
-//        }
+
         else if (this->operand == "li")
         {
             assembled_Instruction.push_back(0);

@@ -6,24 +6,21 @@ Simulator::Simulator()
 //    this->file_regFile_path    = "/home/amrelsersy/regFile.txt";
 //    this->file_dataMemory_path = "/home/amrelsersy/dataMemory.txt";
 
-    this->file_assembly_path   = "C:\\Users\\user\\Desktop\\ins.txt";
-    this->file_regFile_path    = "C:\\Users\\user\\Desktop\\regFile.txt";
-    this->file_dataMemory_path = "C:\\Users\\user\\Desktop\\dataMemory.txt";
+    this->file_assembly_path   = "C:\\Modeltech_pe_edu_10.4a\\examples\\ins.txt";
+    this->file_regFile_path    = "C:\\Modeltech_pe_edu_10.4a\\examples\\regFile.txt";
+    this->file_dataMemory_path = "C:\\Modeltech_pe_edu_10.4a\\examples\\dataMemory.txt";
 
     this->modelsim_process = new QProcess();
-    this->modelsim_path = "C:\\Modeltech_pe_edu_10.4a\\examples\\mips_project";
-    this->python_path  =  "C:\\Users\\user\\Desktop\\modelsim.py" ;
 
     // ================== ModelSim Running Settings ===========================
 //    this->modelsim_process->setWorkingDirectory("C:\\Users\\user\\Desktop");
 //    this->modelsim_process->setProgram("python");
 //    this->modelsim_process->setArguments(QStringList() << "modelsim.py");
 
+    this->modelsim_command = "vsim -c -do \"run -all\" work.MIPS";
+    this->modelsim_path = "C:\\Modeltech_pe_edu_10.4a\\examples";
     this->modelsim_process->setWorkingDirectory(this->modelsim_path);
-    this->modelsim_process->setProgram("vsim");
-    this->modelsim_process->setArguments(QStringList() << "-c" << "-do" << "'run'" << "work.mips_processor");
     // =========================================================================
-
     this->Program_Counter = new Register("PC",100,0);
     this->Alu = new ALU(this->Program_Counter);
     this->assembler = new Assembler();
@@ -39,6 +36,7 @@ Simulator::~Simulator()
     delete this->Alu;
     delete this->Program_Counter;
     this->file.close();
+    this->modelsim_process->kill();
 }
 void Simulator::clear()
 {
@@ -68,16 +66,16 @@ void Simulator::update_GUI()
 
 void Simulator::Modelsim()
 {
-    emit file_assembled_instructions(this->file_assembly_path);
-    this->Run_Modelsim();
-    emit file_regFile_data(this->file_regFile_path);
-    emit file_dataMemory_data(this->file_dataMemory_path);
+    emit file_assembled_instructions(this->file_assembly_path); // write file with assembledd instructions
+    this->modelsim_process->start(this->modelsim_command);// run modelsim to read the assembly file and write in the dataMemory and regFile files
+    QThread::sleep(3);  // wait for modelsim execution
+    this->modelsim_process->kill();
+    emit file_regFile_data(this->file_regFile_path); // read regFile and load it into reg File Widget
+    emit file_dataMemory_data(this->file_dataMemory_path); // read dataMemory and load it into Data Memory Widget
 }
 
 void Simulator::Run_Modelsim()
 {
-
-    // ================== python ====================================
     this->modelsim_process->start();
 }
 void Simulator::Simulate()

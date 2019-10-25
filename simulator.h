@@ -9,9 +9,12 @@
 #include "alu.h"
 #include "data_memory.h"
 #include <QProcess>
+#include <QThread>
+
 #define PC         this->Program_Counter->getValue() /4
 #define Set_PC(x)  this->Program_Counter->setValue((x)*4)
 #define SYSCALL "syscall"
+
 
 
 using namespace std;
@@ -37,6 +40,7 @@ private:
     string file_regFile_path;
     string file_dataMemory_path;
     QString modelsim_path;
+    QString modelsim_command;
     QProcess* modelsim_process ;
 
     QString python_path;
