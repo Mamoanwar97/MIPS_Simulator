@@ -79,9 +79,9 @@ void Assembler::Assemble(vector<string> Instruction)
         {
             assembled_Instruction.push_back( emit get_register_num(Instruction[1]) ) ;
             assembled_Instruction.push_back( emit get_register_num(Instruction[2]) ) ;
-            // label address in words mode +1 (to get the instruction after the label not the label itself) -address = pc address(in bytes)/4 +1(because pc incremented automatically)
-            int x = ( emit get_label_address(Instruction[3])+1 ) - ( stoi(Instruction[4])/4 +1) ;
-            cout << "x= " <<  emit get_label_address(Instruction[3])+1 << " - " << stoi(Instruction[4])/4+1 << "=" << x << endl;
+            // label address in words mode - address = pc address(in bytes)/4 +1(because pc incremented automatically)
+            int x = ( emit get_label_address(Instruction[3]) ) - ( stoi(Instruction[4])/4 +1) ;
+            cout << "x= " <<  emit get_label_address(Instruction[3]) << " - " << stoi(Instruction[4])/4+1 << "=" << x << endl;
             assembled_Instruction.push_back( ( x ) )  ;  // PC-relative addressing
         }
         else if (this->operand == "lui")

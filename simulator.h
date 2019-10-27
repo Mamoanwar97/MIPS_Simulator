@@ -57,7 +57,7 @@ public:
     ~Simulator();
     void Simulate();
     void Simulate(string path);
-    void Split_Instruction(string s,uint index);
+    void Split_Instruction(string s);
     void Read_Data();
     uint Read_Data_Editor(vector<string>);
     void Read_Instruction();

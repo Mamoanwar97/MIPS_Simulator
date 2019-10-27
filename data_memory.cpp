@@ -41,7 +41,7 @@ void Data_Memory::file_read_data_mem(string path)
     string s ;
     while(getline(this->file,s)) // read line by line
     {
-        vector<string> address_value = split_string(s," ");
+        vector<string> address_value = split_string(s,",");
         if(address_value.size() != 2)
         {
             cout << "ERROR in Reading Data of Data_Mem_File (not the openning) " << endl;

@@ -22,3 +22,5 @@ public slots:
 };
 
 #endif // REGISTER_H
+
+void clean_from_space(string& s);

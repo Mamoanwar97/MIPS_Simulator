@@ -31,3 +31,15 @@ string Register::getName()
 {
     return this->name;
 }
+
+void clean_string_from(string& s,string rubish)
+{
+    uint n = s.length();
+    int pos = s.find_first_of(rubish);
+    while(pos != string::npos)
+    {
+        s.erase(pos,1);
+        pos = s.find_first_of(rubish);
+    }
+
+}

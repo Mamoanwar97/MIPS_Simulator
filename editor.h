@@ -9,7 +9,7 @@
 #include <QTreeWidget>
 #include <QTreeWidgetItem>
 #include <QStringList>
-
+#include <QPlainTextEdit>
 
 using namespace std;
 class GUI;

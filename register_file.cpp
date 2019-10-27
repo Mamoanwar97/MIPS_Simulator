@@ -121,7 +121,7 @@ void Register_File::read_regFile_data(string path)
     string s ;
     while(getline(this->file,s)) // read line by line
     {
-        vector<string> address_value = split_string(s," ");
+        vector<string> address_value = split_string(s,",");
         if(address_value.size() != 2)
         {
             cout << "ERROR in Reading Data of RegFile (not the openning) " << endl;

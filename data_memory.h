@@ -5,6 +5,7 @@
 #include <QTableWidget>
 #include <iostream>
 #include <bits/stdc++.h>
+#include "register.h"
 
 #define MEM_SIZE 8192
 

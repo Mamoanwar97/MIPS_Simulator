@@ -60,6 +60,7 @@ void ALU::R_Format_ALU(vector<string> instruction)
 void ALU::J_Format_ALU(vector<string> instruction)
 {
     if (this->operand == "j")
+
     {
         emit change_PC_Label( instruction[1] );
     }

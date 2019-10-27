@@ -2,9 +2,9 @@
 
 Simulator::Simulator()
 {
-//    this->file_assembly_path   = "/home/amrelsersy/ins.txt";
-//    this->file_regFile_path    = "/home/amrelsersy/regFile.txt";
-//    this->file_dataMemory_path = "/home/amrelsersy/dataMemory.txt";
+    //    this->file_assembly_path   = "/home/amrelsersy/ins.txt";
+    //    this->file_regFile_path    = "/home/amrelsersy/regFile.txt";
+    //    this->file_dataMemory_path = "/home/amrelsersy/dataMemory.txt";
 
     this->file_assembly_path   = "C:\\Modeltech_pe_edu_10.4a\\examples\\ins.txt";
     this->file_regFile_path    = "C:\\Modeltech_pe_edu_10.4a\\examples\\regFile.txt";
@@ -13,9 +13,9 @@ Simulator::Simulator()
     this->modelsim_process = new QProcess();
 
     // ================== ModelSim Running Settings ===========================
-//    this->modelsim_process->setWorkingDirectory("C:\\Users\\user\\Desktop");
-//    this->modelsim_process->setProgram("python");
-//    this->modelsim_process->setArguments(QStringList() << "modelsim.py");
+    //    this->modelsim_process->setWorkingDirectory("C:\\Users\\user\\Desktop");
+    //    this->modelsim_process->setProgram("python");
+    //    this->modelsim_process->setArguments(QStringList() << "modelsim.py");
 
     this->modelsim_command = "vsim -c -do \"run -all\" work.MIPS";
     this->modelsim_path = "C:\\Modeltech_pe_edu_10.4a\\examples";
@@ -84,13 +84,15 @@ void Simulator::Simulate()
     clear();
     Read_Instruction_Editor();
     Assemble_Instructions();
-//    ALU_Logic();
+    ALU_Logic();
 
-//    emit print_registers();
+    //    emit print_registers();
     print(this->Lables);
     print(this->assembler->get_assembled_strings());
+//    for(uint i =0 ; i<instructions.size();i++)
+//        print(instructions[i]);
 
-    this->Modelsim();
+//    this->Modelsim();
     this->update_GUI();
 }
 
@@ -101,7 +103,7 @@ void Simulator::Simulate(string path)
 
     Read_Instruction();
     Assemble_Instructions();
-//    ALU_Logic();
+    //    ALU_Logic();
 
 
     emit print_registers();
@@ -124,7 +126,7 @@ void Simulator::Read_Instruction()
     // Read line by line in the file and parase it then add it to the Instructions Vector
     string s;
     uint address = 0;
-
+    uint index = 0;
     this->Read_Data();
 
 
@@ -132,10 +134,15 @@ void Simulator::Read_Instruction()
     {
         if(s == "")
             continue;
-
-        Split_Instruction(s,address);
-        this->instructions[address].push_back( to_string(address*4) ) ; // add adress to the instruction
+        if(check_for_Lable(s,address))
+        {
+            index++;
+            continue;
+        }
+        Split_Instruction(s);
+        this->instructions[index].push_back( to_string(address*4) ) ; // add adress to the instruction
         address++;
+        index++;
 
     }
     this->instructions.push_back(vector<string> {"end"});
@@ -148,7 +155,7 @@ void Simulator::Read_Instruction_Editor()
 
     string s;
     uint address = 0;
-
+    uint index =address;
     uint start = this->Read_Data_Editor(code_from_editor);
 
     for (uint i =start ;i< code_from_editor.size();i++)
@@ -156,19 +163,23 @@ void Simulator::Read_Instruction_Editor()
         s = code_from_editor[i];
         if (s=="")
             continue;
-            Split_Instruction(s,address);
-            this->instructions[address].push_back( to_string(address*4) ) ; // add adress to the instruction (for just the address)
-            address++;
+        if(check_for_Lable(s,address))
+        {
+            index++;
+            continue;
+        }
+        Split_Instruction(s);
+        this->instructions[index].push_back( to_string(address*4) ) ; // add adress to the instruction (for just the address)
+        address++;
+        index ++;
 
     }
     this->instructions.push_back(vector<string> {"end"});
 
 }
 
-void Simulator::Split_Instruction(string s,uint index)
+void Simulator::Split_Instruction(string s)
 {
-    if(check_for_Lable(s,index))
-        return;
     if(check_for_specials(s))
         return;
 
@@ -221,7 +232,7 @@ uint Simulator::Read_Data_Editor(vector<string> editor_code)
         vector<string> dot_data;
         for (int i =0 ;i < dot_data_.size(); i++)
             if(dot_data_[i] != "")
-              dot_data.push_back(dot_data_[i]);
+                dot_data.push_back(dot_data_[i]);
 
         print(dot_data);
 
@@ -333,7 +344,7 @@ void Simulator::ALU_Logic()
         {
             cout << " ============= End of Excution ============== " << endl;
             return;
-        }  
+        }
 
         emit ALU_Instruction(this->instructions[address]);
         cout << "instruction ";
@@ -443,7 +454,7 @@ int Simulator::get_dataWord(string s)
 void Simulator::print(map<string,uint> x)
 {
     for (auto i = x.begin();i != x.end(); i ++)
-        cout << "(" << i->first << "," << i->second << ") ";    
+        cout << "(" << i->first << "," << i->second << ") ";
     cout << endl;}
 void Simulator::print(deque<string> x)
 {
