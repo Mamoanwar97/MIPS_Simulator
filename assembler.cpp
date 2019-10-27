@@ -73,7 +73,7 @@ void Assembler::Assemble(vector<string> Instruction)
         {
             assembled_Instruction.push_back( emit get_register_num(Instruction[3]) ) ;
             assembled_Instruction.push_back( emit get_register_num(Instruction[1]) ) ;
-            assembled_Instruction.push_back( get_16bit_value(Instruction[2]) ) ;  // 16-bit address value
+            assembled_Instruction.push_back( get_16bit_value(Instruction[2]) /4) ;  // 16-bit address value / 4 because in verilog the addressing is words not byte addressing
         }
         else if (this->operand == "beq" || this->operand == "bne")
         {

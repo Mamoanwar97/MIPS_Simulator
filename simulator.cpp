@@ -80,19 +80,18 @@ void Simulator::Run_Modelsim()
 }
 void Simulator::Simulate()
 {
-
     clear();
     Read_Instruction_Editor();
     Assemble_Instructions();
-    ALU_Logic();
+//    ALU_Logic();
 
     //    emit print_registers();
     print(this->Lables);
     print(this->assembler->get_assembled_strings());
-//    for(uint i =0 ; i<instructions.size();i++)
-//        print(instructions[i]);
+    for(uint i =0 ; i<instructions.size();i++)
+        print(instructions[i]);
 
-//    this->Modelsim();
+    this->Modelsim();
     this->update_GUI();
 }
 
@@ -126,7 +125,6 @@ void Simulator::Read_Instruction()
     // Read line by line in the file and parase it then add it to the Instructions Vector
     string s;
     uint address = 0;
-    uint index = 0;
     this->Read_Data();
 
 
@@ -135,18 +133,14 @@ void Simulator::Read_Instruction()
         if(s == "")
             continue;
         if(check_for_Lable(s,address))
-        {
-            index++;
             continue;
-        }
+
         Split_Instruction(s);
-        this->instructions[index].push_back( to_string(address*4) ) ; // add adress to the instruction
+        this->instructions[address].push_back( to_string(address*4) ) ; // add adress to the instruction
         address++;
-        index++;
 
     }
     this->instructions.push_back(vector<string> {"end"});
-    this->print_all();
     cout << "======================" << endl;}
 
 void Simulator::Read_Instruction_Editor()
@@ -155,7 +149,6 @@ void Simulator::Read_Instruction_Editor()
 
     string s;
     uint address = 0;
-    uint index =address;
     uint start = this->Read_Data_Editor(code_from_editor);
 
     for (uint i =start ;i< code_from_editor.size();i++)
@@ -164,15 +157,11 @@ void Simulator::Read_Instruction_Editor()
         if (s=="")
             continue;
         if(check_for_Lable(s,address))
-        {
-            index++;
-            continue;
-        }
-        Split_Instruction(s);
-        this->instructions[index].push_back( to_string(address*4) ) ; // add adress to the instruction (for just the address)
-        address++;
-        index ++;
+            continue;        
 
+        Split_Instruction(s);
+        this->instructions[address].push_back( to_string(address*4) ) ; // add adress to the instruction (for just the address)
+        address++;
     }
     this->instructions.push_back(vector<string> {"end"});
 
@@ -308,8 +297,6 @@ bool Simulator::check_for_Lable(string s,uint index)
     if (pos == -1)
         return false;
     string Lable_name = s.substr(0,pos);
-    vector<string> x;   x.push_back(Lable_name);
-    this->instructions.push_back(x);
     this->Lables[Lable_name] = index;
 
     return true;
@@ -340,7 +327,7 @@ void Simulator::ALU_Logic()
         if (instructions[address].size()==2 && instructions[address][0] != SYSCALL)
             continue;
         // check for end of program =====> instructions has end vector to check
-        else if (instructions[address].size() == 1  )
+        else if ( (instructions[address].size() == 1)  || (PC >= instructions.size()) )
         {
             cout << " ============= End of Excution ============== " << endl;
             return;
@@ -424,7 +411,7 @@ void Simulator::print_all()
 void Simulator::set_Program_Counter(string label)
 {
     uint address = this->Lables[label];
-    this->Program_Counter->setValue((address*4)+4);}
+    this->Program_Counter->setValue(address*4);}
 void Simulator::set_Program_Counter(int address)
 {
     this->Program_Counter->setValue(address);

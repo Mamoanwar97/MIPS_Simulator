@@ -77,8 +77,8 @@ void ALU::I_Format_ALU(vector<string> instruction)
     //  ==================Specials ==================
     if (this->operand == "lw")
     {
-        input1 = emit read_register(instruction[3]) ; // base address
-        input2 = get_16_bit_value(instruction[2]) ; // the shift
+        input1 = emit read_register(instruction[3])  ; // base address
+        input2 = get_16_bit_value(instruction[2])    ; // the shift
         this->result = input1+input2; // index
 
         uint address =this->result/4; // devide by 4 because it is num of bytes not words
