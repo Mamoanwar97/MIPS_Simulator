@@ -41,6 +41,7 @@
 #define Hight_Editor 500
 #define Registers_Width 300
 #define O_Screen_Hight 150
+#define Code_color 170,170,170 // grey
 
 using namespace  std;
 

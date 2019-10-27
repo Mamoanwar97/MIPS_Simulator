@@ -14,7 +14,10 @@ GUI::GUI(QWidget *parent) :
     this->Execution       = new Execute_Widget();
     this->Data_Memory     = new Data_Mem_Widget();
 
-    this->Code_Editor     = new Editor();
+    // set colors of highlight
+    QColor Code_highlight_color; Code_highlight_color.setRgb(Code_color);
+
+    this->Code_Editor     = new Editor(Code_highlight_color);
     this->IO_Screen       = new Editor();
     this->IO_Screen_Container = new QTabWidget();
     this->IO_Screen->setReadOnly(true);
