@@ -9,6 +9,7 @@ Assembler::Assembler()
     this->operands["xor"] = {0,38};
     this->operands["nor"] = {0,39};
     this->operands["slt"] = {0,42};
+    this->operands["slt"] = {0,1};
     this->operands["sll"] = {0, 0};
     this->operands["srl"] = {0, 2};
     this->operands["jr" ] = {0, 8};
@@ -18,6 +19,7 @@ Assembler::Assembler()
     this->operands["ori" ] = {13,I_Format_Fun};
     this->operands["xori"] = {14,I_Format_Fun};
     this->operands["slti"] = {10,I_Format_Fun};
+    this->operands["sgti"] = {11,I_Format_Fun};
     this->operands["lui" ] = {15,I_Format_Fun};
     this->operands[ "lw" ] = {35,I_Format_Fun};
     this->operands[ "sw" ] = {43,I_Format_Fun};
