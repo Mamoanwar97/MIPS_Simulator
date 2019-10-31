@@ -9,7 +9,7 @@ Assembler::Assembler()
     this->operands["xor"] = {0,38};
     this->operands["nor"] = {0,39};
     this->operands["slt"] = {0,42};
-    this->operands["slt"] = {0,1};
+    this->operands["sgt"] = {0,1};
     this->operands["sll"] = {0, 0};
     this->operands["srl"] = {0, 2};
     this->operands["jr" ] = {0, 8};
