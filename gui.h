@@ -67,8 +67,10 @@ private:
     QPushButton* includeBtn;
     QPushButton* RunBtn;
     QPushButton* TestBtn;
+
     QFileDialog* file_dialog;
     QFileDialog* include_file_dialog;
+
     Editor* IO_Screen;
     QTabWidget* IO_Screen_Container;
     regFile_Widget* Registers_Table;

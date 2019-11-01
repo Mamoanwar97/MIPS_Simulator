@@ -5,12 +5,7 @@
 #include "gui.h"
 #include <QEvent>
 #include <QKeyEvent>
-#include <QStackedLayout>
-#include <QStackedWidget>
-#include <QComboBox>
-#include <QToolBox>
-#include <QGroupBox>
-#include <QDockWidget>
+#include "testwidget.h"
 
 using namespace  std;
 

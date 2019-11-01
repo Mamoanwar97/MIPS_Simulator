@@ -150,6 +150,7 @@ void GUI::Start_Simulation()
 
 void GUI::Start_Simulation_File(QStringList code_file_path)
 {
+    this->Code_Editor->clear();
     for (int i =0 ; i< code_file_path.size(); i++)
         cout << code_file_path[i].toStdString() << endl;
 

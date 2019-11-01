@@ -5,6 +5,8 @@ MainWindow::MainWindow(QWidget *parent) :
         this->gui = new GUI();
         this->setCentralWidget(this->gui);
 
+        TestWidget* test = new TestWidget("TestCase_Ray2");
+
 
     //  ======= ToolBox Container ============
     //    QToolBox* toolBox = new QToolBox();

@@ -20,13 +20,18 @@
 #include <QTreeWidget>
 #include <QTreeWidgetItem>
 #include <QStringList>
-
+#include <QIcon>
+#include <QCoreApplication>
+#define ICON_PATH "/home/amrelsersy/warning-icon.png"
 using namespace std;
 
 class Tree_Widget : public QTreeWidget
 {
     Q_OBJECT
 protected:
+    QIcon warning_icon;
+    bool centerAlign;
+    bool warning;
     QColor color;
     bool flag_color;
     vector<QTreeWidgetItem*> Items ;
@@ -36,6 +41,10 @@ public:
     void addItem();
     void addItem(QStringList);
     void setColor(QTreeWidgetItem*item);
+    void setTreeColor(QColor);
+    void setAlignCenter(bool);
+    void setWarning(bool);
+    void SetHeaderLabels(QTreeWidgetItem*item);
 
 
 };
