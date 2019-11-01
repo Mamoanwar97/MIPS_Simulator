@@ -16,6 +16,7 @@
 #include <QKeyEvent>
 #include <QBrush>
 #include <QColor>
+#include <QFileDialog>
 
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -30,7 +31,7 @@
 #include <QStringList>
 
 #define RUN "Run"
-#define DEBUG "Debug"
+#define TEST "Test"
 #define INCLUDE "include"
 #define EDIT "Edit"
 #define EXECUTE "Execute"
@@ -65,9 +66,9 @@ private:
     QLineEdit *  lineEdit;
     QPushButton* includeBtn;
     QPushButton* RunBtn;
-    QPushButton* DebugBtn;
-
-
+    QPushButton* TestBtn;
+    QFileDialog* file_dialog;
+    QFileDialog* include_file_dialog;
     Editor* IO_Screen;
     QTabWidget* IO_Screen_Container;
     regFile_Widget* Registers_Table;
@@ -79,7 +80,7 @@ public:
     void init_horizontal_layout();
     void Signals_Slots();
 
-
+    void init_files_dialog();
     void keyPressEvent(QKeyEvent * event);
 
 signals:
@@ -87,8 +88,10 @@ signals:
 
 public slots:
     void Start_Simulation();
-    void Start_Simulation_File();
+    void Start_Simulation_File(QStringList);
     void Output_Screen(string);
+    void file_paths_selected_dialog(QStringList);
+    void Browse_file();
 };
 
 vector<string> split_string(string s,string splitter);

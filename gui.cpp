@@ -23,6 +23,7 @@ GUI::GUI(QWidget *parent) :
     this->IO_Screen->setReadOnly(true);
 
     this->init_horizontal_layout();
+    this->init_files_dialog();
     this->Design();
     this->Signals_Slots();
 }
@@ -73,15 +74,15 @@ void GUI::init_horizontal_layout()
 {
     this->horizontalLayout = new QHBoxLayout();
     this->lineEdit         = new QLineEdit();
-//    this->lineEdit->       setReadOnly(true);
     this->includeBtn       = new QPushButton(INCLUDE);
     this->RunBtn           = new QPushButton(RUN);
-    this->DebugBtn         = new QPushButton(DEBUG);
+    this->TestBtn         = new QPushButton(TEST);
 
     this->horizontalLayout->addWidget(this->lineEdit);
     this->horizontalLayout->addWidget(this->includeBtn);
     this->horizontalLayout->addWidget(this->RunBtn);
-    this->horizontalLayout->addWidget(this->DebugBtn);
+    this->horizontalLayout->addWidget(this->TestBtn);
+
 }
 
 void GUI::Signals_Slots()
@@ -94,16 +95,39 @@ void GUI::Signals_Slots()
     connect( this->simulator->Alu ,SIGNAL( syscall(string) ) , this,SLOT( Output_Screen(string) ) );
 
     connect( this->RunBtn     , SIGNAL(clicked() )     , this , SLOT( Start_Simulation() ) );
-    connect( this->includeBtn , SIGNAL(clicked() )     , this , SLOT( Start_Simulation_File() ) );
+    connect( this->includeBtn , SIGNAL(clicked() )     , this , SLOT( Browse_file() ) );
+    connect( this->include_file_dialog     , SIGNAL(filesSelected(QStringList) )     , this , SLOT( Start_Simulation_File(QStringList) ) );
+    connect( this->file_dialog             , SIGNAL(filesSelected(QStringList) )     , this , SLOT( file_paths_selected_dialog(QStringList) ) );
 
     connect( this->simulator, SIGNAL(getInstruction_Editor()), this->Code_Editor,SLOT(Read_Code_Text_Editor() ));
     connect( this->simulator, SIGNAL(update_assembled_instruction() ) , this->Execution , SLOT( updateInstructions() ) );
     connect( this->simulator, SIGNAL(update_registers() )    , this->Registers_Table , SLOT( updateRegisters() ) );
     connect( this->simulator, SIGNAL(update_data_memory() ), this->Data_Memory , SLOT( update_memory() ) );
     connect( this->simulator, SIGNAL(clear_data_memory() ), this->Data_Memory , SLOT( clear() ) );
+    connect( this->simulator, SIGNAL (update_Text_Editor(vector<string>)) , this->Code_Editor, SLOT(Write_Code_Text_Editor(vector<string>)) );
+
     connect( this->simulator->Alu, SIGNAL(Info_Output(string)), this,SLOT(Output_Screen(string) ));
     connect( this->simulator->Alu , SIGNAL (update_memory_gui(uint)) , this->Data_Memory , SLOT(update_memory(uint)) );
     connect( this->simulator->data_memory , SIGNAL (update_dataMemory_GUI(uint)) , this->Data_Memory , SLOT(update_memory(uint)) );
+
+}
+
+void GUI::init_files_dialog()
+{
+    this->file_dialog = new QFileDialog(this);
+    this->file_dialog->setDirectory("/home/amrelsersy/ay7aga"); // set the open directory
+    this->file_dialog->setFileMode(QFileDialog::ExistingFiles); // select existing file only
+    this->file_dialog->setNameFilter("*.txt");                  // show only txt extentions
+    this->file_dialog->setOption(QFileDialog::ReadOnly);        // readonly mode dosn't support deleting or writing
+
+    this->include_file_dialog = new QFileDialog(this);
+    this->include_file_dialog->setDirectory("/home/amrelsersy"); // set the open directory
+    this->include_file_dialog->setFileMode(QFileDialog::ExistingFile); // select existing file (one file )only
+    this->include_file_dialog->setNameFilter("*.txt");                  // show only txt extentions
+    this->include_file_dialog->setOption(QFileDialog::ReadOnly);        // readonly mode dosn't support deleting or writing
+
+//    this->file_dialog->show();
+//    this->include_file_dialog->show();
 }
 
 void GUI::keyPressEvent(QKeyEvent *event)
@@ -124,11 +148,15 @@ void GUI::Start_Simulation()
     this->simulator->Simulate();
 }
 
-void GUI::Start_Simulation_File()
+void GUI::Start_Simulation_File(QStringList code_file_path)
 {
+    for (int i =0 ; i< code_file_path.size(); i++)
+        cout << code_file_path[i].toStdString() << endl;
+
     this->IO_Screen->clear();
-    string path = this->lineEdit->text().toStdString();
+    string path = code_file_path[0].toStdString();
     this->simulator->Simulate(path);
+    this->lineEdit->setText(QString::fromStdString(path));
 }
 
 void GUI::Output_Screen(string syscall_msg)
@@ -138,4 +166,18 @@ void GUI::Output_Screen(string syscall_msg)
     this->IO_Screen->Write_Code_Text_Editor(x);
     x.clear();
 }
+
+void GUI::file_paths_selected_dialog(QStringList files_pahts)
+{
+    // when the files is selected (then accepted by "enter" or "open") the file dialog emits signal with paths to that files
+    for (int i =0 ; i< files_pahts.size(); i++)
+        cout << files_pahts[i].toStdString() << endl;
+}
+
+void GUI:: Browse_file()
+{
+    this->include_file_dialog->show();
+}
+
+
 

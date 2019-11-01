@@ -91,7 +91,7 @@ void Simulator::Simulate()
     for(uint i =0 ; i<instructions.size();i++)
         print(instructions[i]);
 
-    this->Modelsim();
+//    this->Modelsim();
     this->update_GUI();
 }
 
@@ -109,7 +109,7 @@ void Simulator::Simulate(string path)
     print(this->Lables);
     print(this->assembler->get_assembled_strings());
 
-    this->Modelsim();
+//    this->Modelsim();
     this->update_GUI();
 }
 
@@ -141,7 +141,10 @@ void Simulator::Read_Instruction()
 
     }
     this->instructions.push_back(vector<string> {"end"});
-    cout << "======================" << endl;}
+
+    cout << "======================" << endl;
+    emit update_Text_Editor(this->code);
+}
 
 void Simulator::Read_Instruction_Editor()
 {
@@ -164,6 +167,7 @@ void Simulator::Read_Instruction_Editor()
         address++;
     }
     this->instructions.push_back(vector<string> {"end"});
+
 
 }
 
