@@ -5,8 +5,8 @@ MainWindow::MainWindow(QWidget *parent) :
         this->gui = new GUI();
         this->setCentralWidget(this->gui);
 
-        TestWidget* test = new TestWidget("TestCase_Ray2");
-
+//        TestCase* test = new TestCase("TestCase_Ray2");
+        BrowseFile* b = new BrowseFile();
 
     //  ======= ToolBox Container ============
     //    QToolBox* toolBox = new QToolBox();

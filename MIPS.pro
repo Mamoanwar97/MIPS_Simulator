@@ -40,7 +40,9 @@ SOURCES += \
     regfile_widget.cpp \
     execute_widget.cpp \
     data_mem_widget.cpp \
-    testwidget.cpp
+    testcase.cpp \
+    testwidget.cpp \
+    browsefile.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -57,7 +59,9 @@ HEADERS += \
     regfile_widget.h \
     execute_widget.h \
     data_mem_widget.h \
-    testwidget.h
+    testcase.h \
+    testwidget.h \
+    browsefile.h
 
 FORMS += \
         mainwindow.ui

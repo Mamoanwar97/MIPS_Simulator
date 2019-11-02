@@ -1,47 +1,30 @@
 #ifndef TESTWIDGET_H
 #define TESTWIDGET_H
-#include <QObject>
+
 #include <QWidget>
-#include <QLabel>
-#include <QPushButton>
-#include "tree_widget.h"
-#include "editor.h"
-#include <iostream>
-#include <bits/stdc++.h>
+#include <QVBoxLayout>
 #include <QHBoxLayout>
-#include <QStyle>
-#include <QTreeWidget>
-#include <QIcon>
+#include <QGridLayout>
+#include <QPushButton>
+#include <QLineEdit>
+#include <QFileDialog>
+#include "testcase.h"
 
-#define green "background-color:rgb(0, 200, 0)"
-#define red "background-color:rgb(255, 0, 0)"
-#define grey "background-color:rgb(170, 170, 170)"
-#define MIN_SIZE 600
 
-class TestWidget : QWidget
+class TestWidget : public QWidget
 {
     Q_OBJECT
 private:
-    QHBoxLayout* layout;
-    QLabel* label;
-    string name;
-    QPushButton* BtnDetails;
+    QGridLayout* grid;
+    QVBoxLayout* testCasesLayout ;
 
-    QTabWidget* DetailsWidget;
-    Tree_Widget* RegFile_Details;
-    Tree_Widget* DataMem_Details;
-
-    Editor* output = new Editor();
 
 public:
-    TestWidget(string ,QWidget* parent=nullptr);
-    void ObserverPattern();
-    void init_details_widget();
+    TestWidget(QWidget *parent = nullptr);
+
 signals:
-    void Write_Warnings(vector<string>);
 
 public slots:
-    void show_details();
 };
 
 #endif // TESTWIDGET_H

@@ -32,11 +32,14 @@ void Tree_Widget::addItem(QStringList s)
     this->setColor(item);
 
     if (this->centerAlign)
-//        for(int i =0 ; i< item->columnCount(); i++)
+        for(int i =0 ; i< item->columnCount(); i++)
             item->setTextAlignment(0,Qt::AlignCenter);
 
     if (this->warning)
+    {
         item->setIcon(1,this->warning_icon);
+        item->setTextAlignment(0,Qt::AlignCenter);
+    }
 }
 
 void Tree_Widget::setColor(QTreeWidgetItem *item)
