@@ -1,13 +1,17 @@
 #include "browsefile.h"
 
-BrowseFile::BrowseFile(QWidget *parent) : QWidget(parent)
+BrowseFile::BrowseFile(string name ,QWidget *parent) : QWidget(parent)
 {
     this->layout = new QHBoxLayout();
+    this->label = new QLabel();
+    this->label->setText(QString::fromStdString(name));
+    this->label->setMinimumWidth(MIN_WIDTH_LABEL);
     this->entry = new QLineEdit(this);
     this->entry->setReadOnly(true);
     this->BrowseBtn = new QPushButton("Browse");
     this->file_dialog = new QFileDialog(this);
     this->SelectedPath = false;
+    this->layout->addWidget(this->label);
     this->layout->addWidget(this->entry);
     this->layout->addWidget(this->BrowseBtn);
     this->setLayout(this->layout);

@@ -7,6 +7,7 @@
 #include <QKeyEvent>
 #include "testcase.h"
 #include "browsefile.h"
+#include "testwidget.h"
 
 
 using namespace  std;
@@ -20,7 +21,6 @@ private:
 
 public:
     explicit MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
 
 public slots:
 

@@ -38,7 +38,7 @@
 #define REGISTERS_TYPE "registers"
 #define DATA_MEM "Memory"
 
-#define Width_Editor 600
+#define Width_Editor 700
 #define Hight_Editor 500
 #define Registers_Width 300
 #define O_Screen_Hight 150

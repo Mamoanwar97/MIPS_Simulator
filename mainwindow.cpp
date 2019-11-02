@@ -6,8 +6,8 @@ MainWindow::MainWindow(QWidget *parent) :
         this->setCentralWidget(this->gui);
 
 //        TestCase* test = new TestCase("TestCase_Ray2");
-        BrowseFile* b = new BrowseFile();
-
+//        BrowseFile* b = new BrowseFile("RegFile:");
+         TestWidget* testwidget = new TestWidget();
     //  ======= ToolBox Container ============
     //    QToolBox* toolBox = new QToolBox();
     //    toolBox->addItem(red,"red");
@@ -43,10 +43,4 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // ==========================================================
 
-}
-
-MainWindow::~MainWindow()
-{
-    delete gui;
-    delete this;
 }

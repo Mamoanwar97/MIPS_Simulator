@@ -1,45 +1,46 @@
-        #ifndef REGISTER_FILE_H
-    #define REGISTER_FILE_H
-    #include <bits/stdc++.h>
-    #include <QObject>
-    #include "register.h"
-    using namespace std;
+#ifndef REGISTER_FILE_H
+#define REGISTER_FILE_H
+#include <bits/stdc++.h>
+#include <QObject>
+#include "register.h"
 
-    #define WORD_SIZE sizeof(int)
-    #define MEMORYSIZE 8192
-    #define STACK_SIZE (WORD_SIZE*MEMORYSIZE)
+using namespace std;
 
-    class Register_File : public QObject
-    {
-        Q_OBJECT
+#define WORD_SIZE sizeof(int)
+#define MEMORYSIZE 8192
+#define STACK_SIZE (WORD_SIZE*MEMORYSIZE)
 
-    private:
-        map<string,Register*> Registers;
-        stack<int> Stack_Pointer;
-        ifstream file ;
-    public:
-        Register_File(QObject *parent = nullptr);
-        void add_register(string Name,uint Num , int Value = 0 );
-        void clear();
-        vector<string> split_string(string s,string splitter);
+class Register_File : public QObject
+{
+    Q_OBJECT
 
-    public slots:
-        map<string,Register*> registers_reading();
-        int read_register(string name);
-        uint get_register_num(string name);
-        void write_register(string name,int Value=0);
-        void write_register(uint address , int value= 0);
-        void print_all();
+private:
+    map<string,Register*> Registers;
+    stack<int> Stack_Pointer;
+    ifstream file ;
+public:
+    Register_File(QObject *parent = nullptr);
+    void add_register(string Name,uint Num , int Value = 0 );
+    void clear();
+    vector<string> split_string(string s,string splitter);
 
-        // mlhosh 3aza
-        void push(string name);
-        void pop (string name);
-        void stack_write(string name);
-        void stack_read (string name);
-        //
-        void read_regFile_data(string);
+public slots:
+    map<string,Register*> registers_reading();
+    int read_register(string name);
+    uint get_register_num(string name);
+    void write_register(string name,int Value=0);
+    void write_register(uint address , int value= 0);
+    void print_all();
 
-    signals:
-    };
+    // mlhosh 3aza
+    void push(string name);
+    void pop (string name);
+    void stack_write(string name);
+    void stack_read (string name);
+    //
+    void read_regFile_data(string);
 
-    #endif // REGISTER_FILE_H
+signals:
+};
+
+#endif // REGISTER_FILE_H

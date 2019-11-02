@@ -15,10 +15,10 @@
 
 #define green "background-color:rgb(0, 200, 0)"
 #define red "background-color:rgb(255, 0, 0)"
-#define grey "background-color:rgb(170, 170, 170)"
+#define grey "background-color:rgb(220, 220, 220)"
 #define MIN_SIZE 600
 
-class TestCase : QWidget
+class TestCase : public QWidget
 {
     Q_OBJECT
 private:
@@ -33,6 +33,10 @@ private:
     Tree_Widget* RegFile_Details;
     Tree_Widget* DataMem_Details;
     int id;
+
+    string assemblyPath;
+    string regfilePath;
+    string datamemPath;
 
 public:
     TestCase(string ,QWidget* parent=nullptr);

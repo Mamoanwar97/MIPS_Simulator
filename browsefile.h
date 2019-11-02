@@ -8,21 +8,23 @@
 #include <QPushButton>
 #include <QLineEdit>
 #include <QFileDialog>
+#include <QLabel>
 #include <bits/stdc++.h>
 using namespace std;
-
-class BrowseFile : QWidget
+#define MIN_WIDTH_LABEL 95
+class BrowseFile : public QWidget
 {
     Q_OBJECT
 private:
     QHBoxLayout* layout;
+    QLabel* label;
     QLineEdit* entry;
     QPushButton* BrowseBtn;
     QFileDialog* file_dialog;
     string path;
     bool SelectedPath;
 public:
-    BrowseFile(QWidget* parent = nullptr);
+    BrowseFile(string name , QWidget* parent = nullptr);
     void ObserverPattern();
     bool isSelectedPath();
     void clear();

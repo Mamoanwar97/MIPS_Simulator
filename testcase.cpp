@@ -74,7 +74,7 @@ void TestCase::Set_Warnings_DataMem(vector<string> warnings)
         QStringList Warning ;
         // id , Warning ICon , Warning
         Warning.append( QString::fromStdString(to_string(this->id)) );
-        Warning.append( QString::fromStdString("Warning: " + warnings[i]) );
+        Warning.append( QString::fromStdString("Warning:: " + warnings[i]) );
         // add the colomns item to RegFile
         this->DataMem_Details->addItem(Warning);
     }
@@ -102,7 +102,7 @@ void TestCase::Set_Warnings_RegFile(vector<string> warnings)
         QStringList Warning ;
         // id , Warning ICon , Warning
         Warning.append( QString::fromStdString(to_string(this->id)) );
-        Warning.append( QString::fromStdString("Warning: " + warnings[i]) );
+        Warning.append( QString::fromStdString("Warning:: " + warnings[i]) );
         // add the colomns item to RegFile
         this->RegFile_Details->addItem(Warning);
     }
