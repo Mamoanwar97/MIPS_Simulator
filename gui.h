@@ -29,12 +29,14 @@
 #include <QTreeWidget>
 #include <QTreeWidgetItem>
 #include <QStringList>
+#include "testwidget.h"
 
 #define RUN "Run"
 #define TEST "Test"
 #define INCLUDE "include"
 #define EDIT "Edit"
 #define EXECUTE "Execute"
+#define TEST "Test"
 #define REGISTERS_TYPE "registers"
 #define DATA_MEM "Memory"
 
@@ -61,6 +63,7 @@ private:
     Editor* Code_Editor;
     Execute_Widget* Execution;
     Data_Mem_Widget* Data_Memory;
+    TestWidget* testWidget;
 
     QHBoxLayout* horizontalLayout;
     QLineEdit *  lineEdit;

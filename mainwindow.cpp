@@ -4,10 +4,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
         this->gui = new GUI();
         this->setCentralWidget(this->gui);
+//        this->setStyleSheet("background-color:rgb(128,0,23)");
 
-//        TestCase* test = new TestCase("TestCase_Ray2");
-//        BrowseFile* b = new BrowseFile("RegFile:");
-         TestWidget* testwidget = new TestWidget();
     //  ======= ToolBox Container ============
     //    QToolBox* toolBox = new QToolBox();
     //    toolBox->addItem(red,"red");

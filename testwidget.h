@@ -33,8 +33,9 @@ public:
     TestWidget(QWidget *parent = nullptr);
     void Design();
     void ObserverPattern();
+    void addOriginalTestCase();
 signals:
-
+    void output_screen(vector<string>);
 public slots:
     void addTestCase();
 };

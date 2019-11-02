@@ -42,12 +42,12 @@ public:
     TestCase(string ,QWidget* parent=nullptr);
     void ObserverPattern();
     void init_details_widget();
+    void Test_Result(bool result);
 signals:
 public slots:
     void show_details();
     void Set_Warnings_RegFile(vector<string>);
     void Set_Warnings_DataMem(vector<string>);
-    void Test_Result(bool result);
     void Test_Files();
 };
 

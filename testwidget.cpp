@@ -15,12 +15,11 @@ TestWidget::TestWidget(QWidget *parent) : QWidget(parent)
     this->AddTestBtn = new QPushButton("Add TestCase");
     this->TestAllBtn = new QPushButton("Test All");
 
-//    for (uint i =0 ; i<10 ; i++)
-//        this->addTestCase();
+    for (uint i =0 ; i<8 ; i++)
+        this->addOriginalTestCase();
 
     this->Design();
     this->ObserverPattern();
-    this->show();
 }
 
 void TestWidget::Design()
@@ -41,12 +40,19 @@ void TestWidget::Design()
 
     this->setLayout(this->centralLayout);
     this->testcasesWidget->setStyleSheet("background-color:white");
-    //    this->testcasesWidget->setStyleSheet("border:2px solid");
 }
 
 void TestWidget::ObserverPattern()
 {
     connect(this->AddTestBtn,SIGNAL(clicked()),this,SLOT(addTestCase()));
+}
+
+void TestWidget::addOriginalTestCase()
+{
+    ulong id = this->TestCases.size();
+    TestCase* testcase = new TestCase("TestCase"+to_string(id+1));
+    this->testCasesLayout->addWidget(testcase);
+    this->TestCases.push_back(testcase);
 }
 
 void TestWidget::addTestCase()
@@ -64,6 +70,6 @@ void TestWidget::addTestCase()
         this->AssemblyBrowse->clear();
     }
     else {
-        cout << "you are not ray2 "<< endl;
+        emit output_screen({"Error in Adding NewTask ... Please Add All Required Files"});
     }
 }

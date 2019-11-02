@@ -13,6 +13,7 @@ GUI::GUI(QWidget *parent) :
     this->Registers_Table = new regFile_Widget();
     this->Execution       = new Execute_Widget();
     this->Data_Memory     = new Data_Mem_Widget();
+    this->testWidget      = new TestWidget();
 
     // set colors of highlight
     QColor Code_highlight_color; Code_highlight_color.setRgb(Code_color);
@@ -45,6 +46,7 @@ void GUI::Design()
     this->tabWidget->addTab(this->Code_Editor,EDIT);
     this->tabWidget->addTab(this->Execution,EXECUTE);
     this->tabWidget->addTab(this->Data_Memory,DATA_MEM);
+    this->tabWidget->addTab(this->testWidget,TEST);
     this->tabWidget->setMovable(true);
 
     this->IO_Screen_Container->addTab(this->IO_Screen,"Output");
@@ -109,6 +111,8 @@ void GUI::Signals_Slots()
     connect( this->simulator->Alu, SIGNAL(Info_Output(string)), this,SLOT(Output_Screen(string) ));
     connect( this->simulator->Alu , SIGNAL (update_memory_gui(uint)) , this->Data_Memory , SLOT(update_memory(uint)) );
     connect( this->simulator->data_memory , SIGNAL (update_dataMemory_GUI(uint)) , this->Data_Memory , SLOT(update_memory(uint)) );
+
+    connect(this->testWidget,SIGNAL(output_screen(vector<string>)),this->IO_Screen,SLOT(Write_Code_Text_Editor(vector<string>)));
 
 }
 
