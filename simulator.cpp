@@ -68,8 +68,13 @@ void Simulator::Modelsim()
 {
     emit file_assembled_instructions(this->file_assembly_path); // write file with assembledd instructions
     this->modelsim_process->start(this->modelsim_command);// run modelsim to read the assembly file and write in the dataMemory and regFile files
-    QThread::sleep(2);  // wait for modelsim execution
-    this->modelsim_process->kill();
+    cout << "starting ..." << endl;
+    this->modelsim_process->waitForStarted(3000);
+    cout << "started" << endl;
+    this->modelsim_process->terminate();
+    cout << "terminated " << endl;
+    this->modelsim_process->waitForFinished(3000);
+    cout << "finished" << endl;
     emit file_regFile_data(this->file_regFile_path); // read regFile and load it into reg File Widget
     emit file_dataMemory_data(this->file_dataMemory_path); // read dataMemory and load it into Data Memory Widget
 }
@@ -91,7 +96,7 @@ void Simulator::Simulate()
     for(uint i =0 ; i<instructions.size();i++)
         print(instructions[i]);
 
-//    this->Modelsim();
+    this->Modelsim();
     this->update_GUI();
 }
 
@@ -105,11 +110,11 @@ void Simulator::Simulate(string path)
     //    ALU_Logic();
 
 
-    emit print_registers();
+//    emit print_registers();
     print(this->Lables);
     print(this->assembler->get_assembled_strings());
 
-//    this->Modelsim();
+    this->Modelsim();
     this->update_GUI();
 }
 

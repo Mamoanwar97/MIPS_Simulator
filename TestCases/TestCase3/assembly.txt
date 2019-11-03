@@ -1,2 +1,2 @@
 addi $s0,$s0,1
-addi $s1,$s0,30
+sub $s1,$s1,$s0

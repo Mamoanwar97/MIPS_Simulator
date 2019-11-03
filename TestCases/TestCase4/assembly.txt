@@ -1,2 +1,4 @@
+addi $s1,$s1,25
+L:
 addi $s0,$s0,1
-addi $s1,$s0,30
+bne $s0,$s1,L

@@ -42,20 +42,30 @@ void filesTester:: check_reg()
 
     while(getline(file1,s)) // read line by line
     {
+        if (s == "")
+            continue;
+        try {
         vector<string> address_value = split_string(s,",");
         int address =  stoi(address_value[0]);
         int value    = stoi(address_value[1]);
-        this -> correct_values[address] =  value;
+        this -> correct_values[address] =  value;}
+        catch (...) {}
+
     }
 
     file1.close();
 
     while(getline(file2,s)) // read line by line
     {
+        if (s == "")
+            continue;
+        try {
         vector<string> address_value = split_string(s,",");
         int address =  stoi(address_value[0]) ;
         int value    = stoi(address_value[1]);
-        this -> new_values[address] =  value;
+        this -> new_values[address] =  value;}
+        catch (...) {}
+
     }
 
     file2.close();
@@ -80,20 +90,29 @@ void filesTester::check_data()
 
     while(getline(file1,s)) // read line by line
     {
+        if (s == "")
+            continue;
+        try {
         vector<string> address_value = split_string(s,",");
         int address =  stoi(address_value[0]);
         int value    = stoi(address_value[1]);
-        this -> correct_data[address] = value;
+        this -> correct_data[address] = value; }
+        catch (...) {}
     }
 
     file1.close();
 
     while(getline(file2,s)) // read line by line
     {
+        if (s == "")
+            continue;
+        try {
         vector<string> address_value = split_string(s,",");
         int address =  stoi(address_value[0]) ;
         int value    = stoi(address_value[1]);
-        this -> new_data[address] =  value;
+        this -> new_data[address] =  value;}
+        catch (...) {}
+
     }
 
     file2.close();

@@ -1,4 +1,11 @@
-addi $s0,$s0,30
-sw $s0,4($s1)
-lw $s2,4($s1)
-addi $s2,$s3,50
+addi $s1,$s1,10
+addi $s2,$s2,20
+addi $s3,$s3,30
+
+sw $s1,0($s0)
+sw $s2,4($s0)
+sw $s3,8($s0)
+
+lw $t0,0($s0)
+lw $t1,4($s0)
+lw $t2,8($s0)

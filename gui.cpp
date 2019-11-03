@@ -79,7 +79,7 @@ void GUI::init_horizontal_layout()
     this->RunBtn           = new QPushButton(RUN);
     this->TestBtn         = new QPushButton(TEST);
 
-    this->horizontalLayout->addWidget(this->lineEdit);1
+    this->horizontalLayout->addWidget(this->lineEdit);
     this->horizontalLayout->addWidget(this->includeBtn);
     this->horizontalLayout->addWidget(this->RunBtn);
     this->horizontalLayout->addWidget(this->TestBtn);
