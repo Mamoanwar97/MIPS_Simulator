@@ -1,14 +1,41 @@
 #include "mainwindow.h"
+
 #include <QApplication>
+#include <QFile>
+#include <QStyleFactory>
 
-int main(int argc, char *argv[])
-{
-    QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
+QByteArray readTextFile(const QString &file_path) {
+  QFile input_file(file_path);
+  QByteArray input_data;
 
-    return a.exec();
+  if (input_file.open(QIODevice::Text | QIODevice::Unbuffered | QIODevice::ReadOnly)) {
+    input_data = input_file.readAll();
+    input_file.close();
+    return input_data;
+  }
+  else {
+    return QByteArray();
+  }
 }
+
+int main(int argc, char *argv[]) {
+  // qss.qss
+  QString style_sheet = readTextFile("C:\\MIPS_Simulator\\styles\\qss.qss");
+
+  QApplication a(argc, argv);
+  MainWindow w;
+  a.setStyleSheet(style_sheet);
+  a.setStyle(QStyleFactory::create("Fusion") ); // make it like linux
+
+  QStringList x =     QStyleFactory::keys();
+  for (int i =0 ; i <x.size(); i++)
+      cout << x[i].toStdString() << endl;
+
+  w.show();
+
+  return a.exec();
+}
+
 // ================== QTreeWidget ========================
 //  items added in tree can have sub-item (child item with the same type(QTreeWidgetItem) )
 //
