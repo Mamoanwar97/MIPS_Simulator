@@ -61,10 +61,16 @@ void TestWidget::addTestCase()
         this->AssemblyBrowse->clear();
         // set Paths
         testcase->setPaths(this->AssemblyBrowse->getText() , this-> RegFileBrowse->getText() , this->DataMemBrowse->getText());
+        connect(testcase,SIGNAL(startSimulationTestCase(string)),this,SLOT(oneShootTest(string)));
     }
     else {
         emit output_screen({"Error in Adding NewTask ... Please Add All Required Files"});
     }
+}
+
+void TestWidget::oneShootTest(string Assembly)
+{
+    emit start_simulation(Assembly);
 }
 
 void TestWidget::TestAll()
@@ -93,6 +99,7 @@ void TestWidget::addOriginalTestCases()
         this->TestCases.push_back(testcase);
         // set paths
         testcase->setPaths(path+assembly  ,path+regFie  ,path+datamem);
+        connect(testcase,SIGNAL(startSimulationTestCase(string)),this,SLOT(oneShootTest(string)));
     }
 
 }

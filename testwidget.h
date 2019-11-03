@@ -39,6 +39,7 @@ signals:
     void output_screen(vector<string>);
 public slots:
     void addTestCase();
+    void oneShootTest(string);
     void TestAll();
 };
 

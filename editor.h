@@ -39,6 +39,7 @@ protected:
 public slots:
     void Write_Code_Text_Editor(vector<string>);
     vector<string> Read_Code_Text_Editor();
+    void Clear();
 private slots:
     void updateLineNumberAreaWidth(int newBlockCount);
     void highlightCurrentLine();

@@ -31,7 +31,7 @@ TestCase::TestCase(string Name,QWidget *parent) : QWidget (parent)
 void TestCase::ObserverPattern()
 {
     connect(this->BtnDetails,SIGNAL(clicked()) ,this,SLOT(show_details()));
-    connect(this->BtnTest   ,SIGNAL(clicked()) ,this->file_tester,SLOT(StartTest()));
+    connect(this->BtnTest   ,SIGNAL(clicked()) ,this,SLOT(start_simulating()));
 
     connect(this->file_tester,SIGNAL(set_status(bool)) ,this,SLOT( Test_Result(bool) ) );
     connect(this->file_tester,SIGNAL(set_reg_warnings (vector<string>)) ,this,SLOT( Set_Warnings_RegFile(vector<string>) ) );
@@ -79,6 +79,12 @@ void TestCase::Test_Result(bool result)
         this->label->setStyleSheet(green);
     else
         this->label->setStyleSheet(red);
+}
+
+void TestCase::start_simulating()
+{
+    emit startSimulationTestCase(this->assembly_path);
+    this->file_tester->StartTest();
 }
 void TestCase::setPaths(string assembly, string regfile, string datamem)
 {

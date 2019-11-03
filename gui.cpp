@@ -106,6 +106,7 @@ void GUI::Signals_Slots()
     connect( this->simulator, SIGNAL(update_registers() )    , this->Registers_Table , SLOT( updateRegisters() ) );
     connect( this->simulator, SIGNAL(update_data_memory() ), this->Data_Memory , SLOT( update_memory() ) );
     connect( this->simulator, SIGNAL(clear_data_memory() ), this->Data_Memory , SLOT( clear() ) );
+    connect(this->simulator,  SIGNAL(clearTextEditor()),    this->Code_Editor,SLOT(Clear()) );
     connect( this->simulator, SIGNAL (update_Text_Editor(vector<string>)) , this->Code_Editor, SLOT(Write_Code_Text_Editor(vector<string>)) );
 
     connect( this->simulator->Alu, SIGNAL(Info_Output(string)), this,SLOT(Output_Screen(string) ));
@@ -113,6 +114,7 @@ void GUI::Signals_Slots()
     connect( this->simulator->data_memory , SIGNAL (update_dataMemory_GUI(uint)) , this->Data_Memory , SLOT(update_memory(uint)) );
 
     connect(this->testWidget,SIGNAL(output_screen(vector<string>)),this->IO_Screen,SLOT(Write_Code_Text_Editor(vector<string>)));
+    connect(this->testWidget,SIGNAL(start_simulation(string)), this,SLOT(Start_Simulation_File(string)));
 
 }
 
@@ -162,6 +164,11 @@ void GUI::Start_Simulation_File(QStringList code_file_path)
     string path = code_file_path[0].toStdString();
     this->simulator->Simulate(path);
     this->lineEdit->setText(QString::fromStdString(path));
+}
+
+void GUI::Start_Simulation_File(string test_assembly_path)
+{
+    this->simulator->Simulate(test_assembly_path);
 }
 
 void GUI::Output_Screen(string syscall_msg)

@@ -48,11 +48,14 @@ public:
     void init_details_widget();
     void setPaths(string assembly , string  regfile , string datamem);
 
+signals:
+    void startSimulationTestCase(string);
 public slots:
     void show_details();
     void Set_Warnings_RegFile(vector<string>);
     void Set_Warnings_DataMem(vector<string>);
     void Test_Result(bool result);
+    void start_simulating();
 
 };
 

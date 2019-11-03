@@ -94,6 +94,7 @@ signals:
 public slots:
     void Start_Simulation();
     void Start_Simulation_File(QStringList);
+    void Start_Simulation_File(string);
     void Output_Screen(string);
     void file_paths_selected_dialog(QStringList);
     void Browse_file();

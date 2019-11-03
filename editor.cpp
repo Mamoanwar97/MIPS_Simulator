@@ -40,6 +40,11 @@ vector<string> Editor::Read_Code_Text_Editor()
     vector<string> instructions =split_string(plaintext,"\n");
     return instructions;}
 
+void Editor::Clear()
+{
+    this->clear();
+}
+
 vector<string> split_string(string s,string splitter)
 {
     vector<string> splitted;

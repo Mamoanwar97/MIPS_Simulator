@@ -143,6 +143,7 @@ void Simulator::Read_Instruction()
     this->instructions.push_back(vector<string> {"end"});
 
     cout << "======================" << endl;
+    emit clearTextEditor();
     emit update_Text_Editor(this->code);
 }
 
