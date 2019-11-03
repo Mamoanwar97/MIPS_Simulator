@@ -3,6 +3,7 @@
 TestCase::TestCase(string Name,QWidget *parent) : QWidget (parent)
 {
     // Memory Allocation
+    this->file_tester = new filesTester();
     this->layout = new QHBoxLayout();
     this->setLayout(this->layout);
     this->label  = new QLabel();
@@ -19,7 +20,8 @@ TestCase::TestCase(string Name,QWidget *parent) : QWidget (parent)
     this->layout->setStretch(0,50); // index 0 is label ,,, any big value is good for dominant stretching for label
     this->layout->addWidget(this->BtnDetails,Qt::AlignRight);
     this->layout->addWidget(this->BtnTest,Qt::AlignRight);
-    this->setMinimumWidth(MIN_SIZE);
+    this->setMinimumWidth(MIN_WIDTH);
+    this->setMaximumHeight(TEST_HIGHT);
 
     this->init_details_widget();
     this->ObserverPattern();
@@ -29,7 +31,12 @@ TestCase::TestCase(string Name,QWidget *parent) : QWidget (parent)
 void TestCase::ObserverPattern()
 {
     connect(this->BtnDetails,SIGNAL(clicked()) ,this,SLOT(show_details()));
-    connect(this->BtnTest   ,SIGNAL(clicked()) ,this,SLOT(Test_Files()));
+    connect(this->BtnTest   ,SIGNAL(clicked()) ,this->file_tester,SLOT(StartTest()));
+
+    connect(this->file_tester,SIGNAL(set_status(bool)) ,this,SLOT( Test_Result(bool) ) );
+    connect(this->file_tester,SIGNAL(set_reg_warnings (vector<string>)) ,this,SLOT( Set_Warnings_RegFile(vector<string>) ) );
+    connect(this->file_tester,SIGNAL(set_data_warnings(vector<string>)) ,this,SLOT( Set_Warnings_DataMem(vector<string>) ) );
+
 }
 
 void TestCase::init_details_widget()
@@ -58,28 +65,13 @@ void TestCase::init_details_widget()
     this->DetailsWidget->addTab(this->RegFile_Details,"RegFile");
     this->DetailsWidget->addTab(this->DataMem_Details,"DataMemory");
     this->DetailsWidget->setMovable(true);
-
+    this->DetailsWidget->setMinimumWidth(DETAILS_WIDTH);
+    this->DetailsWidget->setMinimumHeight(DETAILS_HIGHT);
 }
-
 void TestCase::show_details()
 {
     this->DetailsWidget->show();
 }
-
-void TestCase::Set_Warnings_DataMem(vector<string> warnings)
-{
-    for (uint i =0 ; i< warnings.size() ; i++)
-    {
-        this->id ++ ;
-        QStringList Warning ;
-        // id , Warning ICon , Warning
-        Warning.append( QString::fromStdString(to_string(this->id)) );
-        Warning.append( QString::fromStdString("Warning:: " + warnings[i]) );
-        // add the colomns item to RegFile
-        this->DataMem_Details->addItem(Warning);
-    }
-}
-
 void TestCase::Test_Result(bool result)
 {
     this->testCaseState = result;
@@ -88,14 +80,14 @@ void TestCase::Test_Result(bool result)
     else
         this->label->setStyleSheet(red);
 }
-
-void TestCase::Test_Files()
+void TestCase::setPaths(string assembly, string regfile, string datamem)
 {
-
+    this->file_tester->set_paths(regfile,datamem);
+    this->assembly_path = assembly;
 }
-
 void TestCase::Set_Warnings_RegFile(vector<string> warnings)
 {
+    this->RegFile_Details->Clear();
     for (uint i =0 ; i< warnings.size() ; i++)
     {
         this->id ++ ;
@@ -105,6 +97,20 @@ void TestCase::Set_Warnings_RegFile(vector<string> warnings)
         Warning.append( QString::fromStdString("Warning:: " + warnings[i]) );
         // add the colomns item to RegFile
         this->RegFile_Details->addItem(Warning);
+    }
+}
+void TestCase::Set_Warnings_DataMem(vector<string> warnings)
+{
+    this->DataMem_Details->Clear();
+    for (uint i =0 ; i< warnings.size() ; i++)
+    {
+        this->id ++ ;
+        QStringList Warning ;
+        // id , Warning ICon , Warning
+        Warning.append( QString::fromStdString(to_string(this->id)) );
+        Warning.append( QString::fromStdString("Warning:: " + warnings[i]) );
+        // add the colomns item to RegFile
+        this->DataMem_Details->addItem(Warning);
     }
 }
 

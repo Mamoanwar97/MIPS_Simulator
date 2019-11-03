@@ -11,7 +11,7 @@
 #include "testcase.h"
 #include "browsefile.h"
 #include <QScrollArea>
-
+#define TEST_CASES 5
 
 class TestWidget : public QWidget
 {
@@ -33,11 +33,13 @@ public:
     TestWidget(QWidget *parent = nullptr);
     void Design();
     void ObserverPattern();
-    void addOriginalTestCase();
+    void addOriginalTestCases();
 signals:
+    void start_simulation(string);
     void output_screen(vector<string>);
 public slots:
     void addTestCase();
+    void TestAll();
 };
 
 #endif // TESTWIDGET_H

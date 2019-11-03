@@ -43,6 +43,11 @@ void BrowseFile::clear()
     this->path = "";
 }
 
+string BrowseFile::getText()
+{
+    return this->entry->text().toStdString();
+}
+
 void BrowseFile::show_dialog()
 {
     cout << "Browse File"<< endl;

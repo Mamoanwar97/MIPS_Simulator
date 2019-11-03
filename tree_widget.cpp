@@ -78,3 +78,9 @@ void Tree_Widget::SetHeaderLabels(QTreeWidgetItem *item)
         for(int i =0 ; i< item->columnCount(); i++)
             item->setTextAlignment(0,Qt::AlignCenter);
 }
+
+void Tree_Widget::Clear()
+{
+    this->clear();
+    this->Items.clear();
+}

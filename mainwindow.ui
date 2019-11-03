@@ -13,58 +13,7 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <widget class="QWidget" name="centralWidget">
-   <widget class="QListWidget" name="listWidget">
-    <property name="geometry">
-     <rect>
-      <x>340</x>
-      <y>110</y>
-      <width>501</width>
-      <height>271</height>
-     </rect>
-    </property>
-    <item>
-     <property name="text">
-      <string>
-Warning: register $s0 expected to be xx not YY</string>
-     </property>
-     <property name="background">
-      <brush brushstyle="Dense4Pattern">
-       <color alpha="255">
-        <red>252</red>
-        <green>233</green>
-        <blue>79</blue>
-       </color>
-      </brush>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>Warning: this design is not Ray2</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>
-Warning: register $s0 expected to be xx not YY</string>
-     </property>
-     <property name="background">
-      <brush brushstyle="Dense4Pattern">
-       <color alpha="255">
-        <red>252</red>
-        <green>233</green>
-        <blue>79</blue>
-       </color>
-      </brush>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>Warning: this design is not Ray2</string>
-     </property>
-    </item>
-   </widget>
-  </widget>
+  <widget class="QWidget" name="centralWidget"/>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>

@@ -17,7 +17,7 @@ private:
     int* memory ;
     ifstream file;
 public:
-    explicit Data_Memory(QObject *parent = 0);
+    explicit Data_Memory(QObject *parent = nullptr);
     void clear();
     vector<string> split_string(string s,string splitter);
 

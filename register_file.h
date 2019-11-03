@@ -7,8 +7,8 @@
 using namespace std;
 
 #define WORD_SIZE sizeof(int)
-#define MEMORYSIZE 8192
-#define STACK_SIZE (WORD_SIZE*MEMORYSIZE)
+#define MEMORYSIZE 8191
+#define STACK_SIZE (MEMORYSIZE)
 
 class Register_File : public QObject
 {

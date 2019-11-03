@@ -44,7 +44,8 @@ public:
     void setTreeColor(QColor);
     void setAlignCenter(bool);
     void setWarning(bool);
-    void SetHeaderLabels(QTreeWidgetItem*item);
+    void SetHeaderLabels(QTreeWidgetItem*item); // not useds
+    void Clear();
 
 
 };

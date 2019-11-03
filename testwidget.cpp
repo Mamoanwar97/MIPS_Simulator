@@ -15,11 +15,9 @@ TestWidget::TestWidget(QWidget *parent) : QWidget(parent)
     this->AddTestBtn = new QPushButton("Add TestCase");
     this->TestAllBtn = new QPushButton("Test All");
 
-    for (uint i =0 ; i<8 ; i++)
-        this->addOriginalTestCase();
-
     this->Design();
     this->ObserverPattern();
+    this->addOriginalTestCases();
 }
 
 void TestWidget::Design()
@@ -45,14 +43,7 @@ void TestWidget::Design()
 void TestWidget::ObserverPattern()
 {
     connect(this->AddTestBtn,SIGNAL(clicked()),this,SLOT(addTestCase()));
-}
-
-void TestWidget::addOriginalTestCase()
-{
-    ulong id = this->TestCases.size();
-    TestCase* testcase = new TestCase("TestCase"+to_string(id+1));
-    this->testCasesLayout->addWidget(testcase);
-    this->TestCases.push_back(testcase);
+    connect(this->TestAllBtn,SIGNAL(clicked()),this,SLOT(TestAll()));
 }
 
 void TestWidget::addTestCase()
@@ -68,8 +59,41 @@ void TestWidget::addTestCase()
         this->RegFileBrowse->clear();
         this->DataMemBrowse->clear();
         this->AssemblyBrowse->clear();
+        // set Paths
+        testcase->setPaths(this->AssemblyBrowse->getText() , this-> RegFileBrowse->getText() , this->DataMemBrowse->getText());
     }
     else {
         emit output_screen({"Error in Adding NewTask ... Please Add All Required Files"});
     }
 }
+
+void TestWidget::TestAll()
+{
+    for (uint i = 0 ; i< TestCases.size() ; i++)
+    {
+        emit start_simulation(TestCases[i]->assembly_path);
+        TestCases[i]->file_tester->StartTest();
+    }
+    emit output_screen({"Testing is Done"});
+
+}
+
+
+void TestWidget::addOriginalTestCases()
+{
+    string folder_path = "/home/amrelsersy/MIPS_Simulator/TestCases/TestCase";
+    string assembly = "assembly.txt" , regFie = "regFile.txt" , datamem = "dataMemory.txt";
+    for (int i =1 ; i <= TEST_CASES ; i++)
+    {
+        string path = folder_path + to_string(i) + "/";
+        // add new testCase in Design
+        ulong id = this->TestCases.size();
+        TestCase* testcase = new TestCase("TestCase"+to_string(id+1));
+        this->testCasesLayout->addWidget(testcase);
+        this->TestCases.push_back(testcase);
+        // set paths
+        testcase->setPaths(path+assembly  ,path+regFie  ,path+datamem);
+    }
+
+}
+

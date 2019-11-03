@@ -12,15 +12,20 @@
 #include <QStyle>
 #include <QTreeWidget>
 #include <QIcon>
+#include "filestester.h"
 
-#define green "background-color:rgb(0, 200, 0)"
-#define red "background-color:rgb(255, 0, 0)"
-#define grey "background-color:rgb(220, 220, 220)"
-#define MIN_SIZE 600
+#define green "background-color:rgb(0, 255, 0); color:white"
+#define red "background-color:rgb(255,0,0); color:white"
+#define grey "background-color:rgb(220, 220, 220) ; color:white"
+#define MIN_WIDTH 600
+#define TEST_HIGHT 50
+#define DETAILS_WIDTH 600
+#define DETAILS_HIGHT 400
 
 class TestCase : public QWidget
 {
     Q_OBJECT
+    friend class TestWidget;
 private:
     QHBoxLayout* layout;
     QLabel* label;
@@ -34,21 +39,21 @@ private:
     Tree_Widget* DataMem_Details;
     int id;
 
-    string assemblyPath;
-    string regfilePath;
-    string datamemPath;
+    filesTester* file_tester;
+    string assembly_path;
 
 public:
     TestCase(string ,QWidget* parent=nullptr);
     void ObserverPattern();
     void init_details_widget();
-    void Test_Result(bool result);
-signals:
+    void setPaths(string assembly , string  regfile , string datamem);
+
 public slots:
     void show_details();
     void Set_Warnings_RegFile(vector<string>);
     void Set_Warnings_DataMem(vector<string>);
-    void Test_Files();
+    void Test_Result(bool result);
+
 };
 
 #endif // TestCase_H

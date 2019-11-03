@@ -28,6 +28,7 @@ public:
     void ObserverPattern();
     bool isSelectedPath();
     void clear();
+    string getText();
 
 public slots:
     void show_dialog();

@@ -42,7 +42,8 @@ SOURCES += \
     data_mem_widget.cpp \
     testcase.cpp \
     testwidget.cpp \
-    browsefile.cpp
+    browsefile.cpp \
+    filestester.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -61,7 +62,8 @@ HEADERS += \
     data_mem_widget.h \
     testcase.h \
     testwidget.h \
-    browsefile.h
+    browsefile.h \
+    filestester.h
 
 FORMS += \
         mainwindow.ui
