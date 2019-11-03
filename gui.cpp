@@ -1,7 +1,6 @@
 #include "gui.h"
 
-GUI::GUI(QWidget *parent) :
-    QWidget (parent)
+GUI::GUI(QWidget *parent) :   QWidget (parent)
 {
     this->path = "/home/amrelsersy/MIPS/dummy.txt";
     // memory allocation
@@ -80,7 +79,7 @@ void GUI::init_horizontal_layout()
     this->RunBtn           = new QPushButton(RUN);
     this->TestBtn         = new QPushButton(TEST);
 
-    this->horizontalLayout->addWidget(this->lineEdit);
+    this->horizontalLayout->addWidget(this->lineEdit);1
     this->horizontalLayout->addWidget(this->includeBtn);
     this->horizontalLayout->addWidget(this->RunBtn);
     this->horizontalLayout->addWidget(this->TestBtn);
@@ -106,7 +105,7 @@ void GUI::Signals_Slots()
     connect( this->simulator, SIGNAL(update_registers() )    , this->Registers_Table , SLOT( updateRegisters() ) );
     connect( this->simulator, SIGNAL(update_data_memory() ), this->Data_Memory , SLOT( update_memory() ) );
     connect( this->simulator, SIGNAL(clear_data_memory() ), this->Data_Memory , SLOT( clear() ) );
-    connect(this->simulator,  SIGNAL(clearTextEditor()),    this->Code_Editor,SLOT(Clear()) );
+    connect( this->simulator,  SIGNAL(clearTextEditor()),    this->Code_Editor,SLOT(Clear()) );
     connect( this->simulator, SIGNAL (update_Text_Editor(vector<string>)) , this->Code_Editor, SLOT(Write_Code_Text_Editor(vector<string>)) );
 
     connect( this->simulator->Alu, SIGNAL(Info_Output(string)), this,SLOT(Output_Screen(string) ));

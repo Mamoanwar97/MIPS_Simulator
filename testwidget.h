@@ -12,6 +12,8 @@
 #include "browsefile.h"
 #include <QScrollArea>
 #define TEST_CASES 5
+// #define TESTCASES_PATH "/home/amrelsersy/MIPS_Simulator/TestCases/TestCase"
+#define TESTCASES_PATH "C:\\MIPS_Simulator\\TestCases\\TestCase"
 
 class TestWidget : public QWidget
 {

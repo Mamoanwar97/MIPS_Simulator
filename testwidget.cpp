@@ -87,11 +87,11 @@ void TestWidget::TestAll()
 
 void TestWidget::addOriginalTestCases()
 {
-    string folder_path = "/home/amrelsersy/MIPS_Simulator/TestCases/TestCase";
+    string folder_path = TESTCASES_PATH;
     string assembly = "assembly.txt" , regFie = "regFile.txt" , datamem = "dataMemory.txt";
     for (int i =1 ; i <= TEST_CASES ; i++)
     {
-        string path = folder_path + to_string(i) + "/";
+        string path = folder_path + to_string(i) + "\\";
         // add new testCase in Design
         ulong id = this->TestCases.size();
         TestCase* testcase = new TestCase("TestCase"+to_string(id+1));

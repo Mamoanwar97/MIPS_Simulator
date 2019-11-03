@@ -2,8 +2,8 @@
 
 filesTester::filesTester(QObject *parent) : QObject (parent)
 {
-//    this->path = "C:\\MIPS\\" ;  // windows
-    this->path = "/home/amrelsersy/MIPS_Simulator/TestCases/" ;  // Linux
+    this->path = "C:\\MIPS\\" ;  // windows
+//    this->path = "/home/amrelsersy/MIPS_Simulator/TestCases/" ;  // Linux
 }
 void filesTester::set_paths(string regfile, string data)
 {
