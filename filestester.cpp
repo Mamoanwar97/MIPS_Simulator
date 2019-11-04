@@ -5,10 +5,20 @@ filesTester::filesTester(QObject *parent) : QObject (parent)
     this->path = "C:\\MIPS\\" ;  // windows
 //    this->path = "/home/amrelsersy/MIPS_Simulator/TestCases/" ;  // Linux
 }
+string filesTester::fixpath(string s1)
+{
+    for(int i=0;i <s1.length();i++)
+    {
+        if(s1[i] == '/')
+           s1.replace(i,1,"\\");
+    }
+    return s1;
+}
 void filesTester::set_paths(string regfile, string data)
 {
-    this -> correct_reg_dis = regfile;
-    this -> correct_data_dis = data;
+    this -> correct_reg_dis = fixpath(regfile);
+    this -> correct_data_dis = fixpath(data);
+    cout << "****done******" << endl <<correct_reg_dis << endl << correct_data_dis << endl;
 }
 
 vector<string> filesTester:: split_string(string s,string splitter)
@@ -28,7 +38,7 @@ vector<string> filesTester:: split_string(string s,string splitter)
 }
 bool filesTester:: get_status()
 {
-    if((data_warnings.size() + data_warnings.size()) == 0)
+    if((data_warnings.size() + reg_warnings.size()) == 0)
         return true;
     return false;
 }

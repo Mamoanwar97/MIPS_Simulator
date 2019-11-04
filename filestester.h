@@ -26,6 +26,7 @@ public:
     bool get_status();
     void check_reg();
     void check_data();
+    string fixpath(string s1);
 
 signals:
     void set_status(bool);

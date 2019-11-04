@@ -20,6 +20,7 @@ class TestWidget : public QWidget
     Q_OBJECT
 private:
     QVBoxLayout* centralLayout;
+    QWidget* grid_widget ;
     QGridLayout* grid;
     QWidget* testcasesWidget;
     QScrollArea* scroll;

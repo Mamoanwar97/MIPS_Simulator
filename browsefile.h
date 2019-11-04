@@ -12,6 +12,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define MIN_WIDTH_LABEL 95
+#define DIRECTORY "C:\\MIPS_Simulator\\TestCases"
 class BrowseFile : public QWidget
 {
     Q_OBJECT

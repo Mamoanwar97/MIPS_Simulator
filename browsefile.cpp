@@ -16,7 +16,7 @@ BrowseFile::BrowseFile(string name ,QWidget *parent) : QWidget(parent)
     this->layout->addWidget(this->BrowseBtn);
     this->setLayout(this->layout);
 
-    this->file_dialog->setDirectory("/home/amrelsersy/ay7aga"); // set the open directory
+    this->file_dialog->setDirectory(DIRECTORY); // set the open directory
     this->file_dialog->setFileMode(QFileDialog::ExistingFile); // select existing one file only
     this->file_dialog->setNameFilter("*.txt");                  // show only txt extentions
     this->file_dialog->setOption(QFileDialog::ReadOnly);        // readonly mode dosn't support deleting or writing

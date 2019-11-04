@@ -4,7 +4,7 @@ TestWidget::TestWidget(QWidget *parent) : QWidget(parent)
 {
     this->centralLayout = new QVBoxLayout();
     this->grid = new QGridLayout();
-
+    this->grid_widget = new QWidget();
     this->testcasesWidget = new QWidget();
     this->testCasesLayout = new QVBoxLayout();
     this->scroll = new QScrollArea();
@@ -13,6 +13,7 @@ TestWidget::TestWidget(QWidget *parent) : QWidget(parent)
     this->DataMemBrowse = new BrowseFile ("DataMemory:");
     this->AssemblyBrowse= new BrowseFile ("Asembly:");
     this->AddTestBtn = new QPushButton("Add TestCase");
+    this->AddTestBtn->setStyleSheet("background-color:white;");
     this->TestAllBtn = new QPushButton("Test All");
 
     this->Design();
@@ -29,15 +30,17 @@ void TestWidget::Design()
     this->grid->addWidget(this->TestAllBtn,3,1);
 
     this->testcasesWidget->setLayout(this->testCasesLayout);
+    this->grid_widget->setLayout(this->grid);
     scroll->setWidget(this->testcasesWidget);
     scroll->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     scroll->setWidgetResizable(true);
 
-    this->centralLayout->addLayout(this->grid);
+    this->centralLayout->addWidget(this->grid_widget);
     this->centralLayout->addWidget(this->scroll);
 
     this->setLayout(this->centralLayout);
-    this->testcasesWidget->setStyleSheet("background-color:white");
+    this->testcasesWidget->setStyleSheet("background-color:white;");
+    this->grid_widget->setStyleSheet("background-color:blue");
 }
 
 void TestWidget::ObserverPattern()
@@ -55,12 +58,15 @@ void TestWidget::addTestCase()
         TestCase* testcase = new TestCase("TestCase"+to_string(id+1));
         this->testCasesLayout->addWidget(testcase);
         this->TestCases.push_back(testcase);
+
+        // set Paths
+        testcase->setPaths(this->AssemblyBrowse->getText() , this-> RegFileBrowse->getText() , this->DataMemBrowse->getText());
+
         // clear the browsers
         this->RegFileBrowse->clear();
         this->DataMemBrowse->clear();
         this->AssemblyBrowse->clear();
-        // set Paths
-        testcase->setPaths(this->AssemblyBrowse->getText() , this-> RegFileBrowse->getText() , this->DataMemBrowse->getText());
+
         connect(testcase,SIGNAL(startSimulationTestCase(string)),this,SLOT(oneShootTest(string)));
     }
     else {
