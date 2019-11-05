@@ -5,17 +5,26 @@ TestWidget::TestWidget(QWidget *parent) : QWidget(parent)
     this->centralLayout = new QVBoxLayout();
     this->grid = new QGridLayout();
     this->grid_widget = new QWidget();
+    this->grid_widget->setStyleSheet("background-color: white;"
+                                     "border-radius: 5%;");
     this->testcasesWidget = new QWidget();
+    this->testcasesWidget->setStyleSheet("background-color: white;"
+                                         "border-radius: 10%;");
     this->testCasesLayout = new QVBoxLayout();
     this->scroll = new QScrollArea();
-
     this->RegFileBrowse = new BrowseFile ("RegFile:");
     this->DataMemBrowse = new BrowseFile ("DataMemory:");
     this->AssemblyBrowse= new BrowseFile ("Asembly:");
     this->AddTestBtn = new QPushButton("Add TestCase");
-    this->AddTestBtn->setStyleSheet("background-color:white;");
+    this->AddTestBtn->setStyleSheet("background-color: rgb(0,0,128);"
+                                    "color: white;"
+                                   "border-radius: 5%;"
+                                    "font-weight: bold;");
     this->TestAllBtn = new QPushButton("Test All");
-
+    this->TestAllBtn->setStyleSheet("background-color: rgb(0,0,128);"
+                                    "color: white;"
+                                   "border-radius: 5%;"
+                                    "font-weight: bold;");
     this->Design();
     this->ObserverPattern();
     this->addOriginalTestCases();
@@ -39,8 +48,6 @@ void TestWidget::Design()
     this->centralLayout->addWidget(this->scroll);
 
     this->setLayout(this->centralLayout);
-    this->testcasesWidget->setStyleSheet("background-color:white;");
-    this->grid_widget->setStyleSheet("background-color:blue");
 }
 
 void TestWidget::ObserverPattern()
@@ -55,7 +62,7 @@ void TestWidget::addTestCase()
     {
         // add new TestCase
         ulong id = this->TestCases.size();
-        TestCase* testcase = new TestCase("TestCase"+to_string(id+1));
+        TestCase* testcase = new TestCase("Test Case "+to_string(id+1));
         this->testCasesLayout->addWidget(testcase);
         this->TestCases.push_back(testcase);
 
@@ -100,7 +107,7 @@ void TestWidget::addOriginalTestCases()
         string path = folder_path + to_string(i) + "\\";
         // add new testCase in Design
         ulong id = this->TestCases.size();
-        TestCase* testcase = new TestCase("TestCase"+to_string(id+1));
+        TestCase* testcase = new TestCase("Test Case "+to_string(id+1));
         this->testCasesLayout->addWidget(testcase);
         this->TestCases.push_back(testcase);
         // set paths

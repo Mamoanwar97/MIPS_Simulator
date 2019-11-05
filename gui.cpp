@@ -9,19 +9,25 @@ GUI::GUI(QWidget *parent) :   QWidget (parent)
     this->grid    = new QGridLayout();
 
     this->tabWidget       = new QTabWidget();
+    this->tabWidget->setStyleSheet("background-color:rgb(0,0,128);");
     this->Registers_Table = new regFile_Widget();
+    this->Registers_Table->setStyleSheet("background: white;");
     this->Execution       = new Execute_Widget();
+    this->Execution->setStyleSheet("background: white;");
     this->Data_Memory     = new Data_Mem_Widget();
+    this->Data_Memory->setStyleSheet("background: white;");
     this->testWidget      = new TestWidget();
+    this->testWidget->setStyleSheet("background: white;");
 
     // set colors of highlight
     QColor Code_highlight_color; Code_highlight_color.setRgb(Code_color);
-
     this->Code_Editor     = new Editor(Code_highlight_color);
+    this->Code_Editor->setStyleSheet("background: white;");
     this->IO_Screen       = new Editor();
     this->IO_Screen_Container = new QTabWidget();
+    this->IO_Screen_Container->setStyleSheet("background:rgb(0,0,128);");
     this->IO_Screen->setReadOnly(true);
-
+    this->IO_Screen->setStyleSheet("background: white;");
     this->init_horizontal_layout();
     this->init_files_dialog();
     this->Design();
@@ -41,7 +47,6 @@ GUI::~GUI()
 
 void GUI::Design()
 {
-    this->setStyleSheet("background-color:white");
     this->tabWidget->addTab(this->Code_Editor,EDIT);
     this->tabWidget->addTab(this->Execution,EXECUTE);
     this->tabWidget->addTab(this->Data_Memory,DATA_MEM);
@@ -75,9 +80,22 @@ void GUI::init_horizontal_layout()
 {
     this->horizontalLayout = new QHBoxLayout();
     this->lineEdit         = new QLineEdit();
+    this->lineEdit->setStyleSheet("background-color: white;");
     this->includeBtn       = new QPushButton(INCLUDE);
+    this->includeBtn->setStyleSheet("background-color: white;"
+                                    "color: rgb(0,0,128);"
+                                   "border-radius: 5%;"
+                                    "font-weight: 400;");
     this->RunBtn           = new QPushButton(RUN);
+    this->RunBtn->setStyleSheet("background-color: white;"
+                                "color: rgb(0,0,128);"
+                               "border-radius: 5%;"
+                                "font-weight: 400;");
     this->TestBtn         = new QPushButton(TEST);
+    this->TestBtn->setStyleSheet("background-color: white;"
+                                 "color: rgb(0,0,128);"
+                                "border-radius: 5%;"
+                                 "font-weight: 400;");
 
     this->horizontalLayout->addWidget(this->lineEdit);
     this->horizontalLayout->addWidget(this->includeBtn);
@@ -105,9 +123,9 @@ void GUI::Signals_Slots()
     connect( this->simulator, SIGNAL(update_registers() )    , this->Registers_Table , SLOT( updateRegisters() ) );
     connect( this->simulator, SIGNAL(update_data_memory() ), this->Data_Memory , SLOT( update_memory() ) );
     connect( this->simulator, SIGNAL(clear_data_memory() ), this->Data_Memory , SLOT( clear() ) );
-    connect( this->simulator,  SIGNAL(clearTextEditor()),    this->Code_Editor,SLOT(Clear()) );
+    connect( this->simulator, SIGNAL(clearTextEditor()),    this->Code_Editor,SLOT(Clear()) );
     connect( this->simulator, SIGNAL (update_Text_Editor(vector<string>)) , this->Code_Editor, SLOT(Write_Code_Text_Editor(vector<string>)) );
-
+    connect( this->simulator, SIGNAL (show(vector<string>)) , this->IO_Screen, SLOT(Write_Code_Text_Editor(vector<string>)) );
     connect( this->simulator->Alu, SIGNAL(Info_Output(string)), this,SLOT(Output_Screen(string) ));
     connect( this->simulator->Alu , SIGNAL (update_memory_gui(uint)) , this->Data_Memory , SLOT(update_memory(uint)) );
     connect( this->simulator->data_memory , SIGNAL (update_dataMemory_GUI(uint)) , this->Data_Memory , SLOT(update_memory(uint)) );
@@ -120,16 +138,17 @@ void GUI::Signals_Slots()
 void GUI::init_files_dialog()
 {
     this->file_dialog = new QFileDialog(this);
-    this->file_dialog->setDirectory("/home/amrelsersy/ay7aga"); // set the open directory
+    this->file_dialog->setDirectory("C:\\MIPS"); // set the open directory
     this->file_dialog->setFileMode(QFileDialog::ExistingFiles); // select existing file only
     this->file_dialog->setNameFilter("*.txt");                  // show only txt extentions
     this->file_dialog->setOption(QFileDialog::ReadOnly);        // readonly mode dosn't support deleting or writing
 
     this->include_file_dialog = new QFileDialog(this);
-    this->include_file_dialog->setDirectory("/home/amrelsersy"); // set the open directory
+    this->include_file_dialog->setDirectory("C:\\MIPS"); // set the open directory
     this->include_file_dialog->setFileMode(QFileDialog::ExistingFile); // select existing file (one file )only
     this->include_file_dialog->setNameFilter("*.txt");                  // show only txt extentions
     this->include_file_dialog->setOption(QFileDialog::ReadOnly);        // readonly mode dosn't support deleting or writing
+    this->include_file_dialog->setStyleSheet("background: white");
 
 //    this->file_dialog->show();
 //    this->include_file_dialog->show();
@@ -155,6 +174,7 @@ void GUI::Start_Simulation()
 
 void GUI::Start_Simulation_File(QStringList code_file_path)
 {
+
     this->Code_Editor->clear();
     for (int i =0 ; i< code_file_path.size(); i++)
         cout << code_file_path[i].toStdString() << endl;

@@ -95,6 +95,7 @@ signals:
     void file_dataMemory_data(string path);
     void update_Text_Editor(vector<string>);
     void clearTextEditor();
+    void show(vector<string>);
 public slots:
     void set_Program_Counter(string label);
     void set_Program_Counter(int adress);
