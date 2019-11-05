@@ -12,9 +12,9 @@ TestWidget::TestWidget(QWidget *parent) : QWidget(parent)
                                          "border-radius: 10%;");
     this->testCasesLayout = new QVBoxLayout();
     this->scroll = new QScrollArea();
-    this->RegFileBrowse = new BrowseFile ("RegFile:");
-    this->DataMemBrowse = new BrowseFile ("DataMemory:");
-    this->AssemblyBrowse= new BrowseFile ("Asembly:");
+    this->RegFileBrowse = new BrowseFile ("Register File:");
+    this->DataMemBrowse = new BrowseFile ("Data Memory:");
+    this->AssemblyBrowse= new BrowseFile ("Assembly Code:");
     this->AddTestBtn = new QPushButton("Add TestCase");
     this->AddTestBtn->setStyleSheet("background-color: rgb(0,0,128);"
                                     "color: white;"
