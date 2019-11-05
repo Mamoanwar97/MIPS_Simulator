@@ -4,19 +4,16 @@
 #include <QWidget>
 #include <QLabel>
 #include <QPushButton>
-#include "tree_widget.h"
-#include "editor.h"
-#include <iostream>
-#include <bits/stdc++.h>
 #include <QHBoxLayout>
 #include <QStyle>
 #include <QTreeWidget>
 #include <QIcon>
+#include <iostream>
+#include <bits/stdc++.h>
+#include "tree_widget.h"
+#include "editor.h"
 #include "filestester.h"
 
-#define green "background-color:rgb(0, 255, 0); color:white"
-#define red "background-color:rgb(255,0,0); color:white"
-#define grey "background-color:rgb(220, 220, 220) ; color:white"
 #define MIN_WIDTH 600
 #define TEST_HIGHT 50
 #define DETAILS_WIDTH 600
@@ -33,12 +30,10 @@ private:
     bool testCaseState;
     QPushButton* BtnDetails;
     QPushButton* BtnTest;
-
     QTabWidget* DetailsWidget;
     Tree_Widget* RegFile_Details;
     Tree_Widget* DataMem_Details;
     int id;
-
     filesTester* file_tester;
     string assembly_path;
 

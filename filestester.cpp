@@ -18,7 +18,7 @@ void filesTester::set_paths(string regfile, string data)
 {
     this -> correct_reg_dis = fixpath(regfile);
     this -> correct_data_dis = fixpath(data);
-    cout << "****done******" << endl <<correct_reg_dis << endl << correct_data_dis << endl;
+   // cout << "****done******" << endl <<correct_reg_dis << endl << correct_data_dis << endl;
 }
 
 vector<string> filesTester:: split_string(string s,string splitter)
@@ -82,10 +82,16 @@ void filesTester:: check_reg()
 
     for(int i=0; i< 32; i++)
     {
-        if(correct_values[i] != new_values[i])
+        if((correct_values[i] != new_values[i]) && ((i == 0) || (i == 1) || (i == 26) || (i == 27)))
         {
             string error;
-            error = "register: " + regs[i] + " correct value should be " + to_string(correct_values[i]) + " not " + to_string(new_values[i]);
+            error = "Access denied - You tried to access a reserved register " + regs[i];
+            this -> reg_warnings.push_back(error);
+        }
+        else if(correct_values[i] != new_values[i])
+        {
+            string error;
+            error = "Register " + regs[i] + " correct value should be " + to_string(correct_values[i]) + " not " + to_string(new_values[i]);
             this -> reg_warnings.push_back(error);
         }
     }
@@ -139,7 +145,7 @@ void filesTester::check_data()
                 {
 
                     string error;
-                    error = "address: 0x" + to_string(i->first) + " correct value should be " + to_string(i->second) + " not " + to_string(j->second);
+                    error = "Address: 0x" + to_string(i->first) + " correct value should be " + to_string(i->second) + " not " + to_string(j->second);
                     this -> data_warnings.push_back(error);
                 }
             }
@@ -148,7 +154,7 @@ void filesTester::check_data()
         if(flag == 0)
         {
             string error;
-            error = "address: 0x" + to_string(i->first) + " not found";
+            error = "Address: 0x" + to_string(i->first) + " not found";
             this -> data_warnings.push_back(error);
         }
     }
@@ -164,6 +170,7 @@ void filesTester::StartTest()
     this->clear();
     this->check_reg();
     this->check_data();
+    //emit show("Testing Started ..");
     emit set_status( this->get_status() );
     emit set_reg_warnings(this->reg_warnings);
     emit set_data_warnings(this->data_warnings);

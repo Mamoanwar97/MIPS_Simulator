@@ -4,8 +4,9 @@ MainWindow::MainWindow(QWidget *parent) :
 {
         this->gui = new GUI();
         this->setCentralWidget(this->gui);
-        this->setStyleSheet("background-color:rgb(128,0,23);"
-                            "color: rgb(0,0,128);");
+        this->setStyleSheet("background-color:rgb(0,0,128);"
+                            "color: rgb(0,0,102);"
+                            "font-weight: 400;");
 
     //  ======= ToolBox Container ============
     //    QToolBox* toolBox = new QToolBox();

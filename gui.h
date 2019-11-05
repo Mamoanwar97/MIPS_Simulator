@@ -33,18 +33,18 @@
 
 #define RUN "Run"
 #define TEST "Test"
-#define INCLUDE "include"
+#define INCLUDE "Include"
 #define EDIT "Edit"
 #define EXECUTE "Execute"
 #define TEST "Test"
-#define REGISTERS_TYPE "registers"
+#define REGISTERS_TYPE "Registers"
 #define DATA_MEM "Memory"
 
 #define Width_Editor 700
 #define Hight_Editor 500
 #define Registers_Width 350
 #define O_Screen_Hight 150
-#define Code_color 170,170,170 // grey
+#define Code_color 115, 197, 241 // grey
 
 using namespace  std;
 
@@ -64,7 +64,6 @@ private:
     Execute_Widget* Execution;
     Data_Mem_Widget* Data_Memory;
     TestWidget* testWidget;
-
     QHBoxLayout* horizontalLayout;
     QLineEdit *  lineEdit;
     QPushButton* includeBtn;
@@ -84,7 +83,6 @@ public:
     void Design();
     void init_horizontal_layout();
     void Signals_Slots();
-
     void init_files_dialog();
     void keyPressEvent(QKeyEvent * event);
 

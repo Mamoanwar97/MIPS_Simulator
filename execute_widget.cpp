@@ -20,7 +20,7 @@ void Execute_Widget::updateInstructions()
     vector<string> Assembly_code = emit require_AssembledInstructions();
 
     uint_fast64_t n = instructions.size();
-    cout << "n = " << n << endl;
+    //cout << "n = " << n << endl;
 
     for (uint i = 0; i < n; ++i)
     {

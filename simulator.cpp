@@ -68,13 +68,9 @@ void Simulator::Modelsim()
 {
     emit file_assembled_instructions(this->file_assembly_path); // write file with assembledd instructions
     this->modelsim_process->start(this->modelsim_command);// run modelsim to read the assembly file and write in the dataMemory and regFile files
-    cout << "starting ..." << endl;
     this->modelsim_process->waitForStarted();
-    cout << "started" << endl;
     this->modelsim_process->terminate();
-    cout << "terminated " << endl;
     this->modelsim_process->waitForFinished();
-    cout << "finished" << endl;
     emit file_regFile_data(this->file_regFile_path); // read regFile and load it into reg File Widget
     emit file_dataMemory_data(this->file_dataMemory_path); // read dataMemory and load it into Data Memory Widget
 }

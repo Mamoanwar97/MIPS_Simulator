@@ -8,12 +8,22 @@ TestCase::TestCase(string Name,QWidget *parent) : QWidget (parent)
     this->setLayout(this->layout);
     this->label  = new QLabel();
     this->BtnDetails = new QPushButton("Details");
+    this -> BtnDetails->setStyleSheet("background-color: rgb(0,0,102);"
+                                      "color: white;"
+                                     "border-radius: 5%;"
+                                      "font-weight: bold;");
     this->BtnTest    = new QPushButton("Test");
+    this->BtnTest->setStyleSheet("background-color: rgb(0,0,102);"
+                                  "color: white;"
+                                 "border-radius: 5%;"
+                                 "font-weight: bold;");
     this->id = 0;
     // label init
     this->name = Name;
     this->label->setText(QString::fromStdString (this->name) ) ;
-    this->label->setStyleSheet(grey);
+    this->label->setStyleSheet("background-color: rgb(104,229,255);"
+                               "border-radius: 5%;"
+                               "font-weight: 400;");
     this->label->setAlignment(Qt::AlignCenter);
     // Design Layout
     this->layout->addWidget(this->label);
@@ -32,7 +42,6 @@ void TestCase::ObserverPattern()
 {
     connect(this->BtnDetails,SIGNAL(clicked()) ,this,SLOT(show_details()));
     connect(this->BtnTest   ,SIGNAL(clicked()) ,this,SLOT(start_simulating()));
-
     connect(this->file_tester,SIGNAL(set_status(bool)) ,this,SLOT( Test_Result(bool) ) );
     connect(this->file_tester,SIGNAL(set_reg_warnings (vector<string>)) ,this,SLOT( Set_Warnings_RegFile(vector<string>) ) );
     connect(this->file_tester,SIGNAL(set_data_warnings(vector<string>)) ,this,SLOT( Set_Warnings_DataMem(vector<string>) ) );
@@ -42,22 +51,26 @@ void TestCase::ObserverPattern()
 void TestCase::init_details_widget()
 {
     // Memory Allocation
-    this->DetailsWidget = new QTabWidget() ; // don't put ("this" as parent) we want it hidden
+    this->DetailsWidget = new QTabWidget(); // don't put ("this" as parent) we want it hidden
     this->RegFile_Details = new Tree_Widget();
+    this->DetailsWidget->setStyleSheet("background: rgb(255, 51,85);"
+                                       "color: rgb(128,0,0);"
+                                       "font-weight: 400;"
+                                       "border-radius: 5%");
     this->DataMem_Details = new Tree_Widget();
     // Design of RegFile
     this->RegFile_Details->setColumnCount(2);
     this->RegFile_Details->setHeaderLabels ( {"    ID","Warnings"} );
-    this->RegFile_Details->setStyleSheet("QTreeView::item {padding: 15px; color: black;}");
-    this->RegFile_Details->setTreeColor(QColor(255,255,220));
+    this->RegFile_Details->setStyleSheet("QTreeView::item {padding: 15px; color: black; font-weight: bold;}");
+    this->RegFile_Details->setTreeColor(QColor(255,255,0));
     this->RegFile_Details->setWarning(true);
     this->RegFile_Details->headerItem()->setTextAlignment(0,Qt::AlignCenter);
     this->RegFile_Details->headerItem()->setTextAlignment(1,Qt::AlignCenter);
     // Design of DataMem
     this->DataMem_Details->setColumnCount(2);
     this->DataMem_Details->setHeaderLabels ( {"    ID","Warnings"} );
-    this->DataMem_Details->setStyleSheet("QTreeView::item {padding: 15px; color: black;}");
-    this->DataMem_Details->setTreeColor(QColor(255,255,220));
+    this->DataMem_Details->setStyleSheet("QTreeView::item {padding: 15px; color: black; font-weight: bold;}");
+    this->DataMem_Details->setTreeColor(QColor(255,255,0));
     this->DataMem_Details->setWarning(true);
     this->DataMem_Details->headerItem()->setTextAlignment(0,Qt::AlignCenter);
     this->DataMem_Details->headerItem()->setTextAlignment(1,Qt::AlignCenter);
@@ -76,9 +89,15 @@ void TestCase::Test_Result(bool result)
 {
     this->testCaseState = result;
     if (this->testCaseState) // if sucess
-        this->label->setStyleSheet(green);
+        this->label->setStyleSheet("background-color: rgb(0,153,0);"
+                                   "color: white;"
+                                   "border-radius: 5%;"
+                                   "font-weight: 400;");
     else
-        this->label->setStyleSheet(red);
+        this->label->setStyleSheet("background-color: rgb(153,0,0);"
+                                   "color: white;"
+                                   "border-radius: 5%;"
+                                   "font-weight: 400;");
 }
 
 void TestCase::start_simulating()
@@ -100,7 +119,7 @@ void TestCase::Set_Warnings_RegFile(vector<string> warnings)
         QStringList Warning ;
         // id , Warning ICon , Warning
         Warning.append( QString::fromStdString(to_string(this->id)) );
-        Warning.append( QString::fromStdString("Warning:: " + warnings[i]) );
+        Warning.append( QString::fromStdString("Warning : : " + warnings[i]) );
         // add the colomns item to RegFile
         this->RegFile_Details->addItem(Warning);
     }
@@ -114,7 +133,7 @@ void TestCase::Set_Warnings_DataMem(vector<string> warnings)
         QStringList Warning ;
         // id , Warning ICon , Warning
         Warning.append( QString::fromStdString(to_string(this->id)) );
-        Warning.append( QString::fromStdString("Warning:: " + warnings[i]) );
+        Warning.append( QString::fromStdString("Warning : : " + warnings[i]) );
         // add the colomns item to RegFile
         this->DataMem_Details->addItem(Warning);
     }
