@@ -32,7 +32,7 @@
 #include "testwidget.h"
 
 #define RUN "Run"
-#define TEST "Test"
+#define PIPELINE "Pipeline"
 #define INCLUDE "Include"
 #define EDIT "Edit"
 #define EXECUTE "Execute"
@@ -68,7 +68,7 @@ private:
     QLineEdit *  lineEdit;
     QPushButton* includeBtn;
     QPushButton* RunBtn;
-    QPushButton* TestBtn;
+    QPushButton* PipelineBtn;
 
     QFileDialog* file_dialog;
     QFileDialog* include_file_dialog;
@@ -91,11 +91,13 @@ signals:
 
 public slots:
     void Start_Simulation();
+    void Start_Pipeline_Simulation();
     void Start_Simulation_File(QStringList);
     void Start_Simulation_File(string);
     void Output_Screen(string);
     void file_paths_selected_dialog(QStringList);
     void Browse_file();
+
 };
 
 vector<string> split_string(string s,string splitter);

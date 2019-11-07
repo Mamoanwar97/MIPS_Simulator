@@ -8,14 +8,21 @@ Simulator::Simulator()
     //    this->file_dataMemory_path = "/home/amrelsersy/dataMemory.txt";
 
     this->modelsim_path = "C:\\MIPS";
+    this->modelsim_pipeline_path = "C:\\Pipeline";
     this->file_assembly_path   = (this->modelsim_path + "\\ins.txt").toStdString();
     this->file_regFile_path    = (this->modelsim_path + "\\regFile.txt").toStdString();
     this->file_dataMemory_path = (this->modelsim_path + "\\dataMemory.txt").toStdString();
+
+    this->file_assembly_path_pipeline   = (this->modelsim_pipeline_path + "\\ins.txt").toStdString();
+    this->file_regFile_path_pipeline    = (this->modelsim_pipeline_path + "\\regFile.txt").toStdString();
+    this->file_dataMemory_path_pipeline = (this->modelsim_pipeline_path + "\\dataMemory.txt").toStdString();
 
     this->modelsim_process = new QProcess();
     // ==================== Run ModelSim ============================
     this->modelsim_process->setWorkingDirectory(this->modelsim_path);
     this->modelsim_command = "vsim -c -do \"run -all\" work.MIPS";
+    this->modelsim_pipeline_command ="vsim -c -do \"run 500 ns\" work.Pipeline_MIPS";
+    this->mode = "MIPS";
     // ================== ModelSim Running python ===========================
     //    this->modelsim_process->setWorkingDirectory("C:\\Users\\user\\Desktop");
     //    this->modelsim_process->setProgram("python");
@@ -66,25 +73,34 @@ void Simulator::update_GUI()
 
 void Simulator::Modelsim()
 {
-    emit file_assembled_instructions(this->file_assembly_path); // write file with assembledd instructions
-    this->modelsim_process->start(this->modelsim_command);// run modelsim to read the assembly file and write in the dataMemory and regFile files
-    this->modelsim_process->waitForStarted();
-    this->modelsim_process->terminate();
-    this->modelsim_process->waitForFinished();
-    emit file_regFile_data(this->file_regFile_path); // read regFile and load it into reg File Widget
-    emit file_dataMemory_data(this->file_dataMemory_path); // read dataMemory and load it into Data Memory Widget
+    if (this->mode == "MIPS")
+    {
+        emit file_assembled_instructions(this->file_assembly_path); // write file with assembledd instructions
+        this->modelsim_process->start(this->modelsim_command);// run modelsim to read the assembly file and write in the dataMemory and regFile files
+        this->modelsim_process->waitForStarted();
+        this->modelsim_process->terminate();
+        this->modelsim_process->waitForFinished();
+        emit file_regFile_data(this->file_regFile_path); // read regFile and load it into reg File Widget
+        emit file_dataMemory_data(this->file_dataMemory_path); // read dataMemory and load it into Data Memory Widget
+    }
+    else if (this->mode == "Pipeline")
+    {
+        emit file_assembled_instructions(this->file_assembly_path_pipeline); // write file with assembledd instructions
+        this->modelsim_process->start(this->modelsim_pipeline_command);// run modelsim to read the assembly file and write in the dataMemory and regFile files
+        this->modelsim_process->waitForStarted();
+        this->modelsim_process->terminate();
+        this->modelsim_process->waitForFinished();
+        emit file_regFile_data(this->file_regFile_path_pipeline); // read regFile and load it into reg File Widget
+        emit file_dataMemory_data(this->file_dataMemory_path_pipeline); // read dataMemory and load it into Data Memory Widget
+    }
 }
 
-void Simulator::Run_Modelsim()
-{
-    this->modelsim_process->start();
-}
 void Simulator::Simulate()
 {
     clear();
     Read_Instruction_Editor();
     Assemble_Instructions();
-//    ALU_Logic();
+    //    ALU_Logic();
 
     //    emit print_registers();
     print(this->Lables);
@@ -106,7 +122,7 @@ void Simulator::Simulate(string path)
     //    ALU_Logic();
 
 
-//    emit print_registers();
+    //    emit print_registers();
     print(this->Lables);
     print(this->assembler->get_assembled_strings());
 
@@ -162,7 +178,7 @@ void Simulator::Read_Instruction_Editor()
         if (s=="")
             continue;
         if(check_for_Lable(s,address))
-            continue;        
+            continue;
 
         Split_Instruction(s);
         this->instructions[address].push_back( to_string(address*4) ) ; // add adress to the instruction (for just the address)

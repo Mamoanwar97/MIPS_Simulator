@@ -36,14 +36,17 @@ private:
     string code_path;
     uint address;
 
-    string file_assembly_path ;
-    string file_regFile_path;
-    string file_dataMemory_path;
+    string file_assembly_path , file_assembly_path_pipeline;
+    string file_regFile_path  , file_regFile_path_pipeline;
+    string file_dataMemory_path, file_dataMemory_path_pipeline;
     QString modelsim_path;
+    QString modelsim_pipeline_path;
     QString modelsim_command;
+    QString modelsim_pipeline_command;
     QProcess* modelsim_process ;
 
     QString python_path;
+    QString mode;
 
     vector<string> code;
     vector<vector<string>> instructions;
@@ -68,7 +71,6 @@ public:
     void clear();
     void update_GUI();
     void Modelsim();
-    void Run_Modelsim();
 
 private:
     bool check_for_specials(string);
@@ -103,6 +105,7 @@ public slots:
     vector<string> get_instructions();
     bool check_data_words(string s);
     int get_dataWord(string s);
+
 };
 
 #endif // SIMULATOR_H

@@ -5,7 +5,7 @@ GUI::GUI(QWidget *parent) :   QWidget (parent)
     this->path = "/home/amrelsersy/MIPS/dummy.txt";
     // memory allocation
     this->simulator = new Simulator();
-//    this->simulator->Simulate(this->path);
+//    this->simulator->Simulate(this->path);11
     this->grid    = new QGridLayout();
 
     this->tabWidget       = new QTabWidget();
@@ -91,8 +91,8 @@ void GUI::init_horizontal_layout()
                                 "color: rgb(0,0,128);"
                                "border-radius: 5%;"
                                 "font-weight: 400;");
-    this->TestBtn         = new QPushButton(TEST);
-    this->TestBtn->setStyleSheet("background-color: white;"
+    this->PipelineBtn         = new QPushButton(PIPELINE);
+    this->PipelineBtn->setStyleSheet("background-color: white;"
                                  "color: rgb(0,0,128);"
                                 "border-radius: 5%;"
                                  "font-weight: 400;");
@@ -100,7 +100,7 @@ void GUI::init_horizontal_layout()
     this->horizontalLayout->addWidget(this->lineEdit);
     this->horizontalLayout->addWidget(this->includeBtn);
     this->horizontalLayout->addWidget(this->RunBtn);
-    this->horizontalLayout->addWidget(this->TestBtn);
+    this->horizontalLayout->addWidget(this->PipelineBtn);
 
 }
 
@@ -113,7 +113,8 @@ void GUI::Signals_Slots()
     connect( this->Registers_Table,SIGNAL(get_registers() ), this->simulator->register_file , SLOT ( registers_reading() ) );
     connect( this->simulator->Alu ,SIGNAL( syscall(string) ) , this,SLOT( Output_Screen(string) ) );
 
-    connect( this->RunBtn     , SIGNAL(clicked() )     , this , SLOT( Start_Simulation() ) );
+    connect( this->RunBtn     , SIGNAL(clicked() )      , this , SLOT( Start_Simulation() ) );
+    connect( this->PipelineBtn, SIGNAL(clicked())       , this,SLOT(Start_Pipeline_Simulation()) );
     connect( this->includeBtn , SIGNAL(clicked() )     , this , SLOT( Browse_file() ) );
     connect( this->include_file_dialog     , SIGNAL(filesSelected(QStringList) )     , this , SLOT( Start_Simulation_File(QStringList) ) );
     connect( this->file_dialog             , SIGNAL(filesSelected(QStringList) )     , this , SLOT( file_paths_selected_dialog(QStringList) ) );
@@ -169,6 +170,14 @@ void GUI::keyPressEvent(QKeyEvent *event)
 void GUI::Start_Simulation()
 {
     this->IO_Screen->clear();
+    this->simulator->mode = "MIPS";
+    this->simulator->Simulate();
+}
+
+void GUI::Start_Pipeline_Simulation()
+{
+    this->IO_Screen->clear();
+    this->simulator->mode = "Pipeline";
     this->simulator->Simulate();
 }
 
