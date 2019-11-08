@@ -5,9 +5,6 @@
 #include "gui.h"
 #include <QEvent>
 #include <QKeyEvent>
-#include "testcase.h"
-#include "browsefile.h"
-#include "testwidget.h"
 
 
 using namespace  std;

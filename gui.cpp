@@ -92,6 +92,7 @@ void GUI::init_horizontal_layout()
                                "border-radius: 5%;"
                                 "font-weight: 400;");
     this->PipelineBtn         = new QPushButton(PIPELINE);
+    this->PipelineBtn->setMinimumWidth(200);
     this->PipelineBtn->setStyleSheet("background-color: white;"
                                  "color: rgb(0,0,128);"
                                 "border-radius: 5%;"
@@ -150,9 +151,6 @@ void GUI::init_files_dialog()
     this->include_file_dialog->setNameFilter("*.txt");                  // show only txt extentions
     this->include_file_dialog->setOption(QFileDialog::ReadOnly);        // readonly mode dosn't support deleting or writing
     this->include_file_dialog->setStyleSheet("background: white");
-
-//    this->file_dialog->show();
-//    this->include_file_dialog->show();
 }
 
 void GUI::keyPressEvent(QKeyEvent *event)

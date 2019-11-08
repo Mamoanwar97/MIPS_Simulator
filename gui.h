@@ -1,11 +1,11 @@
 #ifndef GUI_H
 #define GUI_H
 
-#include "execute_widget.h"
-#include "regfile_widget.h"
-#include "data_mem_widget.h"
-#include "tree_widget.h"
-#include "editor.h"
+#include "GUI/execute_widget.h"
+#include "GUI/regfile_widget.h"
+#include "GUI/data_mem_widget.h"
+#include "GUI/tree_widget.h"
+#include "GUI/editor.h"
 #include "simulator.h"
 #include <bits/stdc++.h>
 #include <QObject>
@@ -29,7 +29,7 @@
 #include <QTreeWidget>
 #include <QTreeWidgetItem>
 #include <QStringList>
-#include "testwidget.h"
+#include "GUI/testwidget.h"
 
 #define RUN "Run"
 #define PIPELINE "Pipeline"

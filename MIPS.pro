@@ -25,6 +25,24 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+    GUI/browsefile.cpp \
+    GUI/data_mem_widget.cpp \
+    GUI/editor.cpp \
+    GUI/execute_widget.cpp \
+    GUI/filestester.cpp \
+    GUI/regfile_widget.cpp \
+    GUI/testcase.cpp \
+    GUI/testwidget.cpp \
+    GUI/tree_widget.cpp \
+    Pipeline/execution.cpp \
+    Pipeline/instructiondecode.cpp \
+    Pipeline/instructionfetch.cpp \
+    Pipeline/memorystage.cpp \
+    Pipeline/path.cpp \
+    Pipeline/scene.cpp \
+    Pipeline/stage.cpp \
+    Pipeline/writebackstage.cpp \
+    data_memory.cpp \
         main.cpp \
         mainwindow.cpp \
         assembler.cpp \
@@ -33,19 +51,28 @@ SOURCES += \
         register.cpp \
         alu.cpp \
         data.cpp \
-    gui.cpp \
-    editor.cpp \
-    tree_widget.cpp \
-    data_memory.cpp \
-    regfile_widget.cpp \
-    execute_widget.cpp \
-    data_mem_widget.cpp \
-    testcase.cpp \
-    testwidget.cpp \
-    browsefile.cpp \
-    filestester.cpp
+        gui.cpp \
+
 
 HEADERS += \
+    GUI/browsefile.h \
+    GUI/data_mem_widget.h \
+    GUI/editor.h \
+    GUI/execute_widget.h \
+    GUI/filestester.h \
+    GUI/regfile_widget.h \
+    GUI/testcase.h \
+    GUI/testwidget.h \
+    GUI/tree_widget.h \
+    Pipeline/execution.h \
+    Pipeline/instructiondecode.h \
+    Pipeline/instructionfetch.h \
+    Pipeline/memorystage.h \
+    Pipeline/path.h \
+    Pipeline/scene.h \
+    Pipeline/stage.h \
+    Pipeline/writebackstage.h \
+    data_memory.h \
         mainwindow.h \
         assembler.h \
         simulator.h \
@@ -53,17 +80,7 @@ HEADERS += \
         register.h \
         alu.h \
         data.h \
-    gui.h \
-    editor.h \
-    tree_widget.h \
-    data_memory.h \
-    regfile_widget.h \
-    execute_widget.h \
-    data_mem_widget.h \
-    testcase.h \
-    testwidget.h \
-    browsefile.h \
-    filestester.h
+        gui.h \
 
 FORMS += \
         mainwindow.ui
@@ -75,4 +92,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 
 DISTFILES += \
+    GUI/warning-icon.png \
     dummy.txt
