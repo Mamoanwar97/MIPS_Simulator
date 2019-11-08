@@ -18,16 +18,15 @@ Simulator::Simulator()
     this->file_dataMemory_path_pipeline = (this->modelsim_pipeline_path + "\\dataMemory.txt").toStdString();
 
     this->modelsim_process = new QProcess();
+    this->modelsim_pipeline_process = new QProcess();
     // ==================== Run ModelSim ============================
     this->modelsim_process->setWorkingDirectory(this->modelsim_path);
+    this->modelsim_process->setWorkingDirectory(this->modelsim_pipeline_path);
     this->modelsim_command = "vsim -c -do \"run -all\" work.MIPS";
-    this->modelsim_pipeline_command ="vsim -c -do \"run 500 ns\" work.Pipeline_MIPS";
+    this->modelsim_pipeline_command ="vsim -c -do \"run -all\" work.Pipeline_MIPS";
+
     this->mode = "MIPS";
-    // ================== ModelSim Running python ===========================
-    //    this->modelsim_process->setWorkingDirectory("C:\\Users\\user\\Desktop");
-    //    this->modelsim_process->setProgram("python");
-    //    this->modelsim_process->setArguments(QStringList() << "modelsim.py");
-    // =========================================================================
+
     this->Program_Counter = new Register("PC",100,0);
     this->Alu = new ALU(this->Program_Counter);
     this->assembler = new Assembler();
@@ -86,10 +85,12 @@ void Simulator::Modelsim()
     else if (this->mode == "Pipeline")
     {
         emit file_assembled_instructions(this->file_assembly_path_pipeline); // write file with assembledd instructions
-        this->modelsim_process->start(this->modelsim_pipeline_command);// run modelsim to read the assembly file and write in the dataMemory and regFile files
-        this->modelsim_process->waitForStarted();
-        this->modelsim_process->terminate();
-        this->modelsim_process->waitForFinished();
+        this->modelsim_pipeline_process->start(this->modelsim_pipeline_command);// run modelsim to read the assembly file and write in the dataMemory and regFile files
+        this->modelsim_pipeline_process->waitForStarted();
+        this->modelsim_pipeline_process->terminate();
+        this->modelsim_pipeline_process->waitForFinished();
+        emit updatePipelineAssemblyCode(this->code);
+        // not important 5als
         emit file_regFile_data(this->file_regFile_path_pipeline); // read regFile and load it into reg File Widget
         emit file_dataMemory_data(this->file_dataMemory_path_pipeline); // read dataMemory and load it into Data Memory Widget
     }
@@ -401,6 +402,7 @@ void Simulator::Observer_Pattern()
     connect(this->Alu ,     SIGNAL(check_for_word(string)),                 this,SLOT(check_data_words(string)));
     connect(this->Alu ,     SIGNAL(get_value_data_memory(uint)),            this->data_memory,SLOT(read_memory(uint)));
     connect(this->Alu ,     SIGNAL(set_value_data_memory(uint,int)),        this->data_memory,SLOT(write_memory(uint ,int)));
+
 }
 vector<string> Simulator :: split_string(string s,string splitter)
 {

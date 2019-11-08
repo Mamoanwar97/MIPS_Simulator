@@ -7,7 +7,7 @@
 #define REGISTERS_COLOR QColor(50,50,50)
 #define INITAIL_COLOR QColor(50,50,50)
 #define OFF_COLOR QColor(50,50,50)
-#define FLUSH_COLOR QColor(255,255,255)
+#define FLUSH_COLOR QColor(50,50,50)
 
 #define fetch 0
 #define decode 1
@@ -112,7 +112,6 @@ private:
     void RegistersUnit();
     void initColors();
     void initText();
-    void ReadInstructions();
     void ReadModelSim();
     void initStates();
     vector<string> split_string(string s,string splitter);
@@ -126,6 +125,7 @@ signals:
 public slots:
     void addNewItem(QGraphicsItem*);
     void UpdatePipeline(int direction);
+    void INIT_Scene(vector<string>);
 
 };
 

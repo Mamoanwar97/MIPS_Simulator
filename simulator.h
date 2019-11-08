@@ -44,6 +44,7 @@ private:
     QString modelsim_command;
     QString modelsim_pipeline_command;
     QProcess* modelsim_process ;
+    QProcess* modelsim_pipeline_process ;
 
     QString python_path;
     QString mode;
@@ -98,6 +99,7 @@ signals:
     void update_Text_Editor(vector<string>);
     void clearTextEditor();
     void show(vector<string>);
+    void updatePipelineAssemblyCode(vector<string>);
 public slots:
     void set_Program_Counter(string label);
     void set_Program_Counter(int adress);

@@ -25,12 +25,6 @@ int main(int argc, char *argv[]) {
   QApplication a(argc, argv);
   MainWindow w;
   a.setStyleSheet(style_sheet);
-  a.setStyle(QStyleFactory::create("Fusion") ); // make it like linux
-
-  QStringList x =     QStyleFactory::keys();
-  for (int i =0 ; i <x.size(); i++)
-      cout << x[i].toStdString() << endl;
-
   w.show();
 
   return a.exec();

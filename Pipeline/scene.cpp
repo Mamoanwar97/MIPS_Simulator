@@ -28,11 +28,7 @@ myScene::myScene(QWidget *parent) : QGraphicsScene(MAX_TOP_LEFT_CORNER,1900,1000
     this->stall= 0;
 
     // code reading
-    this->codePath = "C:\\Pipeline-GUI\\code.txt";
     this->verilogPath = "C:\\Pipeline\\pc.txt";
-    this->ReadInstructions();
-    this->ReadModelSim();
-    this->initStates();
 
     // directions
     this->index = 0;
@@ -74,6 +70,24 @@ void myScene::updateStagesColors(int direction)
 
 
 }
+
+void myScene::INIT_Scene(vector<string> Code)
+{
+    // clear all
+    this->states.clear();
+    this->initColors();    // initialize black color
+    this->clocks_verilog.clear();
+    this->code.clear();
+    // get instruction code
+    for (uint i =0; i<Code.size();i++)
+        this->code.push_back( Code[i] );
+    this->code.push_back("xxxx");
+    // read clocks description
+    this->ReadModelSim();
+    // fill the states
+    this->initStates();
+
+}
 void myScene::initStates()
 {
     for (uint i = 0 ; i < this->clocks_verilog.size() ; i++)
@@ -98,7 +112,7 @@ void myScene::initStates()
         if (this->stall)
         {
             clock_states[ex].color = OFF_COLOR;
-            clock_states[ex].text_instruction = QString("xxxx");
+            clock_states[ex].text_instruction = QString("**Stall**");
 
             // remain un changed
             clock_states[fetch].color = this->states[i][fetch].color;
@@ -110,17 +124,32 @@ void myScene::initStates()
         else if (this->flush)
         {
             clock_states[decode].color = FLUSH_COLOR;
-            clock_states[decode].text_instruction += QString("&Flushed");
-
-            clock_states[fetch].color = this->colors[this->index_color];
-            clock_states[fetch].text_instruction = QString::fromStdString(this->code[this->PC]);
-            index_color ++;
+            clock_states[decode].text_instruction = QString("**Flush**");
+            if(PC < this->code.size())
+            {
+                clock_states[fetch].color = this->colors[this->index_color];
+                clock_states[fetch].text_instruction = QString::fromStdString(this->code[this->PC]);
+                index_color ++;
+            }
+            else
+            {
+                clock_states[fetch].color = OFF_COLOR;
+                clock_states[fetch].text_instruction = QString("xxxx");
+            }
         }
         else
         {
-            clock_states[fetch].color = this->colors[this->index_color];
-            clock_states[fetch].text_instruction = QString::fromStdString(this->code[this->PC]);
-            index_color ++;
+            if (this->PC < this->code.size())
+            {
+                clock_states[fetch].color = this->colors[this->index_color];
+                clock_states[fetch].text_instruction = QString::fromStdString(this->code[this->PC]);
+                index_color ++;
+            }
+            else
+            {
+                clock_states[fetch].color = OFF_COLOR;
+                clock_states[fetch].text_instruction = QString("xxxx");
+            }
         }
         this->states.push_back(clock_states);
 
@@ -130,7 +159,23 @@ void myScene::initStates()
 
     }
 }
+void myScene::ReadModelSim()
+{
+    this->verilog_file.open(this->verilogPath);
+    string s;
+    while (getline(this->verilog_file,s))
+    {
+        if (s == "" || s == " ")
+            continue;
+        this->clocks_verilog.push_back(s);
+    }
 
+    for (uint i =0 ; i< this->clocks_verilog.size() ; i++ )
+        cout << this->clocks_verilog[i] << "   " ;
+    cout << endl;
+    this->max_clocks = this->clocks_verilog.size();
+    this->verilog_file.close();
+}
 void myScene::UpdatePipeline(int direction)
 {
     this->updateStagesColors(direction);
@@ -215,35 +260,6 @@ void myScene::initText()
     for (int i =0 ; i< MUXs_SIZE; i++)
         this->addItem(this->MUX_txt[i]);
     // ====================================
-}
-void myScene::ReadInstructions()
-{
-    this->code_file.open(this->codePath);
-    string s;
-    while (getline(this->code_file,s))
-    {
-        if (s == "" || s == " ")
-            continue;
-        this->code.push_back(s);
-    }
-    for (uint i =0 ; i< this->code.size() ; i++ )
-        cout << this->code[i] << "   " ;
-    cout << endl;
-}
-void myScene::ReadModelSim()
-{
-    this->verilog_file.open(this->verilogPath);
-    string s;
-    while (getline(this->verilog_file,s))
-    {
-        if (s == "" || s == " ")
-            continue;
-        this->clocks_verilog.push_back(s);
-    }
-    for (uint i =0 ; i< this->clocks_verilog.size() ; i++ )
-        cout << this->clocks_verilog[i] << "   " ;
-    cout << endl;
-    this->max_clocks = this->clocks_verilog.size();
 }
 void myScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {

@@ -7,8 +7,8 @@ MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent)
     this->setCentralWidget(this->gui);
     this->setStyleSheet("background-color:rgb(0,0,128);""color: rgb(0,0,102);""font-weight: 400;");
 
+    connect(this->gui->simulator,SIGNAL(updatePipelineAssemblyCode(vector<string>)),this->pipeline_gui->my_scene,SLOT(INIT_Scene(vector<string>)));
     connect(this->gui,SIGNAL(pipeline_GUI()),this,SLOT(show_pipeline_gui()));
-
 }
 void MainWindow ::show_pipeline_gui()
 {
