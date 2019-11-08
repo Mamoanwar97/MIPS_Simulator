@@ -143,7 +143,7 @@ void Register_File::updateRegFilePipeline(string regFileClock)
     for (uint i =0 ; i <s.size(); i++)
     {
         try {
-            vector<string> address_value = split_string(s[i],",");
+            vector<string> address_value = split_string(s[i],","); if (address_value.size() == 1) {continue;}
             uint address = uint( stoi(address_value[0]) );
             int value    = stoi (address_value[1] );
             this->write_register(address,value);

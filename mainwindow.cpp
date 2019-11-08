@@ -11,7 +11,8 @@ MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent)
     // Scene Signals and Slots regFile DataMemory
     connect(this->pipeline_gui->my_scene,SIGNAL(updateRegFile(string)),this->gui->simulator->register_file,SLOT(updateRegFilePipeline(string)));
     connect(this->pipeline_gui->my_scene,SIGNAL(updateDataMem(string)),this->gui->simulator->data_memory,SLOT(updateDataMemPipeline(string)));
-    connect(this->pipeline_gui->my_scene,SIGNAL(updateGUI()),this->gui->simulator,SLOT(update_GUI()));
+    connect( this->pipeline_gui->my_scene, SIGNAL(updateRegistersGUI() )    , this->gui->Registers_Table , SLOT( updateRegisters() ) );
+
     // to show the pipeline GUI
     connect(this->gui,SIGNAL(pipeline_GUI()),this,SLOT(show_pipeline_gui()));
 }

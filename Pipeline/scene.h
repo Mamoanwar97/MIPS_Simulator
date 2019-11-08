@@ -118,7 +118,6 @@ private:
     void ReadClocks();
     void ReadRegFile();
     void ReadDataMem();
-    void updateAll();
 
     vector<string> split_string(string s,string splitter);
     QString parasePC_Text(string pc);
@@ -127,9 +126,9 @@ protected:
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
 
 signals:
-    void updateGUI();
+    void updateDataMem(string); // it updates data memory and data_mem table
     void updateRegFile(string);
-    void updateDataMem(string);
+    void updateRegistersGUI();
 
 public slots:
     void addNewItem(QGraphicsItem*);

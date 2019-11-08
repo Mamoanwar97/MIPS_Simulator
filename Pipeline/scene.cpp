@@ -68,9 +68,12 @@ void myScene::updateStagesColors(int direction)
     this->MEM->setTextInstruction(this->states[index][memory].text_instruction);
     this->WB->setTextInstruction(this->states[index][wb].text_instruction);
 
-    emit updateRegFile(this->regfile_clocks[this->index]);
-    emit updateDataMem(this->datamemory_clocks[this->index]);
-    emit updateGUI();
+    if (this->index < this->regfile_clocks.size()) // for crashing on last index , you can check also on datamemory_clocks it is the same
+    {
+        emit updateDataMem(this->datamemory_clocks[this->index]); // updates both data memory and data_mem table
+        emit updateRegFile(this->regfile_clocks[this->index]);   // updates only register file
+        emit updateRegistersGUI();                              // updates only regfile table
+    }
 }
 
 void myScene::INIT_Scene(vector<string> Code)
@@ -95,6 +98,8 @@ void myScene::INIT_Scene(vector<string> Code)
     this->ReadDataMem(); // read dataMemory.txt
     // fill the states
     this->initStates();
+
+    this->index = 0;
 }
 void myScene::initStates()
 {
