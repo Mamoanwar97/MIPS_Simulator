@@ -58,6 +58,24 @@ void Data_Memory::file_read_data_mem(string path)
     file.close();
 }
 
+void Data_Memory::updateDataMemPipeline(string dataMemClock)
+{
+    if (dataMemClock == "" || dataMemClock == " ")
+        return;
+    vector<string> s = split_string(dataMemClock," ");
+    for (uint i =0 ; i <s.size(); i++)
+    {
+        try {
+            vector<string> address_value = split_string(s[i],",");
+            uint address = uint( stoi(address_value[0]) );
+            int value    = stoi (address_value[1] );
+            this->write_memory(address,value);
+        } catch (...) {
+            cout << "error in data memory pipeline (" << s[i] << ")" << endl;
+        }
+    }
+}
+
 vector<string> Data_Memory :: split_string(string s,string splitter)
 {
     vector<string> splitted;

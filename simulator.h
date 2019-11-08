@@ -25,6 +25,7 @@ class Simulator : public QObject
     Q_OBJECT
 
     friend class GUI;
+    friend class MainWindow;
 private:
     ALU* Alu ;
     Assembler* assembler;
@@ -70,7 +71,6 @@ public:
     void Assemble_Instructions();
     void ALU_Logic();
     void clear();
-    void update_GUI();
     void Modelsim();
 
 private:
@@ -107,6 +107,7 @@ public slots:
     vector<string> get_instructions();
     bool check_data_words(string s);
     int get_dataWord(string s);
+    void update_GUI();
 
 };
 

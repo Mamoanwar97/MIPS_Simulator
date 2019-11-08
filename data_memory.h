@@ -30,6 +30,7 @@ public slots:
     int  *get_Memory_Access();
 
     void file_read_data_mem(string);
+    void updateDataMemPipeline(string dataMemClock);
 };
 
 #endif // DATA_MEMORY_H

@@ -135,6 +135,25 @@ void Register_File::read_regFile_data(string path)
     file.close();
 }
 
+void Register_File::updateRegFilePipeline(string regFileClock)
+{
+    if (regFileClock == "" || regFileClock == " ")
+        return;
+    vector<string> s = split_string(regFileClock," ");
+    for (uint i =0 ; i <s.size(); i++)
+    {
+        try {
+            vector<string> address_value = split_string(s[i],",");
+            uint address = uint( stoi(address_value[0]) );
+            int value    = stoi (address_value[1] );
+            this->write_register(address,value);
+        } catch (...) {
+            cout << "error in regfile pipeline (" << s[i] << ")" << endl;
+        }
+    }
+}
+
+
 int Register_File::read_register(string name)
 {
     return this->Registers[name]->getValue();

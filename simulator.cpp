@@ -21,7 +21,7 @@ Simulator::Simulator()
     this->modelsim_pipeline_process = new QProcess();
     // ==================== Run ModelSim ============================
     this->modelsim_process->setWorkingDirectory(this->modelsim_path);
-    this->modelsim_process->setWorkingDirectory(this->modelsim_pipeline_path);
+    this->modelsim_pipeline_process->setWorkingDirectory(this->modelsim_pipeline_path);
     this->modelsim_command = "vsim -c -do \"run -all\" work.MIPS";
     this->modelsim_pipeline_command ="vsim -c -do \"run -all\" work.Pipeline_MIPS";
 
@@ -90,9 +90,6 @@ void Simulator::Modelsim()
         this->modelsim_pipeline_process->terminate();
         this->modelsim_pipeline_process->waitForFinished();
         emit updatePipelineAssemblyCode(this->code);
-        // not important 5als
-        emit file_regFile_data(this->file_regFile_path_pipeline); // read regFile and load it into reg File Widget
-        emit file_dataMemory_data(this->file_dataMemory_path_pipeline); // read dataMemory and load it into Data Memory Widget
     }
 }
 

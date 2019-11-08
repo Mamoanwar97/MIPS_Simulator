@@ -8,6 +8,11 @@ MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent)
     this->setStyleSheet("background-color:rgb(0,0,128);""color: rgb(0,0,102);""font-weight: 400;");
 
     connect(this->gui->simulator,SIGNAL(updatePipelineAssemblyCode(vector<string>)),this->pipeline_gui->my_scene,SLOT(INIT_Scene(vector<string>)));
+    // Scene Signals and Slots regFile DataMemory
+    connect(this->pipeline_gui->my_scene,SIGNAL(updateRegFile(string)),this->gui->simulator->register_file,SLOT(updateRegFilePipeline(string)));
+    connect(this->pipeline_gui->my_scene,SIGNAL(updateDataMem(string)),this->gui->simulator->data_memory,SLOT(updateDataMemPipeline(string)));
+    connect(this->pipeline_gui->my_scene,SIGNAL(updateGUI()),this->gui->simulator,SLOT(update_GUI()));
+    // to show the pipeline GUI
     connect(this->gui,SIGNAL(pipeline_GUI()),this,SLOT(show_pipeline_gui()));
 }
 void MainWindow ::show_pipeline_gui()

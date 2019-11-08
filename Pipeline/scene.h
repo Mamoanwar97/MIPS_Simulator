@@ -72,9 +72,11 @@ private:
 
     vector<string> code;
     vector<string> clocks_verilog;
+    vector<string> regfile_clocks;
+    vector<string> datamemory_clocks;
     uint max_clocks;
-    ifstream code_file ,verilog_file;
-    string codePath , verilogPath;
+    ifstream verilog_file, regfile_file,dataMem_file;
+    string   verilogPath , regfilePath,dataMemPath;
 
 
     vector< vector<state> > states;
@@ -112,8 +114,12 @@ private:
     void RegistersUnit();
     void initColors();
     void initText();
-    void ReadModelSim();
     void initStates();
+    void ReadClocks();
+    void ReadRegFile();
+    void ReadDataMem();
+    void updateAll();
+
     vector<string> split_string(string s,string splitter);
     QString parasePC_Text(string pc);
 protected:
@@ -121,6 +127,9 @@ protected:
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
 
 signals:
+    void updateGUI();
+    void updateRegFile(string);
+    void updateDataMem(string);
 
 public slots:
     void addNewItem(QGraphicsItem*);

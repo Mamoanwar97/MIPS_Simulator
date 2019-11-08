@@ -39,6 +39,7 @@ public slots:
     void stack_read (string name);
     //
     void read_regFile_data(string);
+    void updateRegFilePipeline(string);
 
 signals:
 };
