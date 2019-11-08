@@ -10,6 +10,7 @@ Editor::Editor(QColor clr,QWidget *parent) : QPlainTextEdit(parent)
 
     this->updateLineNumberAreaWidth(0);
     this->highlightCurrentLine();
+    this->setFont(QFont("Arial",10));
 }
 
 

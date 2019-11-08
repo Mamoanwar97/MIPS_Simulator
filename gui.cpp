@@ -177,6 +177,7 @@ void GUI::Start_Pipeline_Simulation()
     this->IO_Screen->clear();
     this->simulator->mode = "Pipeline";
     this->simulator->Simulate();
+    emit pipeline_GUI();
 }
 
 void GUI::Start_Simulation_File(QStringList code_file_path)

@@ -341,7 +341,7 @@ void Simulator::ALU_Logic()
     while(true)
     {
         // PC is program counter / 4 and we use it as an index for the instructions
-        address = PC;
+        address = PC_;
         // Set the PC with the next instruction address (befor) the ALU Operation >> so that to allow ALU to change PC in some cases(beq,j..)
         Set_PC(address+1);
         // ====================================================================
@@ -349,7 +349,7 @@ void Simulator::ALU_Logic()
         if (instructions[address].size()==2 && instructions[address][0] != SYSCALL)
             continue;
         // check for end of program =====> instructions has end vector to check
-        else if ( (instructions[address].size() == 1)  || (PC >= instructions.size()) )
+        else if ( (instructions[address].size() == 1)  || (PC_ >= instructions.size()) )
         {
             cout << " ============= End of Excution ============== " << endl;
             return;

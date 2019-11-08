@@ -11,7 +11,7 @@
 #include <QProcess>
 #include <QThread>
 
-#define PC         this->Program_Counter->getValue() /4
+#define PC_         this->Program_Counter->getValue() /4
 #define Set_PC(x)  this->Program_Counter->setValue((x)*4)
 #define SYSCALL "syscall"
 #define DELAY 5

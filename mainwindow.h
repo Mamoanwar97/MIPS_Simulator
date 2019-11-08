@@ -5,9 +5,21 @@
 #include "gui.h"
 #include <QEvent>
 #include <QKeyEvent>
-
+#include "Pipeline/scene.h"
 
 using namespace  std;
+class View :public QGraphicsView
+{
+    Q_OBJECT
+public:
+    myScene *      my_scene;
+    View(QWidget *parent = nullptr);
+protected:
+    void keyPressEvent(QKeyEvent *event);
+signals:
+    void updatePipeline(int);
+
+};
 
 class MainWindow : public QMainWindow
 {
@@ -15,13 +27,11 @@ class MainWindow : public QMainWindow
 
 private:
     GUI* gui ;
+    View* pipeline_gui;
 
 public:
     explicit MainWindow(QWidget *parent = nullptr);
-
 public slots:
-
-signals:
-
+    void show_pipeline_gui();
 };
 #endif // MAINWINDOW_H

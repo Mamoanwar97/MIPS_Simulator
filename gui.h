@@ -6,6 +6,7 @@
 #include "GUI/data_mem_widget.h"
 #include "GUI/tree_widget.h"
 #include "GUI/editor.h"
+
 #include "simulator.h"
 #include <bits/stdc++.h>
 #include <QObject>
@@ -40,8 +41,8 @@
 #define REGISTERS_TYPE "Registers"
 #define DATA_MEM "Memory"
 
-#define Width_Editor 700
-#define Hight_Editor 500
+#define Width_Editor 900
+#define Hight_Editor 600
 #define Registers_Width 350
 #define O_Screen_Hight 150
 #define Code_color 115, 197, 241 // grey
@@ -88,6 +89,7 @@ public:
 
 signals:
     void update(vector<int>);
+    void pipeline_GUI();
 
 public slots:
     void Start_Simulation();
