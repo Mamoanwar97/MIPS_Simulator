@@ -1,7 +1,8 @@
 #ifndef STAGE_H
 #define STAGE_H
 #define PATH_WIDTH 4
-#define TEXT_COLOR Qt::black
+#define TEXT_COLOR Qt::white
+#define OFF_COLOR QColor(50,50,50)
 #define FONT_SIZE 12
 #include <QObject>
 #include <QPen>
@@ -37,7 +38,7 @@ public:
     Path* newPath(vector<string> points);
     QColor getColor();
     void setTextInstruction(QString text);
-    virtual void setStageColor(QColor clr) = 0;
+    virtual void setStageColor(QColor clr, vector<string> muxs = vector<string>()) = 0;
 
 
 signals:

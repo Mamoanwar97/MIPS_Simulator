@@ -83,7 +83,7 @@ Execution::Execution(QObject * parent) : Stage (parent)
 
 }
 
-void Execution::setStageColor(QColor clr)
+void Execution::setStageColor(QColor clr,vector<string> muxs)
 {
     // set Pen Color and Width
     this->color = clr;
@@ -100,5 +100,6 @@ void Execution::setStageColor(QColor clr)
         i->second->setPen(this->pen);
 
     this->text_instruction->setDefaultTextColor(this->color);
+
 
 }

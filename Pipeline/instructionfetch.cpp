@@ -56,7 +56,7 @@ InstructionFetch::InstructionFetch(QObject *parent) : Stage(parent)
     emit addnewItem(this->pcAdder_txt);
 }
 
-void InstructionFetch::setStageColor(QColor clr)
+void InstructionFetch::setStageColor(QColor clr,vector<string> muxs)
 {
     // set Pen Color and Width
     this->color = clr;
@@ -70,7 +70,19 @@ void InstructionFetch::setStageColor(QColor clr)
     // Paths
     for (auto i = this->paths.begin(); i != this->paths.end(); i++)
         i->second->setPen(this->pen);
+    // text
     this->text_instruction->setDefaultTextColor(this->color);
     this->pcAdder_txt->setDefaultTextColor(this->color);
+
+    // check for muxs value
+    if (muxs.size() >0)
+    {
+        string mux = muxs[0]; // we have one mux in IF stage
+        if (mux == "1")
+        {
+            this->paths["pcAdder_MUX"]->setColor(OFF_COLOR);
+            cout << "IF MUX:" << mux << endl;
+        }
+    }
 
 }

@@ -20,7 +20,7 @@ private:
 
 public:
     InstructionFetch(QObject *parent);
-    void setStageColor(QColor clr);
+    void setStageColor(QColor clr,vector<string> muxs = vector<string>());
 
 signals:
 

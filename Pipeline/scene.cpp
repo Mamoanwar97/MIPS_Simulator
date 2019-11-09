@@ -34,9 +34,9 @@ myScene::myScene(QWidget *parent) : QGraphicsScene(MAX_TOP_LEFT_CORNER,1900,1000
     // directions
     this->index = 0;
 
-    this->setBackgroundBrush(QBrush(QColor(Qt::white)));
+    this->setBackgroundBrush(QBrush(QColor(Qt::black)));
 
-//    this->image = QImage("C:\\MIPS_Simulator\\pipeline.jpg");
+    //    this->image = QImage("C:\\MIPS_Simulator\\pipeline.jpg");
 }
 
 void myScene::updateStagesColors(int direction)
@@ -60,11 +60,11 @@ void myScene::updateStagesColors(int direction)
         }
         this->index --;
     }
-    this->IF->setStageColor(this->states[index][fetch].color);
-    this->ID->setStageColor(this->states[index][decode].color);
-    this->EX->setStageColor(this->states[index][ex].color);
-    this->MEM->setStageColor(this->states[index][memory].color);
-    this->WB->setStageColor(this->states[index][wb].color);
+    this->IF->setStageColor(this->states[index][fetch].color,this->states[index][fetch].MUXs);
+    this->ID->setStageColor(this->states[index][decode].color,this->states[index][decode].MUXs);
+    this->EX->setStageColor(this->states[index][ex].color,this->states[index][ex].MUXs);
+    this->MEM->setStageColor(this->states[index][memory].color,this->states[index][memory].MUXs); // give it the fetch mux as it is connected to it too
+    this->WB->setStageColor(this->states[index][wb].color,this->states[index][wb].MUXs);
 
     this->IF->setTextInstruction(this->states[index][fetch].text_instruction);
     this->ID->setTextInstruction(this->states[index][decode].text_instruction);
@@ -110,7 +110,24 @@ void myScene::initStates()
     for (uint i = 0 ; i < this->clocks_verilog.size() ; i++)
     {
         vector<state> clock_states(5);  // for 5 stages
-        vector<string> one_clock = this->split_string(clocks_verilog[i],","); // it has 5 PCs of all Stages + Stall flag
+        vector<string> pc_stall_flush__muxs = split_string(this->clocks_verilog[i]," ");
+        vector<string> one_clock = split_string(pc_stall_flush__muxs[0],","); // PC Stall Flush
+        vector<string> muxs = split_string(pc_stall_flush__muxs[1],","); // 4 Selectors MUXs    (PC_MUX , ALU1_MUX,ALU2_MUX ,WB_MUX)
+
+
+//        for (uint i = 0; i < muxs.size(); ++i)
+//            cout <<  muxs[i] << "," ;
+//        cout << endl;
+
+        clock_states[fetch].MUXs.push_back(muxs[0]);
+        clock_states[decode].MUXs.push_back(muxs[0]);
+        clock_states   [ex].MUXs.push_back(muxs[1]);
+        clock_states   [ex].MUXs.push_back(muxs[2]);
+        clock_states   [wb].MUXs.push_back(muxs[3]);
+
+//        for (uint i =0 ; i< clock_states[fetch].MUXs.size(); i++)
+//            cout << "ray2" << clock_states[fetch].MUXs[i];
+//        cout << endl;
 
         this->PC = stoi(one_clock[PC_POS]);
         this->stall = stoi(one_clock[STALL]);

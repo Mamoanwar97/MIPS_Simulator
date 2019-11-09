@@ -11,7 +11,7 @@ private:
 
 public:
     MemoryStage(QObject* parent);
-    void setStageColor(QColor clr);
+    void setStageColor(QColor clr,vector<string> muxs = vector<string>());
 
 };
 

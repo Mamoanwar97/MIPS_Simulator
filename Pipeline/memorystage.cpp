@@ -25,7 +25,7 @@ MemoryStage::MemoryStage(QObject* parent) : Stage (parent)
 
     this->paths["EXMEM_Memory_from_MUX_ALU"] = newPath( { "465,189" ,"534,189" }); // comes from input2 ALU
     this->paths["DataMemory_Result"] = newPath( { "684,27" ,"708,27" });
-    this->paths["JUMB_pcMUX"] = newPath( {"461,-115" ,"540,-115" ,"540,-315" ,"-738,-315" ,"-738,-280" ,"-781,-280"} );
+//    this->paths["JUMB_pcMUX"] = newPath( {"461,-115" ,"540,-115" ,"540,-315" ,"-738,-315" ,"-738,-280" ,"-781,-280"} ); // wrong path
 
     // =============== Text =================
     this->DataMemory_txt = new QGraphicsTextItem("Data Memory");
@@ -44,7 +44,7 @@ MemoryStage::MemoryStage(QObject* parent) : Stage (parent)
 
 }
 
-void MemoryStage::setStageColor(QColor clr)
+void MemoryStage::setStageColor(QColor clr,vector<string> muxs)
 {
     // set Pen Color and Width
     this->color = clr;
@@ -58,5 +58,5 @@ void MemoryStage::setStageColor(QColor clr)
         i->second->setPen(this->pen);
     // for Text
     this->text_instruction->setDefaultTextColor(this->color);
-
+    // mux
 }

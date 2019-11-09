@@ -15,6 +15,10 @@ InstructionDecode::InstructionDecode(QObject *parent) : Stage (parent)
     this->Control = new QGraphicsEllipseItem(-413,-283,95,145);
     this->Control->setPen(QPen(QBrush(Qt::red,Qt::SolidPattern),6));
     emit addnewItem(this->Control);
+    // Comparator
+    this->Comparator = new QGraphicsEllipseItem(-130,-30,50,50);
+    this->Comparator->setPen(QPen(QBrush(Qt::red,Qt::SolidPattern),6));
+    emit addnewItem(this->Comparator);
     // Mux
     painter.addRoundRect(-154,-268,38,122,105);
     this->Mux_Control_IDEX = new QGraphicsPathItem(painter);
@@ -45,7 +49,17 @@ InstructionDecode::InstructionDecode(QObject *parent) : Stage (parent)
     // None Colored Wires (Not Important)
     this->paths["Instruction"] = newPath({  "-593,-380" ,"-593,326" });
     this->paths["IFID_Instruction"] = newPath({ "-593,93" ,"-622,93" });
-    // ====================== Text  (Not Important) =============================
+    this->paths["zero_MUX"] = newPath({"-155,-180" ,"-187,-180"});
+
+    // comparator
+    this->paths["comparator_up"] = newPath({"-105,-30" ,"-105,-73"});
+    this->paths["comparator_down"] = newPath({"-105,20" ,"-105,71"});
+    this->paths["comparator_3alama1"] = newPath({"-112,-10" ,"-99,-10"});
+    this->paths["comparator_3alama2"] = newPath({"-112,-2","-99,-2"});
+
+    // path for MUX
+    this->paths["Control_pcMUX"] = newPath( {"-324,-245" ,"-255,-245" ,"-255,-316" ,"-737,-316" ,"-737,-283" ,"-781,-283" });
+     // ====================== Text  (Not Important) =============================
     this->Control_txt = new QGraphicsTextItem("Control");
     this->RegFile_txt = new QGraphicsTextItem("RegisterFile");
     this->HazardUnit_txt = new QGraphicsTextItem("Hazard Unit");
@@ -70,9 +84,15 @@ InstructionDecode::InstructionDecode(QObject *parent) : Stage (parent)
     this->text_instruction->setPos(-300,-350);
     emit addnewItem(this->text_instruction);
 
+    // mlhomsh 3aza
+    this->zero= new QGraphicsTextItem("0");
+    this->zero->setFont(QFont("Arial",FONT_SIZE,QFont::Bold));
+    this->zero->setDefaultTextColor(TEXT_COLOR);
+    this->zero->setPos(-190,-180);
+    emit addnewItem(this->zero);
 }
 
-void InstructionDecode::setStageColor(QColor clr)
+void InstructionDecode::setStageColor(QColor clr,vector<string> muxs)
 {
     // set Pen Color and Width
     this->color = clr;
@@ -83,10 +103,21 @@ void InstructionDecode::setStageColor(QColor clr)
     this->Hazard_Unit->setPen(this->pen);
     this->Control->setPen(this->pen);
     this->Mux_Control_IDEX->setPen(this->pen);
+    this->Comparator->setPen(this->pen);
 
     // Paths
     for (auto i = this->paths.begin(); i != this->paths.end(); i++)
         i->second->setPen(this->pen);
     this->text_instruction->setDefaultTextColor(this->color);
+
+    if (muxs.size() >0)
+    {
+        string mux = muxs[0]; // we have wire linked to the mux in the PC MUX in IF Stage
+        if (mux == "0")
+        {
+            this->paths["Control_pcMUX"]->setColor(OFF_COLOR);
+            cout << "ID MUX:" << mux << endl;
+        }
+    }
 
 }

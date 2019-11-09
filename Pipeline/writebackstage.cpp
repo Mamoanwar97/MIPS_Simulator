@@ -33,7 +33,7 @@ WriteBackStage::WriteBackStage(QObject* parent) : Stage (parent)
 }
 
 
-void WriteBackStage::setStageColor(QColor clr)
+void WriteBackStage::setStageColor(QColor clr,vector<string> muxs)
 {
     // set Pen Color and Width
     this->color = clr;

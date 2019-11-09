@@ -9,7 +9,7 @@ private:
     QGraphicsPathItem* Mux_MEMWD_RegFile;
 public:
     WriteBackStage(QObject* parent);
-    void setStageColor(QColor clr);
+    void setStageColor(QColor clr,vector<string> muxs = vector<string>());
 
 };
 

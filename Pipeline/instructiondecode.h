@@ -8,15 +8,17 @@ class InstructionDecode : public Stage
 private:
     QGraphicsRectItem* RegFile ;
     QGraphicsEllipseItem* Control;
+    QGraphicsEllipseItem* Comparator;
     QGraphicsPathItem* Hazard_Unit;
     QGraphicsPathItem* Mux_Control_IDEX;
     // Text (Not Important)
     QGraphicsTextItem* RegFile_txt;
     QGraphicsTextItem* Control_txt;
     QGraphicsTextItem* HazardUnit_txt;
+    QGraphicsTextItem* zero;
 public:
     InstructionDecode(QObject* parent);
-    void setStageColor(QColor clr);
+    void setStageColor(QColor clr,vector<string> muxs = vector<string>());
 
 };
 

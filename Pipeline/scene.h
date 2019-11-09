@@ -6,7 +6,6 @@
 #define MUXs_SIZE 6
 #define REGISTERS_COLOR QColor(50,50,50)
 #define INITAIL_COLOR QColor(50,50,50)
-#define OFF_COLOR QColor(50,50,50)
 #define FLUSH_COLOR QColor(50,50,50)
 
 #define fetch 0
@@ -56,6 +55,7 @@ class state {
 public:
     QColor color;
     QString text_instruction;
+    vector<string> MUXs;
     state(QColor clr = Qt::white ){ this->color = clr;}
 };
 
