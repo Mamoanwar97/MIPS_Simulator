@@ -18,8 +18,8 @@ MemoryStage::MemoryStage(QObject* parent) : Stage (parent)
 
     // ******** Same Path **********
     this->paths["EXMEM_Memory_From_ALU_Result"] = newPath( { "466,27" ,"534,27" });
-    this->paths["EXMEM_Back_EX_MUX_line"] = newPath( { "504,26" ,"504,489" ,"63,489" });
-    this->paths["EXMEM_Back_EX_MUX_1"] = newPath( {"63,489", "63,-3" ,"178,-3" });
+    this->paths["EXMEM_Back_EX_MUX_line"] = newPath( { "504,26" ,"504,489" ,"63,489" , "63,115"  });
+    this->paths["EXMEM_Back_EX_MUX_1"] = newPath( {"63,115", "63,-3" ,"178,-3" });
     this->paths["EXMEM_Back_EX_MUX_2"] = newPath( { "63,115" ,"178,116" });
     this->paths["EXMEM_MEMWB_Middle"] = newPath( { "504,262" ,"709,262" });
     // *****************************
@@ -67,10 +67,12 @@ void MemoryStage::setStageColor(QColor clr,vector<string> muxs)
         if (alu_mux1 != "2")
         {
             this->paths["EXMEM_Back_EX_MUX_1"]->setColor(OFF_COLOR);
+            if (alu_mux2 != "2") this->paths["EXMEM_Back_EX_MUX_line"]->setColor(OFF_COLOR);
         }
-        if (alu_mux2 != "1")
+        if (alu_mux2 != "2")
         {
             this->paths["EXMEM_Back_EX_MUX_2"]->setColor(OFF_COLOR);
+            if (alu_mux1 != "2") this->paths["EXMEM_Back_EX_MUX_line"]->setColor(OFF_COLOR);
         }
     }
 }

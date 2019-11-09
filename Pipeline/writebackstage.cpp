@@ -61,11 +61,12 @@ void WriteBackStage::setStageColor(QColor clr,vector<string> muxs)
         else if (mux == "x")
             this->paths["MUX_Write_RegFile"]->setColor(OFF_COLOR);
         // ALU MUX1
+        // it may have over write colors
         if (alu_mux1 != "1")
         {
             this->paths["MUX_ExecutionMUX_1"]->setColor(OFF_COLOR);
         }
-        if (alu_mux2 != "2")
+        if (alu_mux2 != "1")
         {
             this->paths["MUX_ExecutionMUX_2"]->setColor(OFF_COLOR);
         }
