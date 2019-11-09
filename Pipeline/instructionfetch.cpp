@@ -77,11 +77,10 @@ void InstructionFetch::setStageColor(QColor clr,vector<string> muxs)
     // check for muxs value
     if (muxs.size() >0)
     {
-        string mux = muxs[0]; // we have one mux in IF stage
+        string mux = muxs[0]; // PC MUX
         if (mux == "1")
         {
             this->paths["pcAdder_MUX"]->setColor(OFF_COLOR);
-            cout << "IF MUX:" << mux << endl;
         }
     }
 

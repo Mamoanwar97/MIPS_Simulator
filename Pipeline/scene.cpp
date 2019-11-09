@@ -114,20 +114,20 @@ void myScene::initStates()
         vector<string> one_clock = split_string(pc_stall_flush__muxs[0],","); // PC Stall Flush
         vector<string> muxs = split_string(pc_stall_flush__muxs[1],","); // 4 Selectors MUXs    (PC_MUX , ALU1_MUX,ALU2_MUX ,WB_MUX)
 
-
-//        for (uint i = 0; i < muxs.size(); ++i)
-//            cout <<  muxs[i] << "," ;
-//        cout << endl;
-
+        // PC MUX
         clock_states[fetch].MUXs.push_back(muxs[0]);
+        // PC MUX for helping Fetch Stage
         clock_states[decode].MUXs.push_back(muxs[0]);
-        clock_states   [ex].MUXs.push_back(muxs[1]);
-        clock_states   [ex].MUXs.push_back(muxs[2]);
-        clock_states   [wb].MUXs.push_back(muxs[3]);
+        // MUX1 , MUX2 ALU
+        clock_states[ex].MUXs.push_back(muxs[1]);
+        clock_states[ex].MUXs.push_back(muxs[2]);
+        // MUX1 , MUX2 ALU for just helping the execute stage
+        clock_states[memory].MUXs.push_back(muxs[1]);
+        clock_states[memory].MUXs.push_back(muxs[2]);
 
-//        for (uint i =0 ; i< clock_states[fetch].MUXs.size(); i++)
-//            cout << "ray2" << clock_states[fetch].MUXs[i];
-//        cout << endl;
+        clock_states[wb].MUXs.push_back(muxs[3]); // for wb mux
+        clock_states[wb].MUXs.push_back(muxs[1]); // for execute help
+        clock_states[wb].MUXs.push_back(muxs[2]); // for execute help
 
         this->PC = stoi(one_clock[PC_POS]);
         this->stall = stoi(one_clock[STALL]);
@@ -238,7 +238,6 @@ void myScene::ReadDataMem()
 
     this->dataMem_file.close();
 }
-
 void myScene::UpdatePipeline(int direction)
 {
     this->updateStagesColors(direction);

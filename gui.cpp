@@ -146,7 +146,7 @@ void GUI::init_files_dialog()
     this->file_dialog->setOption(QFileDialog::ReadOnly);        // readonly mode dosn't support deleting or writing
 
     this->include_file_dialog = new QFileDialog(this);
-    this->include_file_dialog->setDirectory("C:\\MIPS"); // set the open directory
+    this->include_file_dialog->setDirectory("C:\\MIPS_Simulator\\TestCases"); // set the open directory
     this->include_file_dialog->setFileMode(QFileDialog::ExistingFile); // select existing file (one file )only
     this->include_file_dialog->setNameFilter("*.txt");                  // show only txt extentions
     this->include_file_dialog->setOption(QFileDialog::ReadOnly);        // readonly mode dosn't support deleting or writing

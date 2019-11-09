@@ -36,7 +36,6 @@ Execution::Execution(QObject * parent) : Stage (parent)
     // ********************************
     this->paths["ALU_Output"] = newPath( {"390,50" ,"411,50" } );
 
-
     this->paths["Forward_Mux_1"] = newPath( { "268,386" ,"268,45" ,"197,45" ,"197,22" } );                   this->paths["Forward_Mux_1"]->setWidth(WIDTH_MUX);
     this->paths["Forward_Mux_2"] = newPath( {"260,399" ,"245,399" ,"245,200" ,"200,200" ,"200,180" } );      this->paths["Forward_Mux_2"]->setWidth(WIDTH_MUX);
     this->paths["IDEX_MUX_1"] = newPath( {"15,-73" ,"175,-73" } );
@@ -101,5 +100,17 @@ void Execution::setStageColor(QColor clr,vector<string> muxs)
 
     this->text_instruction->setDefaultTextColor(this->color);
 
-
+    if (muxs.size() >0)
+    {
+        string mux1 = muxs[0]; // upper mux alu input 1
+        string mux2 = muxs[1]; // lower mux alu input 2
+        if (mux1 != "0")
+        {
+            this->paths["IDEX_MUX_1"]->setColor(OFF_COLOR);
+        }
+        if (mux2 != "0")
+        {
+            this->paths["IDEX_MUX_2"]->setColor(OFF_COLOR);
+        }
+    }
 }

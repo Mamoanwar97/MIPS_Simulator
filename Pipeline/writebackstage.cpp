@@ -16,11 +16,11 @@ WriteBackStage::WriteBackStage(QObject* parent) : Stage (parent)
     // ***************************************
 
     this->paths["MEMWB_MUX_input1"] = newPath( { "762,26" ,"818,26" });
-    this->paths["MEMWB_MUX_input2"] = newPath( { "760,101" ,"818,101"});
+    this->paths["MEMWB_MUX_input2"] = newPath( { "760,261" ,"774,261" ,"774,98" ,"822,98"});
     // ************** Same Path ***************
     this->paths["MUX_Write_RegFile"] = newPath( {"863,56" ,"879,56" ,"879,516" ,"-471,516" ,"-471,112" ,"-326,112"  });
-    this->paths["MUX_ExecutionMUX_1"] = newPath( {"82,515" ,"82,-40" ,"176,-40" });
-    this->paths["MUX_ExecutionMUX_2"] = newPath( {"83,154" ,"178,154"  });
+    this->paths["MUX_ExecutionMUX_1"] = newPath( {"82,515","82,-40" ,"176,-40" });
+    this->paths["MUX_ExecutionMUX_2"] = newPath( {"82,515" , "82,154" ,"178,154"  });
     //    this->paths[""] = newPath( {  });
 
     // Text
@@ -47,5 +47,27 @@ void WriteBackStage::setStageColor(QColor clr,vector<string> muxs)
         i->second->setPen(this->pen);
     this->text_instruction->setDefaultTextColor(this->color);
 
+    if (muxs.size() >0)
+    {
+        string mux = muxs[0]; // WB MUX
+        string alu_mux1 = muxs[1];
+        string alu_mux2 = muxs[2];
 
+        // WB MUX
+        if (mux=="0")
+            this->paths["MEMWB_MUX_input1"]->setColor(OFF_COLOR);
+        else if (mux == "1")
+            this->paths["MEMWB_MUX_input2"]->setColor(OFF_COLOR);
+        else if (mux == "x")
+            this->paths["MUX_Write_RegFile"]->setColor(OFF_COLOR);
+        // ALU MUX1
+        if (alu_mux1 != "1")
+        {
+            this->paths["MUX_ExecutionMUX_1"]->setColor(OFF_COLOR);
+        }
+        if (alu_mux2 != "2")
+        {
+            this->paths["MUX_ExecutionMUX_2"]->setColor(OFF_COLOR);
+        }
+    }
 }

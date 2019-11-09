@@ -18,14 +18,14 @@ MemoryStage::MemoryStage(QObject* parent) : Stage (parent)
 
     // ******** Same Path **********
     this->paths["EXMEM_Memory_From_ALU_Result"] = newPath( { "466,27" ,"534,27" });
-    this->paths["EXMEM_Back_EX_MUX_1"] = newPath( { "504,26" ,"504,489" ,"63,489" ,"63,-3" ,"178,-3" });
+    this->paths["EXMEM_Back_EX_MUX_line"] = newPath( { "504,26" ,"504,489" ,"63,489" });
+    this->paths["EXMEM_Back_EX_MUX_1"] = newPath( {"63,489", "63,-3" ,"178,-3" });
     this->paths["EXMEM_Back_EX_MUX_2"] = newPath( { "63,115" ,"178,116" });
     this->paths["EXMEM_MEMWB_Middle"] = newPath( { "504,262" ,"709,262" });
     // *****************************
 
     this->paths["EXMEM_Memory_from_MUX_ALU"] = newPath( { "465,189" ,"534,189" }); // comes from input2 ALU
     this->paths["DataMemory_Result"] = newPath( { "684,27" ,"708,27" });
-//    this->paths["JUMB_pcMUX"] = newPath( {"461,-115" ,"540,-115" ,"540,-315" ,"-738,-315" ,"-738,-280" ,"-781,-280"} ); // wrong path
 
     // =============== Text =================
     this->DataMemory_txt = new QGraphicsTextItem("Data Memory");
@@ -58,5 +58,19 @@ void MemoryStage::setStageColor(QColor clr,vector<string> muxs)
         i->second->setPen(this->pen);
     // for Text
     this->text_instruction->setDefaultTextColor(this->color);
-    // mux
+
+    if (muxs.size() >0)
+    {
+        string alu_mux1 = muxs[0];
+        string alu_mux2 = muxs[1];
+
+        if (alu_mux1 != "2")
+        {
+            this->paths["EXMEM_Back_EX_MUX_1"]->setColor(OFF_COLOR);
+        }
+        if (alu_mux2 != "1")
+        {
+            this->paths["EXMEM_Back_EX_MUX_2"]->setColor(OFF_COLOR);
+        }
+    }
 }
