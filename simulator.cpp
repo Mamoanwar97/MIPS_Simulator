@@ -142,9 +142,10 @@ void Simulator::Read_Instruction()
     uint address = 0;
     this->Read_Data();
 
-
+    vector<string> all_code_to_copy_in_editor;
     while( getline(file,s) )
     {
+        all_code_to_copy_in_editor.push_back(s);
         if(s == "")
             continue;
         if(check_for_Lable(s,address))
@@ -159,7 +160,7 @@ void Simulator::Read_Instruction()
 
     cout << "======================" << endl;
     emit clearTextEditor();
-    emit update_Text_Editor(this->code);
+    emit update_Text_Editor(all_code_to_copy_in_editor);
 }
 
 void Simulator::Read_Instruction_Editor()
