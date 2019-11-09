@@ -113,55 +113,21 @@ void Simulator::Simulate()
 void Simulator::Simulate(string path)
 {
     this->code_path = path;
-    clear();
-
-    Read_Instruction();
-    Assemble_Instructions();
-    //    ALU_Logic();
-
-
-    //    emit print_registers();
-    print(this->Lables);
-    print(this->assembler->get_assembled_strings());
-
-    this->Modelsim();
-    this->update_GUI();
-}
-
-void Simulator::Read_Instruction()
-{
     file.open(code_path);
     if (!file.is_open())
     {
         cout << "file can't open ya ray2" << endl;
-        exit(1);
+        emit ERROR_Output("File Cannot Open");
     }
-
-    // Read line by line in the file and parase it then add it to the Instructions Vector
-    string s;
-    uint address = 0;
-    this->Read_Data();
-
     vector<string> all_code_to_copy_in_editor;
+    string s;
     while( getline(file,s) )
-    {
         all_code_to_copy_in_editor.push_back(s);
-        if(s == "")
-            continue;
-        if(check_for_Lable(s,address))
-            continue;
 
-        Split_Instruction(s);
-        this->instructions[address].push_back( to_string(address*4) ) ; // add adress to the instruction
-        address++;
-
-    }
-    this->instructions.push_back(vector<string> {"end"});
-
-    cout << "======================" << endl;
     emit clearTextEditor();
     emit update_Text_Editor(all_code_to_copy_in_editor);
 }
+
 
 void Simulator::Read_Instruction_Editor()
 {
@@ -267,50 +233,6 @@ uint Simulator::Read_Data_Editor(vector<string> editor_code)
     }
 }
 
-void Simulator::Read_Data()
-{
-    string s ;
-    getline(file,s);
-    int data_found = s.find(".data");
-    if (data_found == -1)
-    {
-        this->file.close();
-        this->file.open(this->code_path);
-        return ;
-    }
-    while( getline(file,s) )
-    {
-        if(s==".text")
-            return ;
-        else if(s == "")
-            continue;
-
-        // split the dot data to get the name and type and value .....  my_int: .word 25
-        vector<string> dot_data = split_string(s," ");
-        if (dot_data.size() != 3)
-        {
-            cout << "error in .data" << endl;
-            continue;
-        }
-        // remove space noise
-        for (int i =0 ;i<3;i++)
-            for (int j =0 ; j <dot_data.size();j++)
-                if ( s[i] == ' ')
-                    s.erase(i,1);
-        if(dot_data[1] == ".asciiz")
-        {
-            string name = dot_data[0];
-            name.erase(name.size()-1); // delete the ":"
-            data_asciiz[name] = dot_data[2];
-        }
-        else if (dot_data[1] == ".word")
-        {
-            string name = dot_data[0];
-            name.erase(name.size()-1); // delete the ":"
-            data_word[name] = stoi(dot_data[2]);
-        }
-    }
-}
 
 bool Simulator::check_for_Lable(string s,uint index)
 {

@@ -63,9 +63,7 @@ public:
     void Simulate();
     void Simulate(string path);
     void Split_Instruction(string s);
-    void Read_Data();
     uint Read_Data_Editor(vector<string>);
-    void Read_Instruction();
     void Read_Instruction_Editor();
     void Observer_Pattern();
     void Assemble_Instructions();
