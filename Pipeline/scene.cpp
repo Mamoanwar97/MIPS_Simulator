@@ -33,6 +33,10 @@ myScene::myScene(QWidget *parent) : QGraphicsScene(MAX_TOP_LEFT_CORNER,1900,1000
     this->dataMemPath = "C:\\Pipeline\\dataMemory.txt";
     // directions
     this->index = 0;
+
+    this->setBackgroundBrush(QBrush(QColor(Qt::white)));
+
+//    this->image = QImage("C:\\MIPS_Simulator\\pipeline.jpg");
 }
 
 void myScene::updateStagesColors(int direction)
@@ -249,8 +253,6 @@ void myScene::initColors()
     this->MEM->setStageColor(QColor(INITAIL_COLOR));
     this->WB->setStageColor(QColor(INITAIL_COLOR));
 
-    this->setBackgroundBrush(QBrush(QColor(Qt::black)));
-
     this->states.push_back({state(QColor(INITAIL_COLOR)) , state(QColor(INITAIL_COLOR)) , state(QColor(INITAIL_COLOR)) ,state(QColor(INITAIL_COLOR)) ,state(QColor(INITAIL_COLOR))});
 
 }
@@ -267,10 +269,10 @@ void myScene::initText()
     this->EXMEM_txt->setPos(395,-260);
     this->MEMWB_txt->setPos(685,-210);
     // Set Font
-    this->IFID_txt->setFont(QFont("Arial",15,QFont::Bold));
-    this->IDEX_txt->setFont(QFont("Arial",15,QFont::Bold));
-    this->EXMEM_txt->setFont(QFont("Arial",15,QFont::Bold));
-    this->MEMWB_txt->setFont(QFont("Arial",15,QFont::Bold));
+    this->IFID_txt->setFont(QFont("Arial",FONT_SIZE,QFont::Bold));
+    this->IDEX_txt->setFont(QFont("Arial",FONT_SIZE,QFont::Bold));
+    this->EXMEM_txt->setFont(QFont("Arial",FONT_SIZE,QFont::Bold));
+    this->MEMWB_txt->setFont(QFont("Arial",FONT_SIZE,QFont::Bold));
     //Set Color
     this->IFID_txt->setDefaultTextColor(TEXT_COLOR);
     this->IDEX_txt->setDefaultTextColor(TEXT_COLOR);
@@ -283,13 +285,13 @@ void myScene::initText()
     this->addItem(this->MEMWB_txt);
 
     //  ========== MUXs ================
-    this->MUX_txt = new QGraphicsTextItem*() ;
+    this->MUX_txt = new QGraphicsTextItem*[MUXs_SIZE] ;
     for(int i =0 ; i< MUXs_SIZE ; i++)
         this->MUX_txt[i] = new QGraphicsTextItem("M\nU\nX");
     // Set Font Size and Bold State
     for (int i = 0 ; i< MUXs_SIZE ; i++)
     {
-        this->MUX_txt[i]->setFont(QFont("Arial",15,QFont::Bold));
+        this->MUX_txt[i]->setFont(QFont("Arial",FONT_SIZE,QFont::Bold));
         this->MUX_txt[i]->setDefaultTextColor(QColor(TEXT_COLOR));
     }
     // Set Position
@@ -298,6 +300,7 @@ void myScene::initText()
     this->MUX_txt[2]->setPos(187,75);
     this->MUX_txt[3]->setPos(187,290);
     this->MUX_txt[4]->setPos(828,18);
+    this->MUX_txt[5]->setPos(-813,-280);
 
     for (int i =0 ; i< MUXs_SIZE; i++)
         this->addItem(this->MUX_txt[i]);
@@ -322,6 +325,11 @@ void myScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     // print the QGraphicText Item on the Scene
     //    this->cursor->setPos(QPointF(point.x()+10,point.y())); // +10 for visualization only
     //    cout << "Scene(" << point.x() << "," << point.y() << ")" << endl;
+}
+void myScene::keyPressEvent(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key_Space)
+        cout << endl;
 }
 void myScene::addNewItem(QGraphicsItem * item)
 {
@@ -350,3 +358,7 @@ QString myScene::parasePC_Text(string pc)
         return QString("xxxx");
     }
 }
+//void myScene::drawBackground(QPainter *painter, const QRectF &rect)
+//{
+//    painter->drawImage(QRectF(-1000,-475,1800,1000),this->image);
+//}

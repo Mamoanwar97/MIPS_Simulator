@@ -38,5 +38,7 @@ void View::keyPressEvent(QKeyEvent *event)
         emit updatePipeline(1);
     else if (event->key() == Qt::Key_A)
         emit updatePipeline(-1);
+    else if (event->key() == Qt::Key_Space)
+        cout << endl;
 }
 

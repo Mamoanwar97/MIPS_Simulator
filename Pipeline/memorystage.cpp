@@ -25,18 +25,19 @@ MemoryStage::MemoryStage(QObject* parent) : Stage (parent)
 
     this->paths["EXMEM_Memory_from_MUX_ALU"] = newPath( { "465,189" ,"534,189" }); // comes from input2 ALU
     this->paths["DataMemory_Result"] = newPath( { "684,27" ,"708,27" });
+    this->paths["JUMB_pcMUX"] = newPath( {"461,-115" ,"540,-115" ,"540,-315" ,"-738,-315" ,"-738,-280" ,"-781,-280"} );
 
     // =============== Text =================
     this->DataMemory_txt = new QGraphicsTextItem("Data Memory");
     this->DataMemory_txt->setDefaultTextColor(TEXT_COLOR);
 
     this->DataMemory_txt->setPos(545,90);
-    this->DataMemory_txt->setFont(QFont("Arial",15,QFont::Bold));
+    this->DataMemory_txt->setFont(QFont("Arial",FONT_SIZE,QFont::Bold));
     emit addnewItem(this->DataMemory_txt);
 
     // Text Instruction
     this->text_instruction->setPlainText("InstructionFetch");
-    this->text_instruction->setFont(QFont("Arial",15,QFont::Bold));
+    this->text_instruction->setFont(QFont("Arial",FONT_SIZE,QFont::Bold));
     this->text_instruction->setDefaultTextColor(TEXT_COLOR);
     this->text_instruction->setPos(450,-350);
     emit addnewItem(this->text_instruction);

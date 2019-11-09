@@ -1,8 +1,8 @@
 #ifndef STAGE_H
 #define STAGE_H
 #define PATH_WIDTH 4
-#define TEXT_COLOR Qt::white
-
+#define TEXT_COLOR Qt::black
+#define FONT_SIZE 12
 #include <QObject>
 #include <QPen>
 #include <QBrush>

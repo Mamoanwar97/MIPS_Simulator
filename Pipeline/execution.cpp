@@ -68,15 +68,15 @@ Execution::Execution(QObject * parent) : Stage (parent)
 
     this->ALU_txt->setPos(330,30);
     this->ForwardUnit_txt->setPos(270,392);
-    this->ALU_txt->setFont(QFont("Arial",15,QFont::Bold));
-    this->ForwardUnit_txt->setFont(QFont("Arial",15,QFont::Bold));
+    this->ALU_txt->setFont(QFont("Arial",FONT_SIZE,QFont::Bold));
+    this->ForwardUnit_txt->setFont(QFont("Arial",FONT_SIZE,QFont::Bold));
     emit addnewItem(this->ALU_txt);
     emit addnewItem(this->ForwardUnit_txt);
 
 
     // ============ Text Instruction =============
     this->text_instruction->setPlainText("Execution");
-    this->text_instruction->setFont(QFont("Arial",15,QFont::Bold));
+    this->text_instruction->setFont(QFont("Arial",FONT_SIZE,QFont::Bold));
     this->text_instruction->setDefaultTextColor(TEXT_COLOR);
     this->text_instruction->setPos(200,-350);
     emit addnewItem(this->text_instruction);

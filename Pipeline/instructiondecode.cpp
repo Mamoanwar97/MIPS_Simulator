@@ -56,16 +56,16 @@ InstructionDecode::InstructionDecode(QObject *parent) : Stage (parent)
     this->RegFile_txt->setPos(-307,-15);
     this->Control_txt->setPos(-405,-225);
     this->HazardUnit_txt->setPos(-505,-405);
-    this->RegFile_txt->setFont(QFont("Arial",15,QFont::Bold));
-    this->Control_txt->setFont(QFont("Arial",15,QFont::Bold));
-    this->HazardUnit_txt->setFont(QFont("Arial",15,QFont::Bold));
+    this->RegFile_txt->setFont(QFont("Arial",FONT_SIZE,QFont::Bold));
+    this->Control_txt->setFont(QFont("Arial",FONT_SIZE,QFont::Bold));
+    this->HazardUnit_txt->setFont(QFont("Arial",FONT_SIZE,QFont::Bold));
     emit addnewItem(this->Control_txt);
     emit addnewItem(this->RegFile_txt);
     emit addnewItem(this->HazardUnit_txt);
 
     // ===== Text Instruction ============
     this->text_instruction->setPlainText("InstructionDecode");
-    this->text_instruction->setFont(QFont("Arial",15,QFont::Bold));
+    this->text_instruction->setFont(QFont("Arial",FONT_SIZE,QFont::Bold));
     this->text_instruction->setDefaultTextColor(TEXT_COLOR);
     this->text_instruction->setPos(-300,-350);
     emit addnewItem(this->text_instruction);

@@ -13,6 +13,11 @@ private:
     QGraphicsTextItem* PC_txt;
     QGraphicsTextItem* InstructionMemory_txt;
 
+
+    QGraphicsPolygonItem* PC_Adder;
+    QGraphicsTextItem* pcAdder_txt;
+    QGraphicsPathItem* MUX_PC;
+
 public:
     InstructionFetch(QObject *parent);
     void setStageColor(QColor clr);

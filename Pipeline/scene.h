@@ -3,7 +3,7 @@
 
 #define MAX_TOP_LEFT_CORNER -984,-446
 #define WIDTH_MUX 1
-#define MUXs_SIZE 5
+#define MUXs_SIZE 6
 #define REGISTERS_COLOR QColor(50,50,50)
 #define INITAIL_COLOR QColor(50,50,50)
 #define OFF_COLOR QColor(50,50,50)
@@ -106,6 +106,8 @@ private:
     int flush;
     int stall;
 
+    QImage image;
+
 public:
     explicit myScene(QWidget *parent = nullptr);
     void updateStagesColors(int);
@@ -124,6 +126,8 @@ private:
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
+    void keyPressEvent(QKeyEvent *event) override;
+//    void drawBackground(QPainter *painter, const QRectF &rect) override;
 
 signals:
     void updateDataMem(string); // it updates data memory and data_mem table

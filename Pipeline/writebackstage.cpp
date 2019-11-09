@@ -25,7 +25,7 @@ WriteBackStage::WriteBackStage(QObject* parent) : Stage (parent)
 
     // Text
     this->text_instruction->setPlainText("WriteBack");
-    this->text_instruction->setFont(QFont("Arial",15,QFont::Bold));
+    this->text_instruction->setFont(QFont("Arial",FONT_SIZE,QFont::Bold));
     this->text_instruction->setDefaultTextColor(TEXT_COLOR);
     this->text_instruction->setPos(700,-350);
     emit addnewItem(this->text_instruction);
